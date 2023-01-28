@@ -1,5 +1,6 @@
 package ProgettoFinale.Controller;
 
+import ProgettoFinale.Controller.Pacchetti.AvvisoGiocata;
 import ProgettoFinale.Controller.Pacchetti.AvvisoPescata;
 import ProgettoFinale.FinestraGioco;
 import ProgettoFinale.Model.Carte.*;
@@ -472,8 +473,11 @@ public class Controller implements ActionListener, ChangeListener {
                 System.out.println("hai giocato: "+bc.getCarta().getColore()+" "+bc.getCarta().getValoreIntero()+" "+ new Date());
                 t.getGiocatore().getMano().remove(bc.getCarta());
                 t.getScarti().push(bc.getCarta());
+                //
+                t.notificaCambiamenti(new AvvisoGiocata(bc.getCarta(),tm.getGiocatoreDiTurno(),this));
+                //
                 f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
-                f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(),this);
+                //f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(),this);
                 f.getGw().getPilaMazzo().setEnabled(true);
                 applicaEffetto(bc.getCarta().getValoreIntero());
                 if(t.getGiocatore().getMano().isEmpty()){

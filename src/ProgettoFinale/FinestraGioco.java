@@ -1,5 +1,6 @@
 package ProgettoFinale;
 
+import ProgettoFinale.Controller.Pacchetti.AvvisoGiocata;
 import ProgettoFinale.Controller.Pacchetti.AvvisoPescata;
 import ProgettoFinale.Model.Giocatori.Giocatore;
 import ProgettoFinale.View.Animazioni.Animazione;
@@ -222,6 +223,9 @@ public class FinestraGioco extends JFrame implements Observer {
             effetti.riproduciEffettoSpeciale(0);
             gw.getLabelManoGiocatore().add(new BottoneCarta(((AvvisoPescata) arg).getCartaPescata(), ((AvvisoPescata) arg).getCtrl()));
             gw.getLabelManoGiocatore().visualizzaMano((Giocatore) ((AvvisoPescata) arg).getGiocatorePescante(),((AvvisoPescata) arg).getCtrl());
+        } else if (arg instanceof AvvisoGiocata) {
+
+            gw.getLabelManoGiocatore().visualizzaCarte((Giocatore) ((AvvisoGiocata) arg).getGiocatore(), ((AvvisoGiocata) arg).getCtrl());
         }
     }
 }
