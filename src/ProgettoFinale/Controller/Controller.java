@@ -1,6 +1,7 @@
 package ProgettoFinale.Controller;
 
 import ProgettoFinale.Controller.Pacchetti.AvvisoGiocata;
+import ProgettoFinale.Controller.Pacchetti.AvvisoGiocataComputer;
 import ProgettoFinale.Controller.Pacchetti.AvvisoPescata;
 import ProgettoFinale.FinestraGioco;
 import ProgettoFinale.Model.Carte.*;
@@ -459,24 +460,19 @@ public class Controller implements ActionListener, ChangeListener {
      * @param bc è la carta nella mano che premendola viene giocata
      */
     public void cartaCliccata(BottoneCarta bc){
+        //TODO:Ricontrollare
         if(tm.getGiocatoreDiTurno().equals(t.getGiocatore()) && bc.isEnabled()) {
             if (giocabile(bc.getCarta())) {
                 f.getGw().getPassaTurno().setVisible(false);
 
-//                f.getGw().getAnimazioneGiocatoreGioca().setImage(bc.getCarta().getImmagine());
-//                f.getGw().getAnimazioneGiocatoreGioca().setX(bc.getX());
-//                f.getGw().getAnimazioneGiocatoreGioca().setY(f.getGw().getLabelManoGiocatore().getY()-350);
-//                f.getGw().getAnimazioneGiocatoreGioca().timer();
-//                f.getGw().getSfondo().add(f.getGw().getAnimazioneGiocatoreGioca());
-
-                System.out.println("hai giocato: "+bc.getCarta().getColore()+" "+bc.getCarta().getValoreIntero()+" "+ new Date());
+                System.out.println("hai giocato: "+bc.getCarta().getColore()+" "+bc.getCarta().getValoreIntero()+" "+
+                                                                                                            new Date());
                 t.getGiocatore().getMano().remove(bc.getCarta());
                 t.getScarti().push(bc.getCarta());
-                //
+
                 t.notificaCambiamenti(new AvvisoGiocata(bc,tm.getGiocatoreDiTurno(),this));
-                //
+
                 f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
-                //f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(),this);
                 f.getGw().getPilaMazzo().setEnabled(true);
                 applicaEffetto(bc.getCarta().getValoreIntero());
                 if(t.getGiocatore().getMano().isEmpty()){
@@ -747,7 +743,7 @@ public class Controller implements ActionListener, ChangeListener {
                 applicaEffetto(cartaPescataBot.getValoreIntero());
             }else {
                 computer.getMano().add(cartaPescataBot);
-                aggiornaMano(computer);
+                t.notificaCambiamenti(new AvvisoGiocataComputer(cartaPescataBot,tm.getGiocatoreDiTurno(),this));
                 System.out.println("pescata: "+cartaPescataBot+" da "+computer.getNome()+" "+new Date()+"    "+computer.getMano().size());
             }
         } else {
