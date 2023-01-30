@@ -326,7 +326,7 @@ public class Controller implements ActionListener, ChangeListener {
                 break;
             case "PESCACARTA":
                 if(tm.getGiocatoreDiTurno().equals(t.getGiocatore())) {
-                    animazioneGiocatori(tm.getGiocatoreDiTurno());
+//                    animazioneGiocatori(tm.getGiocatoreDiTurno());
                     Carta cartaPescata = t.getMazzo().pesca();
                     t.getGiocatore().getMano().add(cartaPescata);
                     t.notificaCambiamenti(new AvvisoPescata(cartaPescata,tm.getGiocatoreDiTurno(),this));
@@ -463,18 +463,17 @@ public class Controller implements ActionListener, ChangeListener {
             if (giocabile(bc.getCarta())) {
                 f.getGw().getPassaTurno().setVisible(false);
 
-                f.getGw().getAnimazioneGiocatoreGioca().setImage(bc.getCarta().getImmagine());
-                f.getGw().getAnimazioneGiocatoreGioca().setX(bc.getX());
-                System.out.println(bc.getX());
-                f.getGw().getAnimazioneGiocatoreGioca().setY(f.getGw().getLabelManoGiocatore().getY()-350);
-                f.getGw().getAnimazioneGiocatoreGioca().timer();
-                f.getGw().getSfondo().add(f.getGw().getAnimazioneGiocatoreGioca());
+//                f.getGw().getAnimazioneGiocatoreGioca().setImage(bc.getCarta().getImmagine());
+//                f.getGw().getAnimazioneGiocatoreGioca().setX(bc.getX());
+//                f.getGw().getAnimazioneGiocatoreGioca().setY(f.getGw().getLabelManoGiocatore().getY()-350);
+//                f.getGw().getAnimazioneGiocatoreGioca().timer();
+//                f.getGw().getSfondo().add(f.getGw().getAnimazioneGiocatoreGioca());
 
                 System.out.println("hai giocato: "+bc.getCarta().getColore()+" "+bc.getCarta().getValoreIntero()+" "+ new Date());
                 t.getGiocatore().getMano().remove(bc.getCarta());
                 t.getScarti().push(bc.getCarta());
                 //
-                t.notificaCambiamenti(new AvvisoGiocata(bc.getCarta(),tm.getGiocatoreDiTurno(),this));
+                t.notificaCambiamenti(new AvvisoGiocata(bc,tm.getGiocatoreDiTurno(),this));
                 //
                 f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
                 //f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(),this);
@@ -603,11 +602,11 @@ public class Controller implements ActionListener, ChangeListener {
     private void pescaDue(){
         riproduciEffettoSpeciale(3);
         fineMazzo();
-        animazioneGiocatori(tm.getGiocatoreSuccessivo());
+//        animazioneGiocatori(tm.getGiocatoreSuccessivo());
         tm.getGiocatoreSuccessivo().getMano().add(t.getMazzo().pesca());
         fineMazzo();
         riproduciEffettoSpeciale(3);
-        animazioneGiocatori(tm.getGiocatoreSuccessivo());
+//        animazioneGiocatori(tm.getGiocatoreSuccessivo());
         tm.getGiocatoreSuccessivo().getMano().add(t.getMazzo().pesca());
         aggiornaMano(tm.getGiocatoreSuccessivo());
         tm.passaTurno();
@@ -638,7 +637,7 @@ public class Controller implements ActionListener, ChangeListener {
         for(int i = 0; i < 4; i++){
             fineMazzo();
             riproduciEffettoSpeciale(3);
-            animazioneGiocatori(tm.getGiocatoreSuccessivo());
+//            animazioneGiocatori(tm.getGiocatoreSuccessivo());
             tm.getGiocatoreSuccessivo().getMano().add(t.getMazzo().pesca());
         }
         aggiornaMano(tm.getGiocatoreSuccessivo());
@@ -738,7 +737,7 @@ public class Controller implements ActionListener, ChangeListener {
         List<Carta> giocabili = computer.getMano().stream().filter(this::giocabile).toList();
         if (giocabili.isEmpty()){
             fineMazzo();
-            animazioneGiocatori(computer);
+//            animazioneGiocatori(computer);
             Carta cartaPescataBot = t.getMazzo().pesca();
             riproduciEffettoSpeciale(0);
             if(giocabile(cartaPescataBot)){
@@ -763,7 +762,7 @@ public class Controller implements ActionListener, ChangeListener {
                 partitaFinita();
             }
 
-            animazioneGiocatoriGiocaCarta(computer,cartaDaGiocare);
+//            animazioneGiocatoriGiocaCarta(computer,cartaDaGiocare);
 
             System.out.println("carta giocata da "+computer.getNome()+": "+ cartaDaGiocare +" "+new Date()+"    "+(computer.getMano().size()));
             t.getScarti().push(cartaDaGiocare);
@@ -786,65 +785,6 @@ public class Controller implements ActionListener, ChangeListener {
                     turnoComputer(tm.getGiocatoreDiTurno());
                 }
             }, 3000);
-        }
-    }
-
-    /**
-     * Metodo che rende visibile la pescata degli avversari
-     * @param giocatore è il giocatore corrente del turno
-     */
-    private void animazioneGiocatori(Giocatori giocatore){
-        switch (giocatore.getNome()) {
-            case "computerSx" -> {
-                f.getGw().getAnimazioneComputerSx().setX(f.getGw().getPilaMazzo().getX() - 200);
-                f.getGw().getAnimazioneComputerSx().setY(f.getGw().getPilaMazzo().getY() - 200);
-                f.getGw().getAnimazioneComputerSx().timer();
-                f.getGw().getSfondo().add(f.getGw().getAnimazioneComputerSx());
-            }
-            case "computerSu" -> {
-                f.getGw().getAnimazioneComputerSu().setX(f.getGw().getPilaMazzo().getX() - 200);
-                f.getGw().getAnimazioneComputerSu().setY(f.getGw().getPilaMazzo().getY() - 200);
-                f.getGw().getAnimazioneComputerSu().timer();
-                f.getGw().getSfondo().add(f.getGw().getAnimazioneComputerSu());
-            }
-            case "computerDx" -> {
-                f.getGw().getAnimazioneComputerDx().setX(f.getGw().getPilaMazzo().getX() - 200);
-                f.getGw().getAnimazioneComputerDx().setY(f.getGw().getPilaMazzo().getY() - 200);
-                f.getGw().getAnimazioneComputerDx().timer();
-                f.getGw().getSfondo().add(f.getGw().getAnimazioneComputerDx());
-            }
-            default -> {
-                f.getGw().getAnimazioneGiocatore().setX(f.getGw().getPilaMazzo().getX() - 200);
-                f.getGw().getAnimazioneGiocatore().setY(f.getGw().getPilaMazzo().getY() - 200);
-                f.getGw().getAnimazioneGiocatore().timer();
-                f.getGw().getSfondo().add(f.getGw().getAnimazioneGiocatore());
-            }
-        }
-    }
-    private void animazioneGiocatoriGiocaCarta(Giocatori giocatore, Carta carta){
-        switch (giocatore.getNome()){
-            case "computerSx"-> {
-                f.getGw().getAnimazioneComputerSxGioca().setImage(carta.getImmagine());
-                f.getGw().getAnimazioneComputerSxGioca().setX(10);
-                f.getGw().getAnimazioneComputerSxGioca().setY(10);
-                f.getGw().getAnimazioneComputerSxGioca().timer();
-                f.getGw().getSfondo().add(f.getGw().getAnimazioneComputerSxGioca());
-            }
-            case "computerSu" -> {
-                f.getGw().getAnimazioneComputerSuGioca().setImage(carta.getImmagine());
-                f.getGw().getAnimazioneComputerSuGioca().setX(5);
-                f.getGw().getAnimazioneComputerSuGioca().setY(5);
-                f.getGw().getAnimazioneComputerSuGioca().timer();
-                f.getGw().getSfondo().add(f.getGw().getAnimazioneComputerSuGioca());
-            }
-            default -> {
-                f.getGw().getAnimazioneComputerDxGioca().setImage(carta.getImmagine());
-                                                            //SE NON FUNZIONA METTIAMO f.getGw().getAnimazioneComputerDxGioca().getWidth() ma con piu velocita su x
-                f.getGw().getAnimazioneComputerDxGioca().setX(f.getGw().getPilaScarti().getX());
-                f.getGw().getAnimazioneComputerDxGioca().setY(10);
-                f.getGw().getAnimazioneComputerDxGioca().timer();
-                f.getGw().getSfondo().add(f.getGw().getAnimazioneComputerDxGioca());
-            }
         }
     }
 
@@ -1219,3 +1159,64 @@ public class Controller implements ActionListener, ChangeListener {
 ////                        }, 3000);
 ////                        break;
 //        }
+
+
+//    private void animazioneGiocatoriGiocaCarta(Giocatori giocatore, Carta carta){
+//        switch (giocatore.getNome()){
+//            case "computerSx"-> {
+//                f.getGw().getAnimazioneComputerSxGioca().setImage(carta.getImmagine());
+//                f.getGw().getAnimazioneComputerSxGioca().setX(10);
+//                f.getGw().getAnimazioneComputerSxGioca().setY(10);
+//                f.getGw().getAnimazioneComputerSxGioca().timer();
+//                f.getGw().getSfondo().add(f.getGw().getAnimazioneComputerSxGioca());
+//            }
+//            case "computerSu" -> {
+//                f.getGw().getAnimazioneComputerSuGioca().setImage(carta.getImmagine());
+//                f.getGw().getAnimazioneComputerSuGioca().setX(5);
+//                f.getGw().getAnimazioneComputerSuGioca().setY(5);
+//                f.getGw().getAnimazioneComputerSuGioca().timer();
+//                f.getGw().getSfondo().add(f.getGw().getAnimazioneComputerSuGioca());
+//            }
+//            default -> {
+//                f.getGw().getAnimazioneComputerDxGioca().setImage(carta.getImmagine());
+//                //SE NON FUNZIONA METTIAMO f.getGw().getAnimazioneComputerDxGioca().getWidth() ma con piu velocita su x
+//                f.getGw().getAnimazioneComputerDxGioca().setX(f.getGw().getPilaScarti().getX());
+//                f.getGw().getAnimazioneComputerDxGioca().setY(10);
+//                f.getGw().getAnimazioneComputerDxGioca().timer();
+//                f.getGw().getSfondo().add(f.getGw().getAnimazioneComputerDxGioca());
+//            }
+//        }
+//    }
+
+//    /**
+//     * Metodo che rende visibile la pescata degli avversari
+//     * @param giocatore è il giocatore corrente del turno
+//     */
+//    private void animazioneGiocatori(Giocatori giocatore){
+//        switch (giocatore.getNome()) {
+//            case "computerSx" -> {
+//                f.getGw().getAnimazioneComputerSx().setX(f.getGw().getPilaMazzo().getX() - 200);
+//                f.getGw().getAnimazioneComputerSx().setY(f.getGw().getPilaMazzo().getY() - 200);
+//                f.getGw().getAnimazioneComputerSx().timer();
+//                f.getGw().getSfondo().add(f.getGw().getAnimazioneComputerSx());
+//            }
+//            case "computerSu" -> {
+//                f.getGw().getAnimazioneComputerSu().setX(f.getGw().getPilaMazzo().getX() - 200);
+//                f.getGw().getAnimazioneComputerSu().setY(f.getGw().getPilaMazzo().getY() - 200);
+//                f.getGw().getAnimazioneComputerSu().timer();
+//                f.getGw().getSfondo().add(f.getGw().getAnimazioneComputerSu());
+//            }
+//            case "computerDx" -> {
+//                f.getGw().getAnimazioneComputerDx().setX(f.getGw().getPilaMazzo().getX() - 200);
+//                f.getGw().getAnimazioneComputerDx().setY(f.getGw().getPilaMazzo().getY() - 200);
+//                f.getGw().getAnimazioneComputerDx().timer();
+//                f.getGw().getSfondo().add(f.getGw().getAnimazioneComputerDx());
+//            }
+//            default -> {
+//                f.getGw().getAnimazioneGiocatore().setX(f.getGw().getPilaMazzo().getX() - 200);
+//                f.getGw().getAnimazioneGiocatore().setY(f.getGw().getPilaMazzo().getY() - 200);
+//                f.getGw().getAnimazioneGiocatore().timer();
+//                f.getGw().getSfondo().add(f.getGw().getAnimazioneGiocatore());
+//            }
+//        }
+//    }

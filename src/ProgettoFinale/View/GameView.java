@@ -1,5 +1,7 @@
 package ProgettoFinale.View;
 
+import ProgettoFinale.Model.Carte.Carta;
+import ProgettoFinale.Model.Giocatori.Giocatori;
 import ProgettoFinale.Utilita.Costanti;
 import ProgettoFinale.View.Animazioni.*;
 import ProgettoFinale.View.ImpostazioniAudio.Audio;
@@ -638,6 +640,66 @@ public class GameView extends JLabel{
 
     public Animazione getAnimazioneComputerDxGioca() {
         return animazioneComputerDxGioca;
+    }
+
+    public void animazioneGiocatoriGiocaCarta(Giocatori giocatore, Carta carta){
+        switch (giocatore.getNome()){
+            case "computerSx"-> {
+                getAnimazioneComputerSxGioca().setImage(carta.getImmagine());
+                getAnimazioneComputerSxGioca().setX(10);
+                getAnimazioneComputerSxGioca().setY(10);
+                getAnimazioneComputerSxGioca().timer();
+                getSfondo().add(getAnimazioneComputerSxGioca());
+            }
+            case "computerSu" -> {
+                getAnimazioneComputerSuGioca().setImage(carta.getImmagine());
+                getAnimazioneComputerSuGioca().setX(5);
+                getAnimazioneComputerSuGioca().setY(5);
+                getAnimazioneComputerSuGioca().timer();
+                getSfondo().add(getAnimazioneComputerSuGioca());
+            }
+            default -> {
+                getAnimazioneComputerDxGioca().setImage(carta.getImmagine());
+                //SE NON FUNZIONA METTIAMO f.getGw().getAnimazioneComputerDxGioca().getWidth() ma con piu velocita su x
+                getAnimazioneComputerDxGioca().setX(getPilaScarti().getX());
+                getAnimazioneComputerDxGioca().setY(10);
+                getAnimazioneComputerDxGioca().timer();
+                getSfondo().add(getAnimazioneComputerDxGioca());
+            }
+        }
+    }
+
+    /**
+     * Metodo che rende visibile la pescata degli avversari
+     * @param giocatore è il giocatore corrente del turno
+     */
+    public void animazioneGiocatori(Giocatori giocatore){
+        switch (giocatore.getNome()) {
+            case "computerSx" -> {
+                getAnimazioneComputerSx().setX(getPilaMazzo().getX() - 200);
+                getAnimazioneComputerSx().setY(getPilaMazzo().getY() - 200);
+                getAnimazioneComputerSx().timer();
+                getSfondo().add(getAnimazioneComputerSx());
+            }
+            case "computerSu" -> {
+                getAnimazioneComputerSu().setX(getPilaMazzo().getX() - 200);
+                getAnimazioneComputerSu().setY(getPilaMazzo().getY() - 200);
+                getAnimazioneComputerSu().timer();
+                getSfondo().add(getAnimazioneComputerSu());
+            }
+            case "computerDx" -> {
+                getAnimazioneComputerDx().setX(getPilaMazzo().getX() - 200);
+                getAnimazioneComputerDx().setY(getPilaMazzo().getY() - 200);
+                getAnimazioneComputerDx().timer();
+                getSfondo().add(getAnimazioneComputerDx());
+            }
+            default -> {
+                getAnimazioneGiocatore().setX(getPilaMazzo().getX() - 200);
+                getAnimazioneGiocatore().setY(getPilaMazzo().getY() - 200);
+                getAnimazioneGiocatore().timer();
+                getSfondo().add(getAnimazioneGiocatore());
+            }
+        }
     }
 
 }

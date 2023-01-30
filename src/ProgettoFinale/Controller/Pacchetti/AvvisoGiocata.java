@@ -3,20 +3,21 @@ package ProgettoFinale.Controller.Pacchetti;
 import ProgettoFinale.Controller.Controller;
 import ProgettoFinale.Model.Carte.Carta;
 import ProgettoFinale.Model.Giocatori.Giocatori;
+import ProgettoFinale.View.ManiGiocatori.BottoneCarta;
 
 public class AvvisoGiocata {
-    private Carta cartaGiocata;
+    private BottoneCarta bottoneCarta;
     private Giocatori giocatore;
     private Controller ctrl;
 
-    public AvvisoGiocata(Carta cartaGiocata, Giocatori giocatore, Controller ctrl) {
-        this.cartaGiocata = cartaGiocata;
+    public AvvisoGiocata(BottoneCarta bottoneCarta, Giocatori giocatore, Controller ctrl) {
+        this.bottoneCarta = bottoneCarta;
         this.giocatore = giocatore;
         this.ctrl = ctrl;
     }
 
-    public Carta getCartaGiocata() {
-        return cartaGiocata;
+    public BottoneCarta getBottoneCarta() {
+        return bottoneCarta;
     }
 
     public Giocatori getGiocatore() {

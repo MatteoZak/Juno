@@ -221,11 +221,19 @@ public class FinestraGioco extends JFrame implements Observer {
     public void update(Observable o, Object arg) {
         if(arg instanceof AvvisoPescata) {
             effetti.riproduciEffettoSpeciale(0);
-            gw.getLabelManoGiocatore().add(new BottoneCarta(((AvvisoPescata) arg).getCartaPescata(), ((AvvisoPescata) arg).getCtrl()));
-            gw.getLabelManoGiocatore().visualizzaMano((Giocatore) ((AvvisoPescata) arg).getGiocatorePescante(),((AvvisoPescata) arg).getCtrl());
+            gw.animazioneGiocatori(((AvvisoPescata) arg).getGiocatorePescante());
+            gw.getLabelManoGiocatore().add(new BottoneCarta(((AvvisoPescata) arg).getCartaPescata(),
+                                            ((AvvisoPescata) arg).getCtrl()));
+            gw.getLabelManoGiocatore().visualizzaMano((Giocatore) ((AvvisoPescata) arg).getGiocatorePescante(),
+                                                        ((AvvisoPescata) arg).getCtrl());
         } else if (arg instanceof AvvisoGiocata) {
-
-            gw.getLabelManoGiocatore().visualizzaCarte((Giocatore) ((AvvisoGiocata) arg).getGiocatore(), ((AvvisoGiocata) arg).getCtrl());
+            gw.getAnimazioneGiocatoreGioca().setImage(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getImmagine());
+            gw.getAnimazioneGiocatoreGioca().setX(((AvvisoGiocata) arg).getBottoneCarta().getX());
+            gw.getAnimazioneGiocatoreGioca().setY(gw.getLabelManoGiocatore().getY()-350);
+            gw.getAnimazioneGiocatoreGioca().timer();
+            gw.getSfondo().add(gw.getAnimazioneGiocatoreGioca());
+            gw.getLabelManoGiocatore().visualizzaCarte((Giocatore) ((AvvisoGiocata) arg).getGiocatore(),
+                                                        ((AvvisoGiocata) arg).getCtrl());
         }
     }
 }
