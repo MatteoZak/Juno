@@ -649,9 +649,15 @@ public class Controller implements ActionListener, ChangeListener {
             fineMazzo();
             riproduciEffettoSpeciale(3);
 //            animazioneGiocatori(tm.getGiocatoreSuccessivo());
-            tm.getGiocatoreSuccessivo().getMano().add(t.getMazzo().pesca());
+            Carta c = t.getMazzo().pesca();
+            tm.getGiocatoreSuccessivo().getMano().add(c);
+            if(tm.getGiocatoreSuccessivo() instanceof Giocatore){
+                t.notificaCambiamenti(new AvvisoPescata(c, (Giocatore) tm.getGiocatoreSuccessivo(),this));
+            }else{
+                t.notificaCambiamenti(new AvvisoPescataComputer(c,(Computer)tm.getGiocatoreSuccessivo(),this));
+            }
         }
-        aggiornaMano(tm.getGiocatoreSuccessivo());
+        //aggiornaMano(tm.getGiocatoreSuccessivo());
         cambioColore();
         tm.passaTurno();
     }
