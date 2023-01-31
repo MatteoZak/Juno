@@ -20,7 +20,7 @@ public class AnimazioneComputerDx extends Animazione {
     public void actionPerformed(ActionEvent e) {
         if (x>520)
             x=0;
-        if(x>480-velocitaX)
+        if(x>520-velocitaX)
             timer.stop();
         System.out.println("velocita"+velocitaX);
         x+=velocitaX;

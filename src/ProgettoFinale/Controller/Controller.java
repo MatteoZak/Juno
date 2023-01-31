@@ -469,7 +469,7 @@ public class Controller implements ActionListener, ChangeListener {
                 f.getGw().getPassaTurno().setVisible(false);
 
                 System.out.println("hai giocato: "+bc.getCarta().getColore()+" "+bc.getCarta().getValoreIntero()+" "+
-                                                                                                            new Date());
+                        new Date());
                 t.getGiocatore().getMano().remove(bc.getCarta());
                 t.getScarti().push(bc.getCarta());
 
@@ -601,13 +601,25 @@ public class Controller implements ActionListener, ChangeListener {
     private void pescaDue(){
         riproduciEffettoSpeciale(3);
         fineMazzo();
+        Carta c = t.getMazzo().pesca();
 //        animazioneGiocatori(tm.getGiocatoreSuccessivo());
-        tm.getGiocatoreSuccessivo().getMano().add(t.getMazzo().pesca());
+        tm.getGiocatoreSuccessivo().getMano().add(c);
+        if(tm.getGiocatoreSuccessivo() instanceof Giocatore){
+            t.notificaCambiamenti(new AvvisoPescata(c, (Giocatore) tm.getGiocatoreSuccessivo(),this));
+        }else{
+            t.notificaCambiamenti(new AvvisoPescataComputer(c,(Computer)tm.getGiocatoreSuccessivo(),this));
+        }
         fineMazzo();
         riproduciEffettoSpeciale(3);
 //        animazioneGiocatori(tm.getGiocatoreSuccessivo());
-        tm.getGiocatoreSuccessivo().getMano().add(t.getMazzo().pesca());
-        aggiornaMano(tm.getGiocatoreSuccessivo());
+        Carta c2 = t.getMazzo().pesca();
+        tm.getGiocatoreSuccessivo().getMano().add(c2);
+        if(tm.getGiocatoreSuccessivo() instanceof Giocatore){
+            t.notificaCambiamenti(new AvvisoPescata(c2, (Giocatore) tm.getGiocatoreSuccessivo(),this));
+        }else{
+            t.notificaCambiamenti(new AvvisoPescataComputer(c2,(Computer)tm.getGiocatoreSuccessivo(),this));
+        }
+        //aggiornaMano(tm.getGiocatoreSuccessivo());
         tm.passaTurno();
     }
 
@@ -895,7 +907,6 @@ public class Controller implements ActionListener, ChangeListener {
             t.getComputerSx().getMano().clear();
             t.getComputerSu().getMano().clear();
             t.getComputerDx().getMano().clear();
-
         for(int i = 0; i < 7; i++){
             t.getGiocatore().getMano().add(new CartaNormale(Colori.NERO,Valori.PESCAQUATTRO));
             t.getComputerSx().getMano().add(new CartaNormale(Colori.NERO,Valori.PESCAQUATTRO));
@@ -925,7 +936,7 @@ public class Controller implements ActionListener, ChangeListener {
             cambioColore();
             faiGiocare();
         }else{
-        //TODO:Delay fatto da ricontrollare per sicurezza
+            //TODO:Delay fatto da ricontrollare per sicurezza
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -935,11 +946,11 @@ public class Controller implements ActionListener, ChangeListener {
                 }
             },2000);
         }
-            f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
-            f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(),this);
-            f.getGw().getLabelManoComputerSx().visualizzaMano(t.getComputerSx());
-            f.getGw().getLabelManoComputerSu().visualizzaMano(t.getComputerSu());
-            f.getGw().getLabelManoComputerDx().visualizzaMano(t.getComputerDx());
+        f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
+        f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(),this);
+        f.getGw().getLabelManoComputerSx().visualizzaMano(t.getComputerSx());
+        f.getGw().getLabelManoComputerSu().visualizzaMano(t.getComputerSu());
+        f.getGw().getLabelManoComputerDx().visualizzaMano(t.getComputerDx());
     }
 
     /**
@@ -1228,4 +1239,4 @@ public class Controller implements ActionListener, ChangeListener {
 //            case "computerDx" -> f.getGw().getLabelManoComputerDx().visualizzaMano(t.getComputerDx());
 //            default -> f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(), this);
 //        }
-//    }
+//    }//    }
