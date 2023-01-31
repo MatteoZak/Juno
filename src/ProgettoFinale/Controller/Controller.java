@@ -737,20 +737,25 @@ public class Controller implements ActionListener, ChangeListener {
         if (giocabili.isEmpty()){
             fineMazzo();
             Carta cartaPescataBot = t.getMazzo().pesca();
-            t.notificaCambiamenti(new AvvisoPescataComputer(cartaPescataBot, (Computer) tm.getGiocatoreDiTurno(),this));
             if(giocabile(cartaPescataBot)){
                 System.out.println("pescata e giocata: "+cartaPescataBot.getValoreIntero()+" "+cartaPescataBot.getColore()+" da "+computer.getNome()+" "+ new Date()+"    "+computer.getMano().size());
+                t.notificaCambiamenti(new AvvisoGiocataComputer(cartaPescataBot,tm.getGiocatoreDiTurno()));
                 t.getScarti().push(cartaPescataBot);
                 f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
-                t.notificaCambiamenti(new AvvisoGiocataComputer(cartaPescataBot,tm.getGiocatoreDiTurno()));
                 applicaEffetto(cartaPescataBot.getValoreIntero());
             }else {
                 computer.pescata(cartaPescataBot);
                 System.out.println("pescata: "+cartaPescataBot+" da "+computer.getNome()+" "+new Date()+"    "+computer.getMano().size());
+                t.notificaCambiamenti(new AvvisoPescataComputer(cartaPescataBot, (Computer) tm.getGiocatoreDiTurno(),this));
             }
         } else {
             Carta cartaDaGiocare = giocabili.get(sourceRandom.nextInt(giocabili.size()));
             computer.getMano().remove(cartaDaGiocare);
+            t.notificaCambiamenti(new AvvisoGiocataComputer(cartaDaGiocare,tm.getGiocatoreDiTurno()));
+            System.out.println("carta giocata da "+computer.getNome()+": "+ cartaDaGiocare +" "+new Date()+"    "+(computer.getMano().size()));
+            t.getScarti().push(cartaDaGiocare);
+            f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
+            applicaEffetto(cartaDaGiocare.getValoreIntero());
             if (computer.getMano().isEmpty()){
                 //TODO: pacchetto Vittoria (?)
                 System.out.println("Ha vinto "+computer.getNome());
@@ -759,11 +764,6 @@ public class Controller implements ActionListener, ChangeListener {
                 riproduciEffettoSpeciale(8);
                 partitaFinita();
             }
-            t.notificaCambiamenti(new AvvisoGiocataComputer(cartaDaGiocare,tm.getGiocatoreDiTurno()));
-            System.out.println("carta giocata da "+computer.getNome()+": "+ cartaDaGiocare +" "+new Date()+"    "+(computer.getMano().size()));
-            t.getScarti().push(cartaDaGiocare);
-            f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
-            applicaEffetto(cartaDaGiocare.getValoreIntero());
         }
         tm.passaTurno();
         segnaGiocatoreAttivo();
