@@ -3,8 +3,11 @@ package ProgettoFinale.Controller;
 import ProgettoFinale.Controller.Pacchetti.AvvisoGiocata;
 import ProgettoFinale.Controller.Pacchetti.AvvisoGiocataComputer;
 import ProgettoFinale.Controller.Pacchetti.AvvisoPescata;
+import ProgettoFinale.Controller.Pacchetti.AvvisoPescataComputer;
 import ProgettoFinale.FinestraGioco;
 import ProgettoFinale.Model.Carte.*;
+import ProgettoFinale.Model.Giocatori.Computer;
+import ProgettoFinale.Model.Giocatori.Giocatore;
 import ProgettoFinale.Model.Giocatori.Giocatori;
 import ProgettoFinale.Model.Tavolo.Avversari;
 import ProgettoFinale.Model.Tavolo.ModalitaGioco;
@@ -330,7 +333,7 @@ public class Controller implements ActionListener, ChangeListener {
 //                    animazioneGiocatori(tm.getGiocatoreDiTurno());
                     Carta cartaPescata = t.getMazzo().pesca();
                     t.getGiocatore().getMano().add(cartaPescata);
-                    t.notificaCambiamenti(new AvvisoPescata(cartaPescata,tm.getGiocatoreDiTurno(),this));
+                    t.notificaCambiamenti(new AvvisoPescata(cartaPescata, (Giocatore) tm.getGiocatoreDiTurno(),this));
                     if(!giocabile(cartaPescata)) {
                         f.getGw().getPilaMazzo().setEnabled(true);
                         tm.passaTurno();
@@ -742,24 +745,22 @@ public class Controller implements ActionListener, ChangeListener {
                 f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
                 applicaEffetto(cartaPescataBot.getValoreIntero());
             }else {
-                computer.getMano().add(cartaPescataBot);
-                t.notificaCambiamenti(new AvvisoGiocataComputer(cartaPescataBot,tm.getGiocatoreDiTurno(),this));
+                computer.pescata(cartaPescataBot);
+                t.notificaCambiamenti(new AvvisoPescataComputer(cartaPescataBot, (Computer) tm.getGiocatoreDiTurno(),this));
                 System.out.println("pescata: "+cartaPescataBot+" da "+computer.getNome()+" "+new Date()+"    "+computer.getMano().size());
             }
         } else {
             Carta cartaDaGiocare = giocabili.get(sourceRandom.nextInt(giocabili.size()));
             computer.getMano().remove(cartaDaGiocare);
-            aggiornaMano(computer);
             if (computer.getMano().isEmpty()){
+                //TODO: pacchetto Vittoria (?)
                 System.out.println("Ha vinto "+computer.getNome());
                 t.getGiocatore().sconfitta();
                 t.getGiocatore().livellamento(50);
                 riproduciEffettoSpeciale(8);
                 partitaFinita();
             }
-
-//            animazioneGiocatoriGiocaCarta(computer,cartaDaGiocare);
-
+            t.notificaCambiamenti(new AvvisoGiocataComputer(cartaDaGiocare,tm.getGiocatoreDiTurno(),this));
             System.out.println("carta giocata da "+computer.getNome()+": "+ cartaDaGiocare +" "+new Date()+"    "+(computer.getMano().size()));
             t.getScarti().push(cartaDaGiocare);
             f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
@@ -974,19 +975,6 @@ public class Controller implements ActionListener, ChangeListener {
     }
 
     /**
-     * Metodo che aggiorna la mano dei giocatori su schermo
-     * @param g è il giocatore in questione
-     */
-    public void aggiornaMano(Giocatori g){
-        switch (g.getNome()) {
-            case "computerSx" -> f.getGw().getLabelManoComputerSx().visualizzaMano(t.getComputerSx());
-            case "computerSu" -> f.getGw().getLabelManoComputerSu().visualizzaMano(t.getComputerSu());
-            case "computerDx" -> f.getGw().getLabelManoComputerDx().visualizzaMano(t.getComputerDx());
-            default -> f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(), this);
-        }
-    }
-
-    /**
      * Metodo che aggiorna il profilo del giocatore in base alle partite giocate e le vittorie
      */
     public void aggiornaProfilo(){
@@ -1033,6 +1021,19 @@ public class Controller implements ActionListener, ChangeListener {
         versi.setTraccia(i);
         versi.regola();
         versi.play();
+    }
+
+    /**
+     * Metodo che aggiorna la mano dei giocatori su schermo
+     * @param g è il giocatore in questione
+     */
+    public void aggiornaMano(Giocatori g){
+        switch (g.getNome()) {
+            case "computerSx" -> f.getGw().getLabelManoComputerSx().visualizzaMano(t.getComputerSx());
+            case "computerSu" -> f.getGw().getLabelManoComputerSu().visualizzaMano(t.getComputerSu());
+            case "computerDx" -> f.getGw().getLabelManoComputerDx().visualizzaMano(t.getComputerDx());
+            default -> f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(), this);
+        }
     }
 
     /**
@@ -1214,5 +1215,18 @@ public class Controller implements ActionListener, ChangeListener {
 //                f.getGw().getAnimazioneGiocatore().timer();
 //                f.getGw().getSfondo().add(f.getGw().getAnimazioneGiocatore());
 //            }
+//        }
+//    }
+
+//  /**
+//     * Metodo che aggiorna la mano dei giocatori su schermo
+//     * @param g è il giocatore in questione
+//     */
+//    public void aggiornaMano(Giocatori g){
+//        switch (g.getNome()) {
+//            case "computerSx" -> f.getGw().getLabelManoComputerSx().visualizzaMano(t.getComputerSx());
+//            case "computerSu" -> f.getGw().getLabelManoComputerSu().visualizzaMano(t.getComputerSu());
+//            case "computerDx" -> f.getGw().getLabelManoComputerDx().visualizzaMano(t.getComputerDx());
+//            default -> f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(), this);
 //        }
 //    }

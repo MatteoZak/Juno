@@ -1,7 +1,9 @@
 package ProgettoFinale;
 
 import ProgettoFinale.Controller.Pacchetti.AvvisoGiocata;
+import ProgettoFinale.Controller.Pacchetti.AvvisoGiocataComputer;
 import ProgettoFinale.Controller.Pacchetti.AvvisoPescata;
+import ProgettoFinale.Controller.Pacchetti.AvvisoPescataComputer;
 import ProgettoFinale.Model.Giocatori.Giocatore;
 import ProgettoFinale.View.Animazioni.Animazione;
 import ProgettoFinale.View.GameView;
@@ -226,7 +228,13 @@ public class FinestraGioco extends JFrame implements Observer {
                                             ((AvvisoPescata) arg).getCtrl()));
             gw.getLabelManoGiocatore().visualizzaMano((Giocatore) ((AvvisoPescata) arg).getGiocatorePescante(),
                                                         ((AvvisoPescata) arg).getCtrl());
+        } else if (arg instanceof AvvisoPescataComputer){
+            effetti.riproduciEffettoSpeciale(0);
+            gw.animazioneGiocatori(((AvvisoPescataComputer) arg).getGiocatorePescante());
+            gw.aggiornaMano(((AvvisoPescataComputer) arg).getGiocatorePescante());
+
         } else if (arg instanceof AvvisoGiocata) {
+            //TODO: Creare metodo in gw per animazioneGiocatoreGioca
             gw.getAnimazioneGiocatoreGioca().setImage(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getImmagine());
             gw.getAnimazioneGiocatoreGioca().setX(((AvvisoGiocata) arg).getBottoneCarta().getX());
             gw.getAnimazioneGiocatoreGioca().setY(gw.getLabelManoGiocatore().getY()-350);
@@ -234,6 +242,9 @@ public class FinestraGioco extends JFrame implements Observer {
             gw.getSfondo().add(gw.getAnimazioneGiocatoreGioca());
             gw.getLabelManoGiocatore().visualizzaCarte((Giocatore) ((AvvisoGiocata) arg).getGiocatore(),
                                                         ((AvvisoGiocata) arg).getCtrl());
+        } else if (arg instanceof AvvisoGiocataComputer) {
+            gw.animazioneGiocatoriGiocaCarta(((AvvisoGiocataComputer) arg).getGiocatore(),((AvvisoGiocataComputer) arg).getCartaGiocata());
+            gw.aggiornaMano(((AvvisoGiocataComputer) arg).getGiocatore());
         }
     }
 }

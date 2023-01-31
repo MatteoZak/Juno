@@ -1,7 +1,9 @@
 package ProgettoFinale.View;
 
 import ProgettoFinale.Model.Carte.Carta;
+import ProgettoFinale.Model.Giocatori.Computer;
 import ProgettoFinale.Model.Giocatori.Giocatori;
+import ProgettoFinale.Model.Tavolo.Tavolo;
 import ProgettoFinale.Utilita.Costanti;
 import ProgettoFinale.View.Animazioni.*;
 import ProgettoFinale.View.ImpostazioniAudio.Audio;
@@ -640,6 +642,18 @@ public class GameView extends JLabel{
 
     public Animazione getAnimazioneComputerDxGioca() {
         return animazioneComputerDxGioca;
+    }
+
+    /**
+     * Metodo che aggiorna la mano dei giocatori su schermo
+     * @param g è il giocatore in questione
+     */
+    public void aggiornaMano(Giocatori g){
+        switch (g.getNome()) {
+            case "computerSx" -> getLabelManoComputerSx().visualizzaMano((Computer) g);
+            case "computerSu" -> getLabelManoComputerSu().visualizzaMano((Computer) g);
+            default -> getLabelManoComputerDx().visualizzaMano((Computer) g );
+        }
     }
 
     public void animazioneGiocatoriGiocaCarta(Giocatori giocatore, Carta carta){

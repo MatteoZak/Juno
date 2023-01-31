@@ -19,6 +19,10 @@ public abstract class Giocatori extends Observable {
         return mano;
     }
 
+    public void pescata(Carta cartaPescata){
+        getMano().add(cartaPescata);
+    }
+
     /**
      * Metodo che ritorna il nome del giocatore
      * @return

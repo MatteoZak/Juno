@@ -2,15 +2,15 @@ package ProgettoFinale.Controller.Pacchetti;
 
 import ProgettoFinale.Controller.Controller;
 import ProgettoFinale.Model.Carte.Carta;
-import ProgettoFinale.Model.Giocatori.Giocatore;
+import ProgettoFinale.Model.Giocatori.Computer;
 import ProgettoFinale.Model.Giocatori.Giocatori;
 
-public class AvvisoPescata{
+public class AvvisoPescataComputer{
     private Carta cartaPescata;
-    private Giocatore giocatorePescante;
+    private Computer giocatorePescante;
     private Controller ctrl;
 
-    public AvvisoPescata(Carta cartaPescata, Giocatore giocatorePescante, Controller ctrl) {
+    public AvvisoPescataComputer(Carta cartaPescata, Computer giocatorePescante, Controller ctrl) {
         this.cartaPescata = cartaPescata;
         this.giocatorePescante = giocatorePescante;
         this.ctrl = ctrl;
