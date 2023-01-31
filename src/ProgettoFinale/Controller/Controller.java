@@ -736,17 +736,16 @@ public class Controller implements ActionListener, ChangeListener {
         List<Carta> giocabili = computer.getMano().stream().filter(this::giocabile).toList();
         if (giocabili.isEmpty()){
             fineMazzo();
-//            animazioneGiocatori(computer);
             Carta cartaPescataBot = t.getMazzo().pesca();
-            riproduciEffettoSpeciale(0);
+            t.notificaCambiamenti(new AvvisoPescataComputer(cartaPescataBot, (Computer) tm.getGiocatoreDiTurno(),this));
             if(giocabile(cartaPescataBot)){
                 System.out.println("pescata e giocata: "+cartaPescataBot.getValoreIntero()+" "+cartaPescataBot.getColore()+" da "+computer.getNome()+" "+ new Date()+"    "+computer.getMano().size());
                 t.getScarti().push(cartaPescataBot);
                 f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
+                t.notificaCambiamenti(new AvvisoGiocataComputer(cartaPescataBot,tm.getGiocatoreDiTurno()));
                 applicaEffetto(cartaPescataBot.getValoreIntero());
             }else {
                 computer.pescata(cartaPescataBot);
-                t.notificaCambiamenti(new AvvisoPescataComputer(cartaPescataBot, (Computer) tm.getGiocatoreDiTurno(),this));
                 System.out.println("pescata: "+cartaPescataBot+" da "+computer.getNome()+" "+new Date()+"    "+computer.getMano().size());
             }
         } else {
@@ -760,7 +759,7 @@ public class Controller implements ActionListener, ChangeListener {
                 riproduciEffettoSpeciale(8);
                 partitaFinita();
             }
-            t.notificaCambiamenti(new AvvisoGiocataComputer(cartaDaGiocare,tm.getGiocatoreDiTurno(),this));
+            t.notificaCambiamenti(new AvvisoGiocataComputer(cartaDaGiocare,tm.getGiocatoreDiTurno()));
             System.out.println("carta giocata da "+computer.getNome()+": "+ cartaDaGiocare +" "+new Date()+"    "+(computer.getMano().size()));
             t.getScarti().push(cartaDaGiocare);
             f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));

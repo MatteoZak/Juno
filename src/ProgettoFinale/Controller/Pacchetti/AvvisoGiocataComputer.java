@@ -8,12 +8,10 @@ import ProgettoFinale.View.ManiGiocatori.BottoneCarta;
 public class AvvisoGiocataComputer {
     private Carta cartaGiocata;
     private Giocatori giocatore;
-    private Controller ctrl;
 
-    public AvvisoGiocataComputer(Carta cartaGiocata, Giocatori giocatore, Controller ctrl) {
+    public AvvisoGiocataComputer(Carta cartaGiocata, Giocatori giocatore) {
         this.cartaGiocata = cartaGiocata;
         this.giocatore = giocatore;
-        this.ctrl = ctrl;
     }
 
     public Carta getCartaGiocata() {
@@ -24,7 +22,4 @@ public class AvvisoGiocataComputer {
         return giocatore;
     }
 
-    public Controller getCtrl() {
-        return ctrl;
-    }
 }
