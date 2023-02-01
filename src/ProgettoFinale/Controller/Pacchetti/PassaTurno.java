@@ -1,11 +1,16 @@
 package ProgettoFinale.Controller.Pacchetti;
 
-import ProgettoFinale.Model.TurnManager;
+import ProgettoFinale.Model.Giocatori.Giocatori;
 
 public class PassaTurno {
-    private TurnManager tm;
 
-    private TurnManager perPush;
+    private String giocatoreDiTurno;
 
+    public PassaTurno(String giocatoreDiTurno) {
+        this.giocatoreDiTurno = giocatoreDiTurno;
+    }
 
+    public String getGiocatoreDiTurno() {
+        return giocatoreDiTurno;
+    }
 }

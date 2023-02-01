@@ -1,10 +1,8 @@
 package ProgettoFinale;
 
-import ProgettoFinale.Controller.Pacchetti.AvvisoGiocata;
-import ProgettoFinale.Controller.Pacchetti.AvvisoGiocataComputer;
-import ProgettoFinale.Controller.Pacchetti.AvvisoPescata;
-import ProgettoFinale.Controller.Pacchetti.AvvisoPescataComputer;
+import ProgettoFinale.Controller.Pacchetti.*;
 import ProgettoFinale.Model.Giocatori.Giocatore;
+import ProgettoFinale.Model.Giocatori.Giocatori;
 import ProgettoFinale.View.Animazioni.Animazione;
 import ProgettoFinale.View.GameView;
 import ProgettoFinale.View.Informazioni;
@@ -245,6 +243,8 @@ public class FinestraGioco extends JFrame implements Observer {
         } else if (arg instanceof AvvisoGiocataComputer) {
             gw.animazioneGiocatoriGiocaCarta(((AvvisoGiocataComputer) arg).getGiocatore(),((AvvisoGiocataComputer) arg).getCartaGiocata());
             gw.aggiornaMano(((AvvisoGiocataComputer) arg).getGiocatore());
+        } else if (arg instanceof PassaTurno){
+            gw.segnaGiocatoreAttivo(((PassaTurno) arg).getGiocatoreDiTurno());
         }
     }
 }

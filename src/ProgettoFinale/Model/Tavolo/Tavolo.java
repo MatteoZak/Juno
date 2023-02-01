@@ -4,6 +4,8 @@ import ProgettoFinale.Model.Carte.Carta;
 import ProgettoFinale.Model.Carte.Mazzo;
 import ProgettoFinale.Model.Giocatori.Computer;
 import ProgettoFinale.Model.Giocatori.Giocatore;
+import ProgettoFinale.Model.TurnManager;
+
 import java.util.Observable;
 import java.util.Stack;
 
@@ -16,6 +18,7 @@ public class Tavolo extends Observable {
     private Computer computerSx = new Computer();
     private Computer computerSu = new Computer();
     private Computer computerDx = new Computer();
+    private TurnManager tm = new TurnManager(giocatore,computerSx,computerSu,computerDx );
     private Mazzo mazzo;
     private Stack<Carta> scarti = new Stack();
 
@@ -92,6 +95,10 @@ public class Tavolo extends Observable {
     public static Tavolo getTavoloInstance() {
         if (tavoloInstance == null) tavoloInstance = new Tavolo();
         return tavoloInstance;
+    }
+
+    public TurnManager getTm() {
+        return tm;
     }
 
     public void notificaCambiamenti(Object obj) {

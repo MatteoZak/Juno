@@ -716,4 +716,36 @@ public class GameView extends JLabel{
         }
     }
 
+    /**
+     * Metodo che permette di visualizzare chi è il giocatore di turno
+     */
+    public void segnaGiocatoreAttivo(String giocatoreDiTurno){
+        switch (giocatoreDiTurno) {
+            case "giocatore" -> {
+                giocatoreAttivo(getAvatarGiocatore(), true);
+                giocatoreAttivo(getAvatarComputerSx(), false);
+                giocatoreAttivo(getAvatarComputerSu(), false);
+                giocatoreAttivo(getAvatarComputerDx(), false);
+            }
+            case "computerSx" -> {
+                giocatoreAttivo(getAvatarGiocatore(), false);
+                giocatoreAttivo(getAvatarComputerSx(), true);
+                giocatoreAttivo(getAvatarComputerSu(), false);
+                giocatoreAttivo(getAvatarComputerDx(), false);
+            }
+            case "computerSu" -> {
+                giocatoreAttivo(getAvatarGiocatore(), false);
+                giocatoreAttivo(getAvatarComputerSx(), false);
+                giocatoreAttivo(getAvatarComputerSu(), true);
+                giocatoreAttivo(getAvatarComputerDx(), false);
+            }
+            default -> {
+                giocatoreAttivo(getAvatarGiocatore(), false);
+                giocatoreAttivo(getAvatarComputerSx(), false);
+                giocatoreAttivo(getAvatarComputerSu(), false);
+                giocatoreAttivo(getAvatarComputerDx(), true);
+            }
+        }
+    }
+
 }

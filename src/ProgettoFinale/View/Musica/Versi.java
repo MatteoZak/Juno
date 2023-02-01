@@ -69,6 +69,7 @@ public class Versi implements Musica{
     public void aggiungiCanzone(int i){
         playList.add(playListCompleta.get(i));
     }
+
     public void setVolume(float volume){
         try {
             lines = Files.readAllLines(file.toPath());
