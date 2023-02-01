@@ -18,46 +18,34 @@ abstract public class Animazione extends JLabel implements ActionListener {
     protected int width = (int) screenSize.getWidth();
     protected int xDestinazione;
     protected int yDestinazione;
-        protected int velocitaX = 5;
-        protected int velocitaY = 5;
-        private final int DELAY = 10;
+    protected int velocitaX = 5;
+    protected int velocitaY = 5;
+    private final int DELAY = 10;
 
-        protected Image image;
-        protected Timer timer;
-        protected int x ;
-        protected int y;
+    protected Image image;
+    protected Timer timer;
+    protected int x ;
+    protected int y;
 
-        protected Toolkit toolkit = Toolkit.getDefaultToolkit();
-        public Animazione() {
+    protected Toolkit toolkit = Toolkit.getDefaultToolkit();
+    public Animazione() {
+        timer = new Timer(DELAY,this);
+    }
 
-            //setPreferredSize(new Dimension(width,height));
-            //image = new ImageIcon(toolkit.createImage("Risorse/images/Carte/backJuno1.png")
-              //      .getScaledInstance(100,150,16)).getImage();
-            //image = new ImageIcon("C:\\Users\\simon\\OneDrive - uniroma1.it\\Juno\\src\\book_PNG51037.png")
-              //      .getImage().getScaledInstance(100,150,16);
-            timer = new Timer(DELAY,this);
-            //timer.start();
-        }
+    @Override
+    public void paint(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(image,x,y,null);
+    }
 
+    public void paintScoperta(Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(image,x,y,width,height,null);
+    }
 
-        @Override
-        public void paint(Graphics g) {
-
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.drawImage(image,x,y,null);
-        }
-
-        public void paintScoperta(Graphics g){
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.drawImage(image,x,y,width,height,null);
-        }
-
-        @Override
-        public abstract void actionPerformed(ActionEvent e);
-        //{
-        public int getxDestinazione() {
-            return xDestinazione;
-        }
+    @Override
+    public abstract void actionPerformed(ActionEvent e);
+    public int getxDestinazione() {return xDestinazione;}
 
     public void setxDestinazione(int xDestinazione) {
         this.xDestinazione = xDestinazione;
@@ -102,21 +90,7 @@ abstract public class Animazione extends JLabel implements ActionListener {
     public void setVelocitaX(int velocitaX) {
         this.velocitaX = velocitaX;
     }
-/*
-    @Override
-    public int getHeight() {
-        return height;
-    }
 
- */
-/*
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-
- */
     public int getVelocitaY() {
         return velocitaY;
     }

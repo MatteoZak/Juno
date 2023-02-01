@@ -15,11 +15,7 @@ public class AnimazioneComputerSuGioca extends Animazione{
     public void actionPerformed(ActionEvent e) {
         if(y>yDestinazione-velocitaY)
             timer.stop();
-        //x+=velocitaX;
-        //System.out.println(yDestinazione);
-        //System.out.println(y);
         y+=velocitaY;
-        //System.out.println(x);
         repaint();
     }
 }

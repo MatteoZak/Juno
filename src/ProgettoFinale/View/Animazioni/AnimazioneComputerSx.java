@@ -19,7 +19,6 @@ public class AnimazioneComputerSx extends Animazione {
         }
         setY(0);
         x -=velocitaX;
-        //y+=velocitaY;
         repaint();
     }
 }

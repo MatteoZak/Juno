@@ -224,25 +224,21 @@ public class Controller implements ActionListener, ChangeListener {
                             System.out.println("carta vittima: "+maxVittima);
                             System.out.println("utilizzatore: "+t.getGiocatore().getNome());
                             System.out.println("carta utilizzatore: "+maxGiocatore);
+                            fineMazzo();
+                            Carta c1 = t.getMazzo().pesca();
+                            fineMazzo();
+                            Carta c2 = t.getMazzo().pesca();
+
                             if(maxGiocatore.compareTo(maxVittima)>=0) {
-                                System.out.println("entrato nel primo if"+maxGiocatore.compareTo(maxVittima));
-                                //TODO:mettere pescadue invece che far pescare 2 carte
-                                fineMazzo();
-                                Carta c1=t.getMazzo().pesca();
                                 vittima.getMano().add(c1);
                                 inviaPacchettoPescata(vittima,c1);
-                                fineMazzo();
-                                Carta c2 = t.getMazzo().pesca();
                                 vittima.getMano().add(c2);
                                 inviaPacchettoPescata(vittima,c2);
-                                t.notificaCambiamenti(new Aggiornamento(this, vittima));
                             }else{
-                                System.out.println("entrato nel secondo if"+maxGiocatore.compareTo(maxVittima));
-                                fineMazzo();
-                                t.getGiocatore().getMano().add(t.getMazzo().pesca());
-                                fineMazzo();
-                                t.getGiocatore().getMano().add(t.getMazzo().pesca());
-                                t.notificaCambiamenti(new Aggiornamento(this, t.getGiocatore()));
+                                t.getGiocatore().getMano().add(c1);
+                                inviaPacchettoPescata(t.getGiocatore(),c1);
+                                t.getGiocatore().getMano().add(c2);
+                                inviaPacchettoPescata(t.getGiocatore(),c2);
                             }
                             f.getGw().getSelezionaGiocatore().setVisible(false);
                             t.getTm().passaTurno();
@@ -330,7 +326,6 @@ public class Controller implements ActionListener, ChangeListener {
                 break;
             case "PESCACARTA":
                 if(t.getTm().getGiocatoreDiTurno().equals(t.getGiocatore())) {
-//                    animazioneGiocatori(tm.getGiocatoreDiTurno());
                     Carta cartaPescata = t.getMazzo().pesca();
                     t.getGiocatore().getMano().add(cartaPescata);
                     t.notificaCambiamenti(new AvvisoPescata(cartaPescata, (Giocatore) t.getTm().getGiocatoreDiTurno(),this));
@@ -467,9 +462,6 @@ public class Controller implements ActionListener, ChangeListener {
         if(t.getTm().getGiocatoreDiTurno().equals(t.getGiocatore()) && bc.isEnabled()) {
             if (giocabile(bc.getCarta())) {
                 f.getGw().getPassaTurno().setVisible(false);
-
-                System.out.println("hai giocato: "+bc.getCarta().getColore()+" "+bc.getCarta().getValoreIntero()+" "+
-                        new Date());
                 t.getGiocatore().getMano().remove(bc.getCarta());
                 t.getScarti().push(bc.getCarta());
 
@@ -616,9 +608,7 @@ public class Controller implements ActionListener, ChangeListener {
      * Metodo della carta che cambia il colore della pila degli scarti
      */
     private void cambioColore(){
-        //TODO:cambiare
         Carta c = t.getScarti().peek();
-        //TODO:finire bene il cambio colore per i bot
         if (!t.getTm().getGiocatoreDiTurno().equals(t.getGiocatore())){
             c.setColore(Colori.values()[sourceRandom.nextInt(4)]);
             System.out.println("Ha scelto colore "+Colori.values()[sourceRandom.nextInt(4)].toString());
@@ -644,6 +634,7 @@ public class Controller implements ActionListener, ChangeListener {
         cambioColore();
         t.getTm().passaTurno();
     }
+
     /////////////////////////////   Effetti Speciali Carte Personalizzate ////////////////////////////////
 
     /**
@@ -653,17 +644,17 @@ public class Controller implements ActionListener, ChangeListener {
         if (!t.getTm().getGiocatoreDiTurno().equals(t.getGiocatore())){
             Giocatori vittima = t.getTm().getGiocatori().stream().filter(x->!x.getNome().equals(t.getTm().getGiocatoreDiTurno().getNome()))
                     .toList().get(sourceRandom.nextInt(3));
+            Giocatori giocatoreDiTurno = t.getTm().getGiocatoreDiTurno();
+
             List<Carta> listaDiAppoggio = new LinkedList<>(t.getTm().getGiocatoreDiTurno().getMano());
-            System.out.println("Lista di appoggio:"+listaDiAppoggio);
-            System.out.println("Mano vittima: "+vittima.getNome()+vittima.getMano().toString());
-            t.getTm().getGiocatoreDiTurno().getMano().clear();
-            t.getTm().getGiocatoreDiTurno().getMano().addAll(vittima.getMano());
-            System.out.println("Mano utilizzatore: "+t.getTm().getGiocatoreDiTurno().getNome()+t.getTm().getGiocatoreDiTurno().getMano().toString());
+
+            giocatoreDiTurno.getMano().clear();
+            giocatoreDiTurno.getMano().addAll(vittima.getMano());
+
             vittima.getMano().clear();
             vittima.getMano().addAll(listaDiAppoggio);
-            System.out.println("Mano vittima: "+vittima.getNome()+vittima.getMano().toString());
-            aggiornaMano(t.getTm().getGiocatoreDiTurno());
-            aggiornaMano(vittima);
+
+            t.notificaCambiamenti(new Aggiornamento(this, giocatoreDiTurno, vittima));
         }else
             f.getGw().getSelezionaGiocatore().setVisible(true);
     }
@@ -685,18 +676,20 @@ public class Controller implements ActionListener, ChangeListener {
                     .max(Comparator.comparing(Carta::getValoreIntero)).get().getValoreIntero());
             System.out.println("carta vittima: "+maxVittima);
             System.out.println("carta utilizzatore: "+maxUtilizzatore);
+            fineMazzo();
+            Carta c1 = t.getMazzo().pesca();
+            fineMazzo();
+            Carta c2 = t.getMazzo().pesca();
             if(maxUtilizzatore.compareTo(maxVittima)>=0) {
-                fineMazzo();
-                vittima.getMano().add(t.getMazzo().pesca());
-                fineMazzo();
-                vittima.getMano().add(t.getMazzo().pesca());
-                aggiornaMano(vittima);
+                vittima.getMano().add(c1);
+                inviaPacchettoPescata(vittima,c1);
+                vittima.getMano().add(c2);
+                inviaPacchettoPescata(vittima,c2);
             }else{
-                fineMazzo();
-                t.getTm().getGiocatoreDiTurno().getMano().add(t.getMazzo().pesca());
-                fineMazzo();
-                t.getTm().getGiocatoreDiTurno().getMano().add(t.getMazzo().pesca());
-                aggiornaMano(t.getTm().getGiocatoreDiTurno());
+                t.getGiocatore().getMano().add(c1);
+                inviaPacchettoPescata(t.getGiocatore(),c1);
+                t.getGiocatore().getMano().add(c2);
+                inviaPacchettoPescata(t.getGiocatore(),c2);
             }
         }else
             f.getGw().getSelezionaGiocatore().setVisible(true);
@@ -739,36 +732,18 @@ public class Controller implements ActionListener, ChangeListener {
             fineMazzo();
             Carta cartaPescataBot = t.getMazzo().pesca();
             if(giocabile(cartaPescataBot)){
-                System.out.println("pescata e giocata: "+cartaPescataBot.getValoreIntero()+" "+cartaPescataBot.getColore()+" da "+computer.getNome()+" "+ new Date()+"    "+computer.getMano().size());
-                t.notificaCambiamenti(new AvvisoGiocataComputer(cartaPescataBot,t.getTm().getGiocatoreDiTurno()));
-                t.getScarti().push(cartaPescataBot);
-                f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
+                t.giocataPescata(cartaPescataBot);
                 applicaEffetto(cartaPescataBot.getValoreIntero());
-            }else {
-                computer.pescata(cartaPescataBot);
-                System.out.println("pescata: "+cartaPescataBot+" da "+computer.getNome()+" "+new Date()+"    "+computer.getMano().size());
-                t.notificaCambiamenti(new AvvisoPescataComputer((Computer) t.getTm().getGiocatoreDiTurno()));
-            }
+            }else {t.pescata(computer,null);}
         } else {
             Carta cartaDaGiocare = giocabili.get(sourceRandom.nextInt(giocabili.size()));
-            computer.getMano().remove(cartaDaGiocare);
-            t.notificaCambiamenti(new AvvisoGiocataComputer(cartaDaGiocare,t.getTm().getGiocatoreDiTurno()));
-            System.out.println("carta giocata da "+computer.getNome()+": "+ cartaDaGiocare +" "+new Date()+"    "+(computer.getMano().size()));
-            t.getScarti().push(cartaDaGiocare);
-            f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
+            t.giocata(computer, cartaDaGiocare);
             applicaEffetto(cartaDaGiocare.getValoreIntero());
             if (computer.getMano().isEmpty()){
-                //TODO: pacchetto Vittoria (?)
-                System.out.println("Ha vinto "+computer.getNome());
-                t.getGiocatore().sconfitta();
-                t.getGiocatore().livellamento(50);
-                riproduciEffettoSpeciale(8);
-                partitaFinita();
+                t.finePartita(false);
             }
         }
-        t.getTm().passaTurno();
-//        segnaGiocatoreAttivo();
-        t.notificaCambiamenti(new PassaTurno(t.getTm().getGiocatoreDiTurno().getNome()));
+        t.turnoPassato();
         faiGiocare();
     }
 
@@ -832,7 +807,6 @@ public class Controller implements ActionListener, ChangeListener {
         f.getPrincipale().setVisible(true);
         f.getMenu().setVisible(true);
         riproduciMusicaAmbiente(5);
-
     }
 
     /**
@@ -857,18 +831,6 @@ public class Controller implements ActionListener, ChangeListener {
             t.getComputerSu().getMano().add(t.getMazzo().pesca());
             t.getComputerDx().getMano().add(t.getMazzo().pesca());
         }
-/*
-            t.getGiocatore().getMano().clear();
-            t.getComputerSx().getMano().clear();
-            t.getComputerSu().getMano().clear();
-            t.getComputerDx().getMano().clear();
-        for(int i = 0; i < 7; i++){
-            t.getGiocatore().getMano().add(new CartaNormale(Colori.NERO,Valori.PESCAQUATTRO));
-            t.getComputerSx().getMano().add(new CartaNormale(Colori.NERO,Valori.PESCAQUATTRO));
-            t.getComputerSu().getMano().add(new CartaNormale(Colori.NERO,Valori.PESCAQUATTRO));
-            t.getComputerDx().getMano().add(new CartaNormale(Colori.NERO,Valori.PESCAQUATTRO));
-        }
-*/
         while(t.getMazzo().getPilaMazzo().peek().getValoreIntero().equals(Valori.PESCAQUATTRO.getValoreIntero()))
             t.getMazzo().mischiaCarte();
         t.getScarti().push(t.getMazzo().pesca());
@@ -1003,9 +965,9 @@ public class Controller implements ActionListener, ChangeListener {
 
     public void inviaPacchettoPescata(Giocatori giocatore, Carta c){
         if(giocatore instanceof Giocatore){
-            t.notificaCambiamenti(new AvvisoPescata(c, (Giocatore) t.getTm().getGiocatoreSuccessivo(),this));
+            t.notificaCambiamenti(new AvvisoPescata(c, (Giocatore) giocatore,this));
         }else{
-            t.notificaCambiamenti(new AvvisoPescataComputer((Computer)t.getTm().getGiocatoreSuccessivo()));
+            t.notificaCambiamenti(new AvvisoPescataComputer((Computer) giocatore));
         }
     }
 
@@ -1238,4 +1200,49 @@ public class Controller implements ActionListener, ChangeListener {
 //                f.getGw().giocatoreAttivo(f.getGw().getAvatarComputerDx(), true);
 //            }
 //        }
+//    }
+
+///**
+//     * Metodo per far eseguire le mosse agli avversari
+//     * @param computer è l'avversario corrente che giocherà il suo turno
+//     */
+//    public void turnoComputer(Giocatori computer){
+//        if (!f.getGw().isVisible()) {
+//            System.out.println(computer.getNome()+": Me fermo!");
+//            return;
+//        }
+//        List<Carta> giocabili = computer.getMano().stream().filter(this::giocabile).toList();
+//        if (giocabili.isEmpty()){
+//            fineMazzo();
+//            Carta cartaPescataBot = t.getMazzo().pesca();
+//            if(giocabile(cartaPescataBot)){
+////                t.notificaCambiamenti(new AvvisoGiocataComputer(cartaPescataBot,t.getTm().getGiocatoreDiTurno()));
+////                t.getScarti().push(cartaPescataBot);
+////                f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
+//                t.giocataPescata(cartaPescataBot);
+//                applicaEffetto(cartaPescataBot.getValoreIntero());
+//            }else {
+//                t.pescata(computer,null);
+////                computer.pescata(cartaPescataBot);
+////                t.notificaCambiamenti(new AvvisoPescataComputer((Computer) t.getTm().getGiocatoreDiTurno()));
+//            }
+//        } else {
+//            Carta cartaDaGiocare = giocabili.get(sourceRandom.nextInt(giocabili.size()));
+////            computer.getMano().remove(cartaDaGiocare);
+////            t.notificaCambiamenti(new AvvisoGiocataComputer(cartaDaGiocare,t.getTm().getGiocatoreDiTurno()));
+////            t.getScarti().push(cartaDaGiocare);
+////            f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
+//            t.giocata(computer, cartaDaGiocare);
+//            applicaEffetto(cartaDaGiocare.getValoreIntero());
+//            if (computer.getMano().isEmpty()){
+//                t.getGiocatore().sconfitta();
+//                t.getGiocatore().livellamento(50);
+//                riproduciEffettoSpeciale(8);
+//                partitaFinita();
+//            }
+//        }
+//        t.getTm().passaTurno();
+////        segnaGiocatoreAttivo();
+//        t.notificaCambiamenti(new PassaTurno(t.getTm().getGiocatoreDiTurno().getNome()));
+//        faiGiocare();
 //    }

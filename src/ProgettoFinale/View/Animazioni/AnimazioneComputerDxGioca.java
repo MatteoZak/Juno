@@ -13,8 +13,6 @@ public class AnimazioneComputerDxGioca extends Animazione{
         if(x<width/70-100)
             timer.stop();
         x-=velocitaX;
-
-        //y+=velocitaY;
         repaint();
     }
 }

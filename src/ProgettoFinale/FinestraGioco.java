@@ -218,6 +218,22 @@ public class FinestraGioco extends JFrame implements Observer {
         return audio;
     }
 
+    /**
+     * Metodo che gestisce la fine della partita e fa ritornare nel menù principale
+     */
+    public void partitaFinita(){
+        gw.setEnabled(false);
+        ambiente.stop();
+        ambiente.close();
+        JFrame uscita = new JFrame();
+        JOptionPane.showMessageDialog(uscita,"FINE PARTITA!");
+        effetti.riproduciEffettoSpeciale(7);
+        gw.setVisible(false);
+        getPrincipale().setVisible(true);
+        getMenu().setVisible(true);
+        ambiente.riproduciMusicaAmbiente(5);
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         if(arg instanceof AvvisoPescata) {
@@ -241,9 +257,12 @@ public class FinestraGioco extends JFrame implements Observer {
             gw.getSfondo().add(gw.getAnimazioneGiocatoreGioca());
             gw.getLabelManoGiocatore().visualizzaCarte((Giocatore) ((AvvisoGiocata) arg).getGiocatore(),
                                                         ((AvvisoGiocata) arg).getCtrl());
+            gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getImmagine()));
         } else if (arg instanceof AvvisoGiocataComputer) {
-            gw.animazioneGiocatoriGiocaCarta(((AvvisoGiocataComputer) arg).getGiocatore(),((AvvisoGiocataComputer) arg).getCartaGiocata());
+            gw.animazioneGiocatoriGiocaCarta(((AvvisoGiocataComputer) arg).getGiocatore(),
+                                                ((AvvisoGiocataComputer) arg).getCartaGiocata());
             gw.aggiornaMano(((AvvisoGiocataComputer) arg).getGiocatore());
+            gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoGiocataComputer) arg).getCartaGiocata().getImmagine()));
         } else if (arg instanceof PassaTurno){
             gw.segnaGiocatoreAttivo(((PassaTurno) arg).getGiocatoreDiTurno());
         } else if (arg instanceof  Aggiornamento){
@@ -253,6 +272,9 @@ public class FinestraGioco extends JFrame implements Observer {
                                                                             ((Aggiornamento) arg).getCtrl());}
                                                                 else{gw.aggiornaMano(x);}
                                                                 });
+        } else if (arg instanceof FinePartita){
+            effetti.riproduciEffettoSpeciale(8);
+            partitaFinita();
         }
     }
 }

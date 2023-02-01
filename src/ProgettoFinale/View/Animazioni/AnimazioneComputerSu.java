@@ -16,12 +16,8 @@ public class AnimazioneComputerSu extends Animazione {
     public void actionPerformed(ActionEvent e) {
         if(y<-150)
             timer.stop();
-        //System.out.println(y);
         setX(0);
-        //System.out.println(x);
         y-=velocitaY;
-
-        //x+=velocitaX;
         repaint();
     }
 }

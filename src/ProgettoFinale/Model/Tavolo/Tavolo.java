@@ -1,9 +1,12 @@
 package ProgettoFinale.Model.Tavolo;
 
+import ProgettoFinale.Controller.Controller;
+import ProgettoFinale.Controller.Pacchetti.*;
 import ProgettoFinale.Model.Carte.Carta;
 import ProgettoFinale.Model.Carte.Mazzo;
 import ProgettoFinale.Model.Giocatori.Computer;
 import ProgettoFinale.Model.Giocatori.Giocatore;
+import ProgettoFinale.Model.Giocatori.Giocatori;
 import ProgettoFinale.Model.TurnManager;
 
 import java.util.Observable;
@@ -97,9 +100,47 @@ public class Tavolo extends Observable {
         return tavoloInstance;
     }
 
+    public void pescata(Giocatori giocatore, Controller ctrl){
+        Carta c = mazzo.pesca();
+        giocatore.pescata(c);
+        if (giocatore instanceof Giocatore){
+            notificaCambiamenti(new AvvisoPescata(c, (Giocatore) giocatore, ctrl));
+        }else {
+            notificaCambiamenti(new AvvisoPescataComputer((Computer) giocatore));
+        }
+    }
+
+    public void giocataPescata(Carta carta){
+        getScarti().push(carta);
+        notificaCambiamenti(new AvvisoGiocataComputer(carta, giocatore));
+    }
+
+    public void giocata(Giocatori giocatore, Carta carta){
+        giocatore.getMano().remove(carta);
+        getScarti().push(carta);
+        notificaCambiamenti(new AvvisoGiocataComputer(carta, giocatore));
+    }
+
+    public void turnoPassato(){
+        tm.passaTurno();
+        notificaCambiamenti(new PassaTurno(tm.getGiocatoreDiTurno().getNome()));
+    }
+
+    public void finePartita(boolean esito){
+        if (esito){
+            getGiocatore().vittoria();
+            getGiocatore().livellamento(100);
+        } else {
+            getGiocatore().sconfitta();
+            getGiocatore().livellamento(50);
+        }
+        notificaCambiamenti(new FinePartita(esito));
+    }
+
     public TurnManager getTm() {
         return tm;
     }
+
 
     public void notificaCambiamenti(Object obj) {
         this.setChanged();

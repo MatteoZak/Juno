@@ -22,12 +22,8 @@ public class AnimazioneComputerDx extends Animazione {
             x=0;
         if(x>520-velocitaX)
             timer.stop();
-        System.out.println("velocita"+velocitaX);
         x+=velocitaX;
-        System.out.println(x);
         setY(0);
-        System.out.println(y);
-        //y+=velocitaY;
         repaint();
     }
 }

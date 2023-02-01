@@ -8,11 +8,9 @@ public class AnimazioneGiocatore extends Animazione {
 
 
     public AnimazioneGiocatore(){
-
         velocitaY = height/40;
         image = new ImageIcon(toolkit.createImage("Risorse/images/Carte/backJuno1.png")
               .getScaledInstance(100,150,16)).getImage();
-
     }
 
     @Override
