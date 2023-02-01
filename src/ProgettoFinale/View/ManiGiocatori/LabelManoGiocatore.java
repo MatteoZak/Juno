@@ -8,7 +8,7 @@ import javax.swing.*;
 
 
 public class LabelManoGiocatore extends JLabel {
-
+/*
     public void visualizzaMano(Giocatore giocatore,Controller ctrl){
         removeAll();
         int var = (getWidth()-101)/(giocatore.getMano().size()+1);
@@ -23,7 +23,7 @@ public class LabelManoGiocatore extends JLabel {
             repaint();
         }
     }
-
+*/
     public void visualizzaCarte(Giocatore giocatore,Controller ctrl){
         removeAll();
         int puntoIniziale = calcolaCentro(getWidth(),giocatore.getMano().size());

@@ -226,7 +226,7 @@ public class FinestraGioco extends JFrame implements Observer {
             gw.animazioneGiocatori(((AvvisoPescata) arg).getGiocatorePescante());
             gw.getLabelManoGiocatore().add(new BottoneCarta(((AvvisoPescata) arg).getCartaPescata(),
                                             ((AvvisoPescata) arg).getCtrl()));
-            gw.getLabelManoGiocatore().visualizzaMano((Giocatore) ((AvvisoPescata) arg).getGiocatorePescante(),
+            gw.getLabelManoGiocatore().visualizzaCarte((Giocatore) ((AvvisoPescata) arg).getGiocatorePescante(),
                                                         ((AvvisoPescata) arg).getCtrl());
         } else if (arg instanceof AvvisoPescataComputer){
             effetti.riproduciEffettoSpeciale(0);
