@@ -228,9 +228,13 @@ public class Controller implements ActionListener, ChangeListener {
                                 System.out.println("entrato nel primo if"+maxGiocatore.compareTo(maxVittima));
                                 //TODO:mettere pescadue invece che far pescare 2 carte
                                 fineMazzo();
-                                vittima.getMano().add(t.getMazzo().pesca());
+                                Carta c1=t.getMazzo().pesca();
+                                vittima.getMano().add(c1);
+                                inviaPacchettoPescata(vittima,c1);
                                 fineMazzo();
-                                vittima.getMano().add(t.getMazzo().pesca());
+                                Carta c2 = t.getMazzo().pesca();
+                                vittima.getMano().add(c2);
+                                inviaPacchettoPescata(vittima,c2);
                                 t.notificaCambiamenti(new Aggiornamento(this, vittima));
                             }else{
                                 System.out.println("entrato nel secondo if"+maxGiocatore.compareTo(maxVittima));
