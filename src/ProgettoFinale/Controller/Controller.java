@@ -134,7 +134,6 @@ public class Controller implements ActionListener, ChangeListener {
             effetti.setVolume(f.getAudio().getBarraVolumeEffetti().getValue());
             f.getAudio().getVolumeEffetti().setText(String.valueOf((int)((f.getAudio().getBarraVolumeEffetti().getValue()+80F)/0.85F)));
             effetti.regola();
-
         } else if (e.getSource().equals(f.getAudio().getBarraVolumeVersi())) {
             versi.setVolume(f.getAudio().getBarraVolumeVersi().getValue());
             f.getAudio().getVolumeVersi().setText(String.valueOf((int) ((f.getAudio().getBarraVolumeVersi().getValue() + 80F) / 0.85F)));
@@ -597,24 +596,13 @@ public class Controller implements ActionListener, ChangeListener {
         riproduciEffettoSpeciale(3);
         fineMazzo();
         Carta c = t.getMazzo().pesca();
-//        animazioneGiocatori(tm.getGiocatoreSuccessivo());
         t.getTm().getGiocatoreSuccessivo().getMano().add(c);
-        if(t.getTm().getGiocatoreSuccessivo() instanceof Giocatore){
-            t.notificaCambiamenti(new AvvisoPescata(c, (Giocatore) t.getTm().getGiocatoreSuccessivo(),this));
-        }else{
-            t.notificaCambiamenti(new AvvisoPescataComputer(c,(Computer)t.getTm().getGiocatoreSuccessivo(),this));
-        }
+        inviaPacchettoPescata(t.getTm().getGiocatoreSuccessivo(),c);
         fineMazzo();
         riproduciEffettoSpeciale(3);
-//        animazioneGiocatori(tm.getGiocatoreSuccessivo());
         Carta c2 = t.getMazzo().pesca();
         t.getTm().getGiocatoreSuccessivo().getMano().add(c2);
-        if(t.getTm().getGiocatoreSuccessivo() instanceof Giocatore){
-            t.notificaCambiamenti(new AvvisoPescata(c2, (Giocatore) t.getTm().getGiocatoreSuccessivo(),this));
-        }else{
-            t.notificaCambiamenti(new AvvisoPescataComputer(c2,(Computer)t.getTm().getGiocatoreSuccessivo(),this));
-        }
-        //aggiornaMano(tm.getGiocatoreSuccessivo());
+        inviaPacchettoPescata(t.getTm().getGiocatoreSuccessivo(),c2);
         t.getTm().passaTurno();
     }
 
@@ -643,16 +631,10 @@ public class Controller implements ActionListener, ChangeListener {
         for(int i = 0; i < 4; i++){
             fineMazzo();
             riproduciEffettoSpeciale(3);
-//            animazioneGiocatori(tm.getGiocatoreSuccessivo());
             Carta c = t.getMazzo().pesca();
             t.getTm().getGiocatoreSuccessivo().getMano().add(c);
-            if(t.getTm().getGiocatoreSuccessivo() instanceof Giocatore){
-                t.notificaCambiamenti(new AvvisoPescata(c, (Giocatore) t.getTm().getGiocatoreSuccessivo(),this));
-            }else{
-                t.notificaCambiamenti(new AvvisoPescataComputer(c,(Computer)t.getTm().getGiocatoreSuccessivo(),this));
-            }
+            inviaPacchettoPescata(t.getTm().getGiocatoreSuccessivo(),c);
         }
-        //aggiornaMano(tm.getGiocatoreSuccessivo());
         cambioColore();
         t.getTm().passaTurno();
     }
@@ -759,7 +741,7 @@ public class Controller implements ActionListener, ChangeListener {
             }else {
                 computer.pescata(cartaPescataBot);
                 System.out.println("pescata: "+cartaPescataBot+" da "+computer.getNome()+" "+new Date()+"    "+computer.getMano().size());
-                t.notificaCambiamenti(new AvvisoPescataComputer(cartaPescataBot, (Computer) t.getTm().getGiocatoreDiTurno(),this));
+                t.notificaCambiamenti(new AvvisoPescataComputer((Computer) t.getTm().getGiocatoreDiTurno()));
             }
         } else {
             Carta cartaDaGiocare = giocabili.get(sourceRandom.nextInt(giocabili.size()));
@@ -1013,40 +995,14 @@ public class Controller implements ActionListener, ChangeListener {
         }
     }
 
-    /**
-          * Metodo che permette di visualizzare chi è il giocatore di turno
-          */
-    private void segnaGiocatoreAttivo(){
-        switch (t.getTm().getGiocatoreDiTurno().getNome()) {
-            case "giocatore" -> {
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarGiocatore(), true);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarComputerSx(), false);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarComputerSu(), false);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarComputerDx(), false);
-            }
-            case "computerSx" -> {
-                riproduciVerso(0);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarGiocatore(), false);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarComputerSx(), true);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarComputerSu(), false);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarComputerDx(), false);
-            }
-            case "computerSu" -> {
-                riproduciVerso(1);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarGiocatore(), false);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarComputerSx(), false);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarComputerSu(), true);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarComputerDx(), false);
-            }
-            default -> {
-                riproduciVerso(2);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarGiocatore(), false);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarComputerSx(), false);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarComputerSu(), false);
-                f.getGw().giocatoreAttivo(f.getGw().getAvatarComputerDx(), true);
-            }
+    public void inviaPacchettoPescata(Giocatori giocatore, Carta c){
+        if(giocatore instanceof Giocatore){
+            t.notificaCambiamenti(new AvvisoPescata(c, (Giocatore) t.getTm().getGiocatoreSuccessivo(),this));
+        }else{
+            t.notificaCambiamenti(new AvvisoPescataComputer((Computer)t.getTm().getGiocatoreSuccessivo()));
         }
     }
+
 
     /**
      * Metodo che legge i valori dei volumi sui JSlider e scrive il valore corrispondente dopo averlo convertito
