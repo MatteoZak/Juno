@@ -178,7 +178,7 @@ public class Controller implements ActionListener, ChangeListener {
                 Giocatori vittima = null;
                 if(t.getTm().getGiocatoreDiTurno().equals(t.getGiocatore())){
                     switch(t.getScarti().peek().getValoreIntero()){
-                        case "18":
+                        case "18": //Scambio
                             //TODO:metodo per stabilire la vittima
                             if ((((JButton) e.getSource()).getName()).contains("ComputerSx")) {
                                 vittima = t.getComputerSx();
@@ -196,14 +196,15 @@ public class Controller implements ActionListener, ChangeListener {
                             vittima.getMano().removeAll(vittima.getMano());
                             vittima.getMano().addAll(listaDiAppoggio);
                             System.out.println("Mano vittima: "+vittima.getNome()+vittima.getMano().toString());
-                            aggiornaMano(t.getTm().getGiocatoreDiTurno());
-                            aggiornaMano(vittima);
+//                            aggiornaMano(t.getTm().getGiocatoreDiTurno());
+//                            aggiornaMano(vittima);
+                            t.notificaCambiamenti(new Aggiornamento(this, t.getTm().getGiocatoreDiTurno(), vittima));
                             f.getGw().getSelezionaGiocatore().setVisible(false);
                             t.getTm().passaTurno();
                             t.notificaCambiamenti(new PassaTurno(t.getTm().getGiocatoreDiTurno().getNome()));
                             faiGiocare();
                             break;
-                        case "20":
+                        case "20": //Duello
                             if ((((JButton) e.getSource()).getName()).contains("ComputerSx")) {
                                 vittima = t.getComputerSx();
                             } else if ((((JButton) e.getSource()).getName()).contains("ComputerSu")) {
@@ -225,18 +226,19 @@ public class Controller implements ActionListener, ChangeListener {
                             System.out.println("carta utilizzatore: "+maxGiocatore);
                             if(maxGiocatore.compareTo(maxVittima)>=0) {
                                 System.out.println("entrato nel primo if"+maxGiocatore.compareTo(maxVittima));
+                                //TODO:mettere pescadue invece che far pescare 2 carte
                                 fineMazzo();
                                 vittima.getMano().add(t.getMazzo().pesca());
                                 fineMazzo();
                                 vittima.getMano().add(t.getMazzo().pesca());
-                                aggiornaMano(vittima);
+                                t.notificaCambiamenti(new Aggiornamento(this, vittima));
                             }else{
                                 System.out.println("entrato nel secondo if"+maxGiocatore.compareTo(maxVittima));
                                 fineMazzo();
                                 t.getGiocatore().getMano().add(t.getMazzo().pesca());
                                 fineMazzo();
                                 t.getGiocatore().getMano().add(t.getMazzo().pesca());
-                                aggiornaMano(t.getGiocatore());
+                                t.notificaCambiamenti(new Aggiornamento(this, t.getGiocatore()));
                             }
                             f.getGw().getSelezionaGiocatore().setVisible(false);
                             t.getTm().passaTurno();

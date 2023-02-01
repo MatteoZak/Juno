@@ -20,6 +20,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -245,6 +246,13 @@ public class FinestraGioco extends JFrame implements Observer {
             gw.aggiornaMano(((AvvisoGiocataComputer) arg).getGiocatore());
         } else if (arg instanceof PassaTurno){
             gw.segnaGiocatoreAttivo(((PassaTurno) arg).getGiocatoreDiTurno());
+        } else if (arg instanceof  Aggiornamento){
+            Arrays.stream(((Aggiornamento) arg).getGiocatore()).forEach(x ->
+                                                                {if (x instanceof Giocatore){
+                                                                    gw.getLabelManoGiocatore().visualizzaCarte((Giocatore) x,
+                                                                            ((Aggiornamento) arg).getCtrl());}
+                                                                else{gw.aggiornaMano(x);}
+                                                                });
         }
     }
 }
