@@ -2,7 +2,6 @@ package ProgettoFinale;
 
 import ProgettoFinale.Controller.Pacchetti.*;
 import ProgettoFinale.Model.Giocatori.Giocatore;
-import ProgettoFinale.Model.Giocatori.Giocatori;
 import ProgettoFinale.View.Animazioni.Animazione;
 import ProgettoFinale.View.GameView;
 import ProgettoFinale.View.Informazioni;
@@ -241,7 +240,7 @@ public class FinestraGioco extends JFrame implements Observer {
             gw.animazioneGiocatori(((AvvisoPescata) arg).getGiocatorePescante().getNome());
             gw.getLabelManoGiocatore().add(new BottoneCarta(((AvvisoPescata) arg).getCartaPescata(),
                                             ((AvvisoPescata) arg).getCtrl()));
-            gw.getLabelManoGiocatore().visualizzaCarte((Giocatore) ((AvvisoPescata) arg).getGiocatorePescante(),
+            gw.getLabelManoGiocatore().visualizzaCarte(((AvvisoPescata) arg).getGiocatorePescante().getMano(),
                                                         ((AvvisoPescata) arg).getCtrl());
         } else if (arg instanceof AvvisoPescataComputer){
             effetti.riproduciEffettoSpeciale(0);
@@ -256,8 +255,8 @@ public class FinestraGioco extends JFrame implements Observer {
 //            gw.getAnimazioneGiocatoreGioca().setY(gw.getLabelManoGiocatore().getY()-350);
 //            gw.getAnimazioneGiocatoreGioca().timer();
             gw.getSfondo().add(gw.getAnimazioneGiocatoreGioca());
-            gw.getLabelManoGiocatore().visualizzaCarte((Giocatore) ((AvvisoGiocata) arg).getGiocatore(),
-                                                        ((AvvisoGiocata) arg).getAct());
+            gw.getLabelManoGiocatore().visualizzaCarte(((AvvisoGiocata) arg).getGiocatore().getMano(),
+                                                        ((AvvisoGiocata) arg).getCtrl());
             gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoGiocata) arg).getCarta().getImmagine()));
         } else if (arg instanceof AvvisoGiocataComputer) {
             gw.animazioneGiocatoriGiocaCarta(((AvvisoGiocataComputer) arg).getGiocatore().getNome(),
@@ -270,7 +269,7 @@ public class FinestraGioco extends JFrame implements Observer {
         } else if (arg instanceof  Aggiornamento){
             Arrays.stream(((Aggiornamento) arg).getGiocatore()).forEach(x ->
                                                                 {if (x instanceof Giocatore){
-                                                                    gw.getLabelManoGiocatore().visualizzaCarte((Giocatore) x,
+                                                                    gw.getLabelManoGiocatore().visualizzaCarte(x.getMano(),
                                                                             ((Aggiornamento) arg).getCtrl());}
                                                                 else{gw.aggiornaMano(x.getNome(), x.getMano());}
                                                                 });

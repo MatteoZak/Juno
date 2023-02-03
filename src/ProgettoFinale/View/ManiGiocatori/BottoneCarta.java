@@ -2,19 +2,15 @@ package ProgettoFinale.View.ManiGiocatori;
 
 import ProgettoFinale.Controller.Controller;
 import ProgettoFinale.Model.Carte.Carta;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.lang.reflect.Method;
 
 public class BottoneCarta extends JButton {
     private Carta carta;
 
-    public BottoneCarta(Carta c, ActionListener act){
+    public BottoneCarta(Carta c, Controller ctrl){
         this.carta = c;
         setBorderPainted(false);
         setContentAreaFilled(false);
@@ -23,6 +19,7 @@ public class BottoneCarta extends JButton {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                ctrl.cartaCliccata(BottoneCarta.this);
             }
 
             @Override

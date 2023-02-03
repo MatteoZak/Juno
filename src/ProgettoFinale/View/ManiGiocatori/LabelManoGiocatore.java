@@ -5,7 +5,9 @@ import ProgettoFinale.Model.Carte.Carta;
 import ProgettoFinale.Model.Giocatori.Giocatore;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 public class LabelManoGiocatore extends JLabel {
@@ -22,12 +24,12 @@ public class LabelManoGiocatore extends JLabel {
 //        repaint();
 //    }
 
-    public void visualizzaCarte(Giocatore giocatore, ActionListener act){
+    public void visualizzaCarte(ArrayList<Carta> carteInMano, Controller ctrl){
         removeAll();
-        int puntoIniziale = calcolaCentro(getWidth(),giocatore.getMano().size());
-        int offset = calcolaOffset(getWidth(),giocatore.getMano().size());
-        for(Carta carta : giocatore.getMano()){
-            BottoneCarta bottone = new BottoneCarta(carta,act);
+        int puntoIniziale = calcolaCentro(getWidth(),carteInMano.size());
+        int offset = calcolaOffset(getWidth(),carteInMano.size());
+        for(Carta carta : carteInMano){
+            BottoneCarta bottone = new BottoneCarta(carta, ctrl);
             bottone.setBounds(puntoIniziale,40,100,150);
             add(bottone);
             puntoIniziale += offset;

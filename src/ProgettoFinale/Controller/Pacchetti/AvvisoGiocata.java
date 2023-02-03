@@ -10,12 +10,12 @@ import java.awt.event.ActionListener;
 public class AvvisoGiocata {
     private Carta carta;
     private Giocatori giocatore;
-    private ActionListener act;
+    private Controller ctrl;
 
-    public AvvisoGiocata(Carta carta, Giocatori giocatore, ActionListener act) {
+    public AvvisoGiocata(Carta carta, Giocatori giocatore, Controller ctrl) {
         this.carta = carta;
         this.giocatore = giocatore;
-        this.act = act;
+        this.ctrl = ctrl;
     }
 
     public Carta getCarta() {
@@ -26,8 +26,8 @@ public class AvvisoGiocata {
         return giocatore;
     }
 
-    public ActionListener getAct() {
-        return act;
+    public Controller getCtrl() {
+        return ctrl;
     }
 }
 

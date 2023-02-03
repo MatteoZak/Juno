@@ -22,6 +22,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
@@ -104,6 +105,8 @@ public class Controller implements ActionListener, ChangeListener {
         f.getCarteExtra().getCheckBoxes().forEach(x->x.addActionListener(this));
         f.getCarteExtra().getBottoneGioca().addActionListener(this);
         f.getCarteExtra().getTornaSceltaModalita().addActionListener(this);
+
+
     }
 
     /**
@@ -456,15 +459,14 @@ public class Controller implements ActionListener, ChangeListener {
      * @param bc è la carta nella mano che premendola viene giocata
      */
     public void cartaCliccata(BottoneCarta bc){
-        //TODO:Ricontrollare
         if(t.getTm().getGiocatoreDiTurno().equals(t.getGiocatore()) && bc.isEnabled()) {
             if (giocabile(bc.getCarta())) {
                 f.getGw().getPassaTurno().setVisible(false);
-                t.giocata(t.getGiocatore(), bc.getCarta(), getActList(bc));
-//                t.getGiocatore().getMano().remove(bc.getCarta());
-//                t.getScarti().push(bc.getCarta());
-//                t.notificaCambiamenti(new AvvisoGiocata(bc,t.getTm().getGiocatoreDiTurno(),this));
-//                f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
+//                t.giocata(t.getGiocatore(), bc.getCarta(), getActList(bc));
+                t.getGiocatore().getMano().remove(bc.getCarta());
+                t.getScarti().push(bc.getCarta());
+                t.notificaCambiamenti(new AvvisoGiocata(bc.getCarta(),t.getTm().getGiocatoreDiTurno(),this));
+                f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
                 f.getGw().getPilaMazzo().setEnabled(true);
                 applicaEffetto(bc.getCarta().getValoreIntero());
                 if(t.getGiocatore().getMano().isEmpty()){
@@ -858,7 +860,7 @@ public class Controller implements ActionListener, ChangeListener {
             },2000);
         }
         f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
-        f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(),this);
+        f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore().getMano(),this);
         f.getGw().getLabelManoComputerSx().visualizzaMano(t.getComputerSx().getMano());
         f.getGw().getLabelManoComputerSu().visualizzaMano(t.getComputerSu().getMano());
         f.getGw().getLabelManoComputerDx().visualizzaMano(t.getComputerDx().getMano());
@@ -953,7 +955,7 @@ public class Controller implements ActionListener, ChangeListener {
             case "computerSx" -> f.getGw().getLabelManoComputerSx().visualizzaMano(t.getComputerSx().getMano());
             case "computerSu" -> f.getGw().getLabelManoComputerSu().visualizzaMano(t.getComputerSu().getMano());
             case "computerDx" -> f.getGw().getLabelManoComputerDx().visualizzaMano(t.getComputerDx().getMano());
-            default -> f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(), this);
+            default -> f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore().getMano(), this);
         }
     }
 
@@ -1243,4 +1245,46 @@ public class Controller implements ActionListener, ChangeListener {
 ////        segnaGiocatoreAttivo();
 //        t.notificaCambiamenti(new PassaTurno(t.getTm().getGiocatoreDiTurno().getNome()));
 //        faiGiocare();
+//    }
+
+
+//    public void cartaCliccata(BottoneCarta bc){
+//        //TODO:Ricontrollare
+//        if(t.getTm().getGiocatoreDiTurno().equals(t.getGiocatore()) && bc.isEnabled()) {
+//            if (giocabile(bc.getCarta())) {
+//                f.getGw().getPassaTurno().setVisible(false);
+//                t.giocata(t.getGiocatore(), bc.getCarta(), getActList(bc));
+//                t.getGiocatore().getMano().remove(bc.getCarta());
+//                t.getScarti().push(bc.getCarta());
+//                t.notificaCambiamenti(new AvvisoGiocata(bc,t.getTm().getGiocatoreDiTurno(),this));
+//                f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
+//                f.getGw().getPilaMazzo().setEnabled(true);
+//                applicaEffetto(bc.getCarta().getValoreIntero());
+//                if(t.getGiocatore().getMano().isEmpty()){
+//                    t.finePartita(true);
+//                }
+//                if(t.getGiocatore().getMano().size() == 1){
+//                    f.getGw().getTastoJuno().setVisible(true);
+//                    new Timer().schedule(new TimerTask() {
+//                        @Override
+//                        public void run() {
+//                            if(f.getGw().getTastoJuno().isVisible()) {
+//                                fineMazzo();
+//                                t.getGiocatore().getMano().add(t.getMazzo().pesca());
+//                                fineMazzo();
+//                                t.getGiocatore().getMano().add(t.getMazzo().pesca());
+//                                f.getGw().getTastoJuno().setVisible(false);
+//                                aggiornaMano(t.getGiocatore());
+//                            }
+//                        }
+//                    }, 3000);
+//                }
+//                if (f.getGw().getLabelSceltaColore().isVisible() || f.getGw().getSelezionaGiocatore().isVisible()){
+//                    return;
+//                }
+//                t.getTm().passaTurno();
+//                t.notificaCambiamenti(new PassaTurno(t.getTm().getGiocatoreDiTurno().getNome()));
+//                faiGiocare();
+//            }
+//        }
 //    }

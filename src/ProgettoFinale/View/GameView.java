@@ -1,8 +1,6 @@
 package ProgettoFinale.View;
 
 import ProgettoFinale.Model.Carte.Carta;
-import ProgettoFinale.Model.Giocatori.Computer;
-import ProgettoFinale.Model.Giocatori.Giocatori;
 import ProgettoFinale.Utilita.Costanti;
 import ProgettoFinale.View.Animazioni.*;
 import ProgettoFinale.View.ImpostazioniAudio.Audio;
