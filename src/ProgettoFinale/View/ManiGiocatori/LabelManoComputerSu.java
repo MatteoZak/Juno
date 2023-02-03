@@ -3,8 +3,12 @@ package ProgettoFinale.View.ManiGiocatori;
 import ProgettoFinale.Model.Carte.Carta;
 import ProgettoFinale.Model.Giocatori.Computer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class LabelManoComputerSu extends JLabel {
 //    public void visualizzaMano(Computer computer){
@@ -25,12 +29,12 @@ public class LabelManoComputerSu extends JLabel {
 //        repaint();
 //    }
 
-    public void visualizzaMano(Computer computer){
+    public void visualizzaMano(ArrayList<Carta> manoComputer){
         removeAll();
-        int puntoIniziale = calcolaCentro(getWidth(),computer.getMano().size());
-        int offset = calcolaOffset(getWidth(),computer.getMano().size());
+        int puntoIniziale = calcolaCentro(getWidth(),manoComputer.size());
+        int offset = calcolaOffset(getWidth(),manoComputer.size());
 
-        for(Carta carta : computer.getMano()){
+        for(Carta carta : manoComputer){
             JLabel dorso = new JLabel();
             dorso.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage("Risorse/images/Carte/backJuno1.png")
                     .getScaledInstance(100, 150, 16)));
@@ -54,3 +58,19 @@ public class LabelManoComputerSu extends JLabel {
 
 
 }
+
+//public void visualizzaMano(Computer computer){
+//        removeAll();
+//        int puntoIniziale = calcolaCentro(getWidth(),computer.getMano().size());
+//        int offset = calcolaOffset(getWidth(),computer.getMano().size());
+//
+//        for(Carta carta : computer.getMano()){
+//            JLabel dorso = new JLabel();
+//            dorso.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage("Risorse/images/Carte/backJuno1.png")
+//                    .getScaledInstance(100, 150, 16)));
+//            dorso.setBounds(puntoIniziale,15,100,150);
+//            add(dorso);
+//            puntoIniziale += offset;
+//        }
+//        repaint();
+//    }

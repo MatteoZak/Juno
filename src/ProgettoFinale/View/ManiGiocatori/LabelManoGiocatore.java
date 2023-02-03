@@ -5,31 +5,29 @@ import ProgettoFinale.Model.Carte.Carta;
 import ProgettoFinale.Model.Giocatori.Giocatore;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 
 public class LabelManoGiocatore extends JLabel {
-/*
-    public void visualizzaMano(Giocatore giocatore,Controller ctrl){
-        removeAll();
-        int var = (getWidth()-101)/(giocatore.getMano().size()+1);
-        for(int i = 0; i < giocatore.getMano().size();i++) {
-            BottoneCarta bottone = new BottoneCarta(giocatore.getMano().get(i), ctrl);
-            if (giocatore.getMano().size() * 100 > getWidth()) {
-                bottone.setBounds((i + 1) * var, 30, 100, 150);
-            } else {
-                bottone.setBounds((i + 1) * 100, 30, 100, 150);
-            }
-            add(bottone);
-            repaint();
-        }
-    }
-*/
-    public void visualizzaCarte(Giocatore giocatore,Controller ctrl){
+//    public void visualizzaCarte(Giocatore giocatore,Controller ctrl){
+//        removeAll();
+//        int puntoIniziale = calcolaCentro(getWidth(),giocatore.getMano().size());
+//        int offset = calcolaOffset(getWidth(),giocatore.getMano().size());
+//        for(Carta carta : giocatore.getMano()){
+//            BottoneCarta bottone = new BottoneCarta(carta,ctrl);
+//            bottone.setBounds(puntoIniziale,40,100,150);
+//            add(bottone);
+//            puntoIniziale += offset;
+//        }
+//        repaint();
+//    }
+
+    public void visualizzaCarte(Giocatore giocatore, ActionListener act){
         removeAll();
         int puntoIniziale = calcolaCentro(getWidth(),giocatore.getMano().size());
         int offset = calcolaOffset(getWidth(),giocatore.getMano().size());
         for(Carta carta : giocatore.getMano()){
-            BottoneCarta bottone = new BottoneCarta(carta,ctrl);
+            BottoneCarta bottone = new BottoneCarta(carta,act);
             bottone.setBounds(puntoIniziale,40,100,150);
             add(bottone);
             puntoIniziale += offset;
@@ -51,3 +49,21 @@ public class LabelManoGiocatore extends JLabel {
         return offset;
     }
 }
+
+
+/*
+    public void visualizzaMano(Giocatore giocatore,Controller ctrl){
+        removeAll();
+        int var = (getWidth()-101)/(giocatore.getMano().size()+1);
+        for(int i = 0; i < giocatore.getMano().size();i++) {
+            BottoneCarta bottone = new BottoneCarta(giocatore.getMano().get(i), ctrl);
+            if (giocatore.getMano().size() * 100 > getWidth()) {
+                bottone.setBounds((i + 1) * var, 30, 100, 150);
+            } else {
+                bottone.setBounds((i + 1) * 100, 30, 100, 150);
+            }
+            add(bottone);
+            repaint();
+        }
+    }
+*/

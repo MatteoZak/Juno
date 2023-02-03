@@ -196,8 +196,6 @@ public class Controller implements ActionListener, ChangeListener {
                             vittima.getMano().removeAll(vittima.getMano());
                             vittima.getMano().addAll(listaDiAppoggio);
                             System.out.println("Mano vittima: "+vittima.getNome()+vittima.getMano().toString());
-//                            aggiornaMano(t.getTm().getGiocatoreDiTurno());
-//                            aggiornaMano(vittima);
                             t.notificaCambiamenti(new Aggiornamento(this, t.getTm().getGiocatoreDiTurno(), vittima));
                             f.getGw().getSelezionaGiocatore().setVisible(false);
                             t.getTm().passaTurno();
@@ -462,19 +460,15 @@ public class Controller implements ActionListener, ChangeListener {
         if(t.getTm().getGiocatoreDiTurno().equals(t.getGiocatore()) && bc.isEnabled()) {
             if (giocabile(bc.getCarta())) {
                 f.getGw().getPassaTurno().setVisible(false);
-                t.getGiocatore().getMano().remove(bc.getCarta());
-                t.getScarti().push(bc.getCarta());
-
-                t.notificaCambiamenti(new AvvisoGiocata(bc,t.getTm().getGiocatoreDiTurno(),this));
-
-                f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
+                t.giocata(t.getGiocatore(), bc.getCarta(), getActList(bc));
+//                t.getGiocatore().getMano().remove(bc.getCarta());
+//                t.getScarti().push(bc.getCarta());
+//                t.notificaCambiamenti(new AvvisoGiocata(bc,t.getTm().getGiocatoreDiTurno(),this));
+//                f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
                 f.getGw().getPilaMazzo().setEnabled(true);
                 applicaEffetto(bc.getCarta().getValoreIntero());
                 if(t.getGiocatore().getMano().isEmpty()){
-                    t.getGiocatore().vittoria();
-                    t.getGiocatore().livellamento(100);
-                    riproduciEffettoSpeciale(6);
-                    partitaFinita();
+                    t.finePartita(true);
                 }
                 if(t.getGiocatore().getMano().size() == 1){
                     f.getGw().getTastoJuno().setVisible(true);
@@ -734,7 +728,7 @@ public class Controller implements ActionListener, ChangeListener {
             if(giocabile(cartaPescataBot)){
                 t.giocataPescata(cartaPescataBot);
                 applicaEffetto(cartaPescataBot.getValoreIntero());
-            }else {t.pescata(computer,null);}
+            }else {t.pescata(computer, null);}
         } else {
             Carta cartaDaGiocare = giocabili.get(sourceRandom.nextInt(giocabili.size()));
             t.giocata(computer, cartaDaGiocare);
@@ -794,20 +788,20 @@ public class Controller implements ActionListener, ChangeListener {
         t.notificaCambiamenti(new PassaTurno(t.getTm().getGiocatoreDiTurno().getNome()));
     }
 
-    /**
-     * Metodo che gestisce la fine della partita e fa ritornare nel menù principale
-     */
-    public void partitaFinita(){
-        f.getGw().setEnabled(false);
-        stopMusicaAmbiente();
-        JFrame uscita = new JFrame();
-        JOptionPane.showMessageDialog(uscita,"FINE PARTITA!");
-        riproduciEffettoSpeciale(7);
-        f.getGw().setVisible(false);
-        f.getPrincipale().setVisible(true);
-        f.getMenu().setVisible(true);
-        riproduciMusicaAmbiente(5);
-    }
+//    /**
+//     * Metodo che gestisce la fine della partita e fa ritornare nel menù principale
+//     */
+//    public void partitaFinita(){
+//        f.getGw().setEnabled(false);
+//        stopMusicaAmbiente();
+//        JFrame uscita = new JFrame();
+//        JOptionPane.showMessageDialog(uscita,"FINE PARTITA!");
+//        riproduciEffettoSpeciale(7);
+//        f.getGw().setVisible(false);
+//        f.getPrincipale().setVisible(true);
+//        f.getMenu().setVisible(true);
+//        riproduciMusicaAmbiente(5);
+//    }
 
     /**
      * Metodo che avvia la partita, mischiando il mazzo, mettendo la prima carta come pila degli scarti
@@ -865,9 +859,9 @@ public class Controller implements ActionListener, ChangeListener {
         }
         f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
         f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(),this);
-        f.getGw().getLabelManoComputerSx().visualizzaMano(t.getComputerSx());
-        f.getGw().getLabelManoComputerSu().visualizzaMano(t.getComputerSu());
-        f.getGw().getLabelManoComputerDx().visualizzaMano(t.getComputerDx());
+        f.getGw().getLabelManoComputerSx().visualizzaMano(t.getComputerSx().getMano());
+        f.getGw().getLabelManoComputerSu().visualizzaMano(t.getComputerSu().getMano());
+        f.getGw().getLabelManoComputerDx().visualizzaMano(t.getComputerDx().getMano());
     }
 
     /**
@@ -956,9 +950,9 @@ public class Controller implements ActionListener, ChangeListener {
      */
     public void aggiornaMano(Giocatori g){
         switch (g.getNome()) {
-            case "computerSx" -> f.getGw().getLabelManoComputerSx().visualizzaMano(t.getComputerSx());
-            case "computerSu" -> f.getGw().getLabelManoComputerSu().visualizzaMano(t.getComputerSu());
-            case "computerDx" -> f.getGw().getLabelManoComputerDx().visualizzaMano(t.getComputerDx());
+            case "computerSx" -> f.getGw().getLabelManoComputerSx().visualizzaMano(t.getComputerSx().getMano());
+            case "computerSu" -> f.getGw().getLabelManoComputerSu().visualizzaMano(t.getComputerSu().getMano());
+            case "computerDx" -> f.getGw().getLabelManoComputerDx().visualizzaMano(t.getComputerDx().getMano());
             default -> f.getGw().getLabelManoGiocatore().visualizzaCarte(t.getGiocatore(), this);
         }
     }
@@ -982,6 +976,10 @@ public class Controller implements ActionListener, ChangeListener {
         f.getAudio().getVolumeEffetti().setText(String.valueOf((int)((f.getAudio().getBarraVolumeEffetti().getValue()+80F)/0.85F)));
         f.getAudio().getBarraVolumeVersi().setValue((int) versi.getVolume());
         f.getAudio().getVolumeVersi().setText(String.valueOf((int)((f.getAudio().getBarraVolumeVersi().getValue()+80F)/0.85F)));
+    }
+
+    public ActionListener getActList(BottoneCarta bc){
+        return e -> cartaCliccata(bc);
     }
 
     /**

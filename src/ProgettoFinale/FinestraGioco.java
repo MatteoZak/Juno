@@ -238,30 +238,32 @@ public class FinestraGioco extends JFrame implements Observer {
     public void update(Observable o, Object arg) {
         if(arg instanceof AvvisoPescata) {
             effetti.riproduciEffettoSpeciale(0);
-            gw.animazioneGiocatori(((AvvisoPescata) arg).getGiocatorePescante());
+            gw.animazioneGiocatori(((AvvisoPescata) arg).getGiocatorePescante().getNome());
             gw.getLabelManoGiocatore().add(new BottoneCarta(((AvvisoPescata) arg).getCartaPescata(),
                                             ((AvvisoPescata) arg).getCtrl()));
             gw.getLabelManoGiocatore().visualizzaCarte((Giocatore) ((AvvisoPescata) arg).getGiocatorePescante(),
                                                         ((AvvisoPescata) arg).getCtrl());
         } else if (arg instanceof AvvisoPescataComputer){
             effetti.riproduciEffettoSpeciale(0);
-            gw.animazioneGiocatori(((AvvisoPescataComputer) arg).getGiocatorePescante());
-            gw.aggiornaMano(((AvvisoPescataComputer) arg).getGiocatorePescante());
+            gw.animazioneGiocatori(((AvvisoPescataComputer) arg).getGiocatorePescante().getNome());
+            gw.aggiornaMano(((AvvisoPescataComputer) arg).getGiocatorePescante().getNome(),
+                            ((AvvisoPescataComputer) arg).getGiocatorePescante().getMano());
 
         } else if (arg instanceof AvvisoGiocata) {
             //TODO: Creare metodo in gw per animazioneGiocatoreGioca
-            gw.getAnimazioneGiocatoreGioca().setImage(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getImmagine());
-            gw.getAnimazioneGiocatoreGioca().setX(((AvvisoGiocata) arg).getBottoneCarta().getX());
-            gw.getAnimazioneGiocatoreGioca().setY(gw.getLabelManoGiocatore().getY()-350);
-            gw.getAnimazioneGiocatoreGioca().timer();
+//            gw.getAnimazioneGiocatoreGioca().setImage(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getImmagine());
+//            gw.getAnimazioneGiocatoreGioca().setX(((AvvisoGiocata) arg).getBottoneCarta().getX());
+//            gw.getAnimazioneGiocatoreGioca().setY(gw.getLabelManoGiocatore().getY()-350);
+//            gw.getAnimazioneGiocatoreGioca().timer();
             gw.getSfondo().add(gw.getAnimazioneGiocatoreGioca());
             gw.getLabelManoGiocatore().visualizzaCarte((Giocatore) ((AvvisoGiocata) arg).getGiocatore(),
-                                                        ((AvvisoGiocata) arg).getCtrl());
-            gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getImmagine()));
+                                                        ((AvvisoGiocata) arg).getAct());
+            gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoGiocata) arg).getCarta().getImmagine()));
         } else if (arg instanceof AvvisoGiocataComputer) {
-            gw.animazioneGiocatoriGiocaCarta(((AvvisoGiocataComputer) arg).getGiocatore(),
+            gw.animazioneGiocatoriGiocaCarta(((AvvisoGiocataComputer) arg).getGiocatore().getNome(),
                                                 ((AvvisoGiocataComputer) arg).getCartaGiocata());
-            gw.aggiornaMano(((AvvisoGiocataComputer) arg).getGiocatore());
+            gw.aggiornaMano(((AvvisoGiocataComputer) arg).getGiocatore().getNome(),
+                            ((AvvisoGiocataComputer) arg).getGiocatore().getMano());
             gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoGiocataComputer) arg).getCartaGiocata().getImmagine()));
         } else if (arg instanceof PassaTurno){
             gw.segnaGiocatoreAttivo(((PassaTurno) arg).getGiocatoreDiTurno());
@@ -270,7 +272,7 @@ public class FinestraGioco extends JFrame implements Observer {
                                                                 {if (x instanceof Giocatore){
                                                                     gw.getLabelManoGiocatore().visualizzaCarte((Giocatore) x,
                                                                             ((Aggiornamento) arg).getCtrl());}
-                                                                else{gw.aggiornaMano(x);}
+                                                                else{gw.aggiornaMano(x.getNome(), x.getMano());}
                                                                 });
         } else if (arg instanceof FinePartita){
             effetti.riproduciEffettoSpeciale(8);

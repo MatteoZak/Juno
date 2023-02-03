@@ -9,6 +9,8 @@ import ProgettoFinale.Model.Giocatori.Giocatore;
 import ProgettoFinale.Model.Giocatori.Giocatori;
 import ProgettoFinale.Model.TurnManager;
 
+import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Stack;
 
@@ -100,11 +102,11 @@ public class Tavolo extends Observable {
         return tavoloInstance;
     }
 
-    public void pescata(Giocatori giocatore, Controller ctrl){
+    public void pescata(Giocatori giocatore, ActionListener act){
         Carta c = mazzo.pesca();
         giocatore.pescata(c);
         if (giocatore instanceof Giocatore){
-            notificaCambiamenti(new AvvisoPescata(c, (Giocatore) giocatore, ctrl));
+            notificaCambiamenti(new AvvisoPescata(c, (Giocatore) giocatore, null));
         }else {
             notificaCambiamenti(new AvvisoPescataComputer((Computer) giocatore));
         }
@@ -119,6 +121,16 @@ public class Tavolo extends Observable {
         giocatore.getMano().remove(carta);
         getScarti().push(carta);
         notificaCambiamenti(new AvvisoGiocataComputer(carta, giocatore));
+    }
+
+    public void giocata(Giocatori giocatore, Carta carta, ActionListener act){
+        giocatore.getMano().remove(carta);
+        getScarti().push(carta);
+        if (giocatore instanceof Giocatore){
+            notificaCambiamenti(new AvvisoGiocata(carta, giocatore, act));
+        }else{
+        notificaCambiamenti(new AvvisoGiocataComputer(carta, giocatore));
+        }
     }
 
     public void turnoPassato(){

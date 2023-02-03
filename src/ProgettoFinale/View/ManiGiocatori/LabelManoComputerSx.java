@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class LabelManoComputerSx extends JLabel{
 
@@ -31,12 +32,12 @@ public class LabelManoComputerSx extends JLabel{
 //            repaint();
 //        }
 //    }
-    public void visualizzaMano(Computer computer){
+    public void visualizzaMano(ArrayList<Carta> manoComputer){
         removeAll();
-        int puntoIniziale = calcolaCentro(getHeight(),computer.getMano().size());
-        int offset = calcolaOffset(getHeight(),computer.getMano().size());
+        int puntoIniziale = calcolaCentro(getHeight(),manoComputer.size());
+        int offset = calcolaOffset(getHeight(),manoComputer.size());
 
-        for(Carta carta : computer.getMano()){
+        for(Carta carta : manoComputer){
             JLabel dorso = new JLabel();
             try {
                 dorso.setIcon(new ImageIcon((rotate(ImageIO.read(new File("Risorse/images/Carte/backJuno1.png")), 90)
@@ -74,3 +75,23 @@ public class LabelManoComputerSx extends JLabel{
     }
 
 }
+
+//public void visualizzaMano(Computer computer){
+//        removeAll();
+//        int puntoIniziale = calcolaCentro(getHeight(),computer.getMano().size());
+//        int offset = calcolaOffset(getHeight(),computer.getMano().size());
+//
+//        for(Carta carta : computer.getMano()){
+//            JLabel dorso = new JLabel();
+//            try {
+//                dorso.setIcon(new ImageIcon((rotate(ImageIO.read(new File("Risorse/images/Carte/backJuno1.png")), 90)
+//                        .getScaledInstance(150, 100, 16))));
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//            dorso.setBounds(15,puntoIniziale,150,100);
+//            add(dorso);
+//            puntoIniziale += offset;
+//        }
+//        repaint();
+//    }

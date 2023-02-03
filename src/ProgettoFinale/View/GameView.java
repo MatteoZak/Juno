@@ -3,7 +3,6 @@ package ProgettoFinale.View;
 import ProgettoFinale.Model.Carte.Carta;
 import ProgettoFinale.Model.Giocatori.Computer;
 import ProgettoFinale.Model.Giocatori.Giocatori;
-import ProgettoFinale.Model.Tavolo.Tavolo;
 import ProgettoFinale.Utilita.Costanti;
 import ProgettoFinale.View.Animazioni.*;
 import ProgettoFinale.View.ImpostazioniAudio.Audio;
@@ -13,14 +12,11 @@ import ProgettoFinale.View.ManiGiocatori.LabelManoComputerSx;
 import ProgettoFinale.View.ManiGiocatori.LabelManoGiocatore;
 import ProgettoFinale.View.Scelte.LabelSceltaColore;
 import ProgettoFinale.View.Scelte.LabelSelezionaGiocatore;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 public class GameView extends JLabel{
     private JLabel sfondo = new JLabel();
@@ -648,16 +644,16 @@ public class GameView extends JLabel{
      * Metodo che aggiorna la mano dei giocatori su schermo
      * @param g è il giocatore in questione
      */
-    public void aggiornaMano(Giocatori g){
-        switch (g.getNome()) {
-            case "computerSx" -> getLabelManoComputerSx().visualizzaMano((Computer) g);
-            case "computerSu" -> getLabelManoComputerSu().visualizzaMano((Computer) g);
-            default -> getLabelManoComputerDx().visualizzaMano((Computer) g );
+    public void aggiornaMano(String g, ArrayList<Carta> manoGiocatore){
+        switch (g) {
+            case "computerSx" -> getLabelManoComputerSx().visualizzaMano(manoGiocatore);
+            case "computerSu" -> getLabelManoComputerSu().visualizzaMano(manoGiocatore);
+            default -> getLabelManoComputerDx().visualizzaMano(manoGiocatore);
         }
     }
 
-    public void animazioneGiocatoriGiocaCarta(Giocatori giocatore, Carta carta){
-        switch (giocatore.getNome()){
+    public void animazioneGiocatoriGiocaCarta(String nomeGiocatore, Carta carta){
+        switch (nomeGiocatore){
             case "computerSx"-> {
                 getAnimazioneComputerSxGioca().setImage(carta.getImmagine());
                 getAnimazioneComputerSxGioca().setX(10);
@@ -685,10 +681,10 @@ public class GameView extends JLabel{
 
     /**
      * Metodo che rende visibile la pescata degli avversari
-     * @param giocatore è il giocatore corrente del turno
+     * @param nomeGiocatore è il giocatore corrente del turno
      */
-    public void animazioneGiocatori(Giocatori giocatore){
-        switch (giocatore.getNome()) {
+    public void animazioneGiocatori(String nomeGiocatore){
+        switch (nomeGiocatore) {
             case "computerSx" -> {
                 getAnimazioneComputerSx().setX(getPilaMazzo().getX() - 200);
                 getAnimazioneComputerSx().setY(getPilaMazzo().getY() - 200);
