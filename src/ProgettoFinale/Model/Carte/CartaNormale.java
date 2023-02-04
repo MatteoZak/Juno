@@ -3,7 +3,7 @@ package ProgettoFinale.Model.Carte;
 import ProgettoFinale.View.Decorator.DecoratoreCarta;
 
 /**
- * Classe concreta che estende Carta
+ * Classe concreta che estende Carta e permette la creazione delle varie carte
  */
 public class CartaNormale extends Carta {
     /**

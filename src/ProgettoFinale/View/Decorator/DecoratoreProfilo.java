@@ -6,12 +6,22 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Classe che estende la super classe e serve per creare il profilo del giocatore (utente)
+ */
 public class DecoratoreProfilo extends DecoratoreProfiliAstratto{
-
+    /**
+     * Costruttore che richiama quello della super classe
+     * @param bottoneIcona
+     */
     public DecoratoreProfilo(JButton bottoneIcona) {
         super(bottoneIcona);
     }
 
+    /**
+     * Metodo che controlla se è da modificare il giocatore e va
+     * a prendere l'immagine dai file
+     */
     @Override
     public void visualizzaAvatar() {
         //TODO: cambiare trattino con costante nell'apposita classe            nome = bottoneIcona.getName().split("-")[1];

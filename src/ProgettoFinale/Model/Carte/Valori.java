@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Classe che identifica i valori delle carte
+ * Classe che identifica i valori delle carte a cui diamo un valore numerico
+ * tramite stringa
  */
 public enum Valori {
     ZERO("0"),

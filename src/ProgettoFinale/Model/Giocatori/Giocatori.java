@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**
- * Classe astratta dei giocatori
+ * Classe astratta dei giocatori in cui abbiamo le carte in mano e il nome
  */
 public abstract class Giocatori extends Observable {
     protected ArrayList<Carta> mano = new ArrayList<>();
@@ -40,7 +40,7 @@ public abstract class Giocatori extends Observable {
     }
 
     /**
-     *
+
      */
     @Override
     public void notifyObservers() {

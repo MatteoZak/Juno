@@ -10,7 +10,7 @@ public class Mazzo {
     private List<Valori> valoriCarteSpeciali = new LinkedList<>();
 
     /**
-     * Costruttore che genera il mazzo
+     * Costruttore che genera il mazzo tramite l'utilizzo di un suo metodo
      */
     public Mazzo() {
         formaMazzo();

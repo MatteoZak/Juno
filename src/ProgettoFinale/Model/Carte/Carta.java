@@ -3,7 +3,8 @@ package ProgettoFinale.Model.Carte;
 import java.awt.*;
 
 /**
- * Classe che rappresenta tutti i tipi di carta
+ * Classe astratta che rappresenta tutti i tipi di carta a cui diamo un colore
+ * un valore e un immagine
  */
 public abstract class Carta {
     protected Image img;

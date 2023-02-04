@@ -23,6 +23,9 @@ import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Classe usata come View ed è la nostra finestra in cui posizioniamo tutti i label
+ */
 public class FinestraGioco extends JFrame implements Observer {
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     protected int height = (int) screenSize.getHeight();
@@ -52,6 +55,11 @@ public class FinestraGioco extends JFrame implements Observer {
     private Versi versi = new Versi();
 
     private Animazione animazione;
+
+    /**
+     * Costruttore che chiama la super classe
+     * e non usa layout, in cui vengono aggiunto tutti i label
+     */
     public FinestraGioco(){
         super("Juno!");
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
@@ -169,54 +177,112 @@ public class FinestraGioco extends JFrame implements Observer {
         setVisible(true);
     }
 
+    /**
+     * Metodo che ritorna il label delle informazioni
+     * @return
+     */
     public Informazioni getInfo() {
         return info;
     }
 
+    /**
+     * Metodo che ritorna il label delle carte extra
+     * @return
+     */
     public SelezionaCarteExtra getCarteExtra() {
         return carteExtra;
     }
 
+    /**
+     * Metodo che ritorna il label delle modalità
+     * @return
+     */
     public SelezioneModalita getModalita() {
         return modalita;
     }
 
+    /**
+     * Metodo che ritorna il bottone per giocare
+     * @return
+     */
     public JButton getGiocaButton() {
         return giocaButton;
     }
 
+    /**
+     * Metodo che ritorna il bottone per il profilo
+     * @return
+     */
     public JButton getProfiloButton() {
         return profiloButton;
     }
 
+    /**
+     * Metodo che ritorna il bottone per l'audio
+     * @return
+     */
     public JButton getAudioButton() {
         return audioButton;
     }
 
+    /**
+     * Metodo che ritorna il bottone per chiudere il gioco
+     * @return
+     */
     public JButton getChiudiButton() {
         return chiudiButton;
     }
 
+    /**
+     * Metodo che ritorna il label del menu principale
+     * @return
+     */
     public JLabel getPrincipale() {
         return principale;
     }
 
+    /**
+     * Metodo che ritorna il label del menu
+     * @return
+     */
     public JLabel getMenu() {
         return menu;
     }
 
+    /**
+     * Metodo che ritorna la GameView
+     * @return
+     */
     public GameView getGw() {
         return gw;
     }
 
+    /**
+     * Metodo che ritorna il Profilo View
+     * @return
+     */
     public ProfiloView getPw() {
         return pw;
     }
 
+    /**
+     * Metodo che ritorna l'audio
+     * @return
+     */
     public Audio getAudio() {
         return audio;
     }
+
+    /**
+     * Meotdo che ritorna la classe ambiente
+     * @return
+     */
     public Ambiente getAmbiente(){return ambiente;}
+
+    /**
+     * Metodo che ritorna la classe versi
+     * @return
+     */
     public Versi getVersi(){return versi;}
 
     /**
@@ -234,6 +300,13 @@ public class FinestraGioco extends JFrame implements Observer {
         ambiente.riproduciMusicaAmbiente(5);
     }
 
+    /**
+     * Metodo che esegue l'update a seconda dell'istanza del pacchetto
+     * passato come input
+     * @param o     the observable object.
+     * @param arg   an argument passed to the {@code notifyObservers}
+     *                 method.
+     */
     @Override
     public void update(Observable o, Object arg) {
         if(arg instanceof AvvisoPescata) {

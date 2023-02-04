@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Classe usata per le informazioni degli effetti delle carte
+ */
 public class Informazioni extends JLabel {
 
     private JLabel spiegazioneCarte = new JLabel("Spiegazione Carte:");
@@ -49,6 +52,13 @@ public class Informazioni extends JLabel {
     private JLabel spiegazioneCartaDuello = new JLabel();
 
     private JButton bottoneCapito = new JButton("Capito, grazie!");
+
+    /**
+     * Costruttore con dimensioni dello schermo e usa
+     * il GridBagLayout
+     * @param width
+     * @param height
+     */
 
     public Informazioni(int width, int height){
         setBounds(0,0,width,height);
@@ -317,15 +327,30 @@ public class Informazioni extends JLabel {
         add(bottoneCapito,gbc04);
 
     }
+
+    /**
+     * Metodo per rendere più leggibile la spiegaizone degli effetti delle carte
+     * @param orig
+     * @return
+     */
     public static String convertToMultiline(String orig)
     {
         return "<html>" + orig.replaceAll("\n", "<br>");
     }
 
+    /**
+     * Metodo che ritorna il bottone per uscire dalle informazioni
+     * @return
+     */
     public JButton getBottoneCapito() {
         return bottoneCapito;
     }
 
+    /**
+     * Metodo che ritorna una lista con tutte le spiegazioni
+     * delle carte
+     * @return
+     */
     public List<JLabel> getListaInformazioni(){
         return new LinkedList<>(List.of(spiegazioneCartaNormale, spiegazioneCartaBlocco, spiegazioneCartaInvertigiro,
                 spiegazioneCartaPescaDue, spiegazioneCartaPescaQuattro, spiegazioneCartaCambiocolore,
@@ -333,6 +358,10 @@ public class Informazioni extends JLabel {
                 spiegazioneCartaInvertigiroBlocco, spiegazioneCartaScambioMani, spiegazioneCartaDuello));
     }
 
+    /**
+     * Metodo che ritorna la lista con tutti i tipi di carte
+     * @return
+     */
     public List<JLabel> getListaCarte(){
         return new LinkedList<>(List.of(cartaNormale, cartaBlocco, cartaInvertigiro,
                 cartaPescaDue, cartaPescaQuattro, cartaCambiocolore,
@@ -340,6 +369,10 @@ public class Informazioni extends JLabel {
                 cartaInvertigiroBlocco, cartaScambioMani, cartaDuello));
     }
 
+    /**
+     * Metodo che ritorna la lista delle carte speciali
+     * @return
+     */
     public List<JLabel> getListaCarteViola(){
         return new LinkedList<>(List.of(spiegazioneCartaBloccoTutti, spiegazioneCartaPescadueTutti, spiegazionePescatreTutti,
                 spiegazioneCartaInvertigiroBlocco, spiegazioneCartaScambioMani, spiegazioneCartaDuello,
@@ -347,6 +380,9 @@ public class Informazioni extends JLabel {
                 cartaInvertigiroBlocco, cartaScambioMani, cartaDuello));
     }
 
+    /**
+     * Metodo che nasconde le scarte viola dalle informazioni
+     */
     public void nascondiCarteViola(){
         getListaCarteViola().stream().forEach(x -> x.setVisible(false));
     }

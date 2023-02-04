@@ -7,6 +7,10 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe utilizzata per la modalità delle carte extra
+ * in cui è stato utilizzato il GridBagLayout
+ */
 public class SelezionaCarteExtra extends JLabel {
     private JLabel spiegazione = new JLabel();
     private JLabel labelBloccaTutti = new JLabel();
@@ -33,6 +37,13 @@ public class SelezionaCarteExtra extends JLabel {
 
 
     private final String ACTIONCOMMAND = "CONTROLLO";
+
+    /**
+     * Costruttore con le dimensioni dello schermo in cui vengono
+     * aggiunti tutti i label e i CheckBox
+     * @param width
+     * @param height
+     */
     public SelezionaCarteExtra(int width, int height) {
         setBounds(0, 0, width, height);
         setLayout(new GridBagLayout());
@@ -238,21 +249,39 @@ public class SelezionaCarteExtra extends JLabel {
         setVisible(false);
 
     }
+
+    /**
+     * Metodo usato per rendere più leggibili i testi delle spiegazioni
+     * @param orig
+     * @return
+     */
     public static String convertToMultiline(String orig)
     {
         return "<html>" + orig.replaceAll("\n", "<br>");
     }
 
+    /**
+     * Metodo che restituisce la lista con tutti i checkBox
+     * @return
+     */
     public List<JCheckBox> getCheckBoxes() {
         return new ArrayList<>(List.of(checkBloccaTutti,checkPescaDueTutti,checkPescaTreTutti,
                 checkScambiaMani,checkBloccoInverti, checkDuello));
     }
 
+    /**
+     * Metodo che ritorna la lista con tutti i label delle carte speciali
+     * @return
+     */
     public List<JLabel> getLabelCarte(){
         return new ArrayList<>(List.of(labelBloccaTutti,labelPescaDueTutti,labelPescaTreTutti,labelScambiaMani,
                 labelBloccoInverti, labelDuello));
     }
 
+    /**
+     * Metodo che ritorna la lista con tutte le spiegazioni
+     * @return
+     */
     public List<JLabel> getLabelSpiegazioni(){
         return new ArrayList<>(List.of(spiegazioneBloccaTutti,spiegazionePescaDueTutti,spiegazionePescaTreTutti,
                 spiegazioneScambiaMani, spiegazioneBloccoInverti, spiegazioneDuello));
@@ -306,10 +335,18 @@ public class SelezionaCarteExtra extends JLabel {
         return checkDuello;
     }
 
+    /**
+     * Metodo che ritorna il bottone per giocare
+     * @return
+     */
     public JButton getBottoneGioca() {
         return bottoneGioca;
     }
 
+    /**
+     * Metodo che ritorna il bottone della scelta delle modalità
+     * @return
+     */
     public JButton getTornaSceltaModalita() {
         return tornaSceltaModalita;
     }

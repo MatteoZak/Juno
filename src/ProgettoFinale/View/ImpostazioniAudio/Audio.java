@@ -9,6 +9,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Hashtable;
 
+/**
+ * Classe che rappresenta la schermata dell'audio nel gioco
+ */
 public class Audio extends JLabel {
     private JSlider barraVolumeAmbiente = new JSlider(-80,5);
     private JSlider barraVolumeEffetti = new JSlider(-80,5);
@@ -25,6 +28,12 @@ public class Audio extends JLabel {
     private JButton riprendiPartita = new JButton("Riprendi");
     private JPanel menuAudio = new JPanel();
 
+    /**
+     * Costruttore creato con le dimensioni dello schermo e con un
+     * GridBagLayout
+     * @param width
+     * @param height
+     */
     public Audio(int width, int height){
 
         Font font = new FontPokemon(20f).getFont();
@@ -240,34 +249,63 @@ public class Audio extends JLabel {
         setVisible(false);
     }
 
+    /**
+     * Metodo che ritorna il bottone per  uscire dalle
+     * impostazioni audio
+     * @return
+     */
     public JButton getUscita() {
         return uscita;
     }
 
+    /**
+     * Metodo che ritorna il text field per gli effetti sonori
+     * @return
+     */
     public JTextField getVolumeEffetti() {
         return volumeEffetti;
     }
 
+    /**
+     * Metodo che ritorna lo slider degli effetti speciali
+     * @return
+     */
     public JSlider getBarraVolumeEffetti() {
         return barraVolumeEffetti;
     }
-
+    /**
+     * Metodo che ritorna lo slider della musica in sottofondo
+     * @return
+     */
     public JSlider getBarraVolumeAmbiente() {
         return barraVolumeAmbiente;
     }
-
+    /**
+     * Metodo che ritorna il text field per la musica in sottofondo
+     * @return
+     */
     public JTextField getVolumeAmbiente() {
         return volumeAmbiente;
     }
-
+    /**
+     * Metodo che ritorna lo slider dei versi degli avversari
+     * @return
+     */
     public JSlider getBarraVolumeVersi() {
         return barraVolumeVersi;
     }
-
+    /**
+     * Metodo che ritorna il text field per gi versi degli avversari
+     * @return
+     */
     public JTextField getVolumeVersi() {
         return volumeVersi;
     }
 
+    /**
+     * Metodo che ritorna il bottone per riprendere la partita
+     * @return
+     */
     public JButton getRiprendiPartita() {
         return riprendiPartita;
     }

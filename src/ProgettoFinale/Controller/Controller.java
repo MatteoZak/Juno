@@ -949,6 +949,12 @@ public class Controller implements ActionListener, ChangeListener {
         }
     }
 
+    /**
+     * Metodo che invia il pacchetto per pescare da parte dei giocatori con il
+     * metodo del tavolo
+     * @param giocatore
+     * @param c
+     */
     public void inviaPacchettoPescata(Giocatori giocatore, Carta c){
         if(giocatore instanceof Giocatore){
             t.notificaCambiamenti(new AvvisoPescata(c, (Giocatore) giocatore,this));
@@ -959,7 +965,8 @@ public class Controller implements ActionListener, ChangeListener {
 
 
     /**
-     * Metodo che legge i valori dei volumi sui JSlider e scrive il valore corrispondente dopo averlo convertito
+     * Metodo che legge i valori dei volumi sui JSlider e scrive il
+     * valore corrispondente dopo averlo convertito
      */
     public void leggiImpostazioniAudio(){
         f.getAudio().getBarraVolumeAmbiente().setValue((int) f.getAmbiente().getVolume());

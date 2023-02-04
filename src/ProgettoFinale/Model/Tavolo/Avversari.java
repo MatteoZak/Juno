@@ -16,6 +16,10 @@ public enum Avversari {
 
     private String tipo;
 
+    /**
+     * Costruttore a cui viene assegnato il tipo dell'avversario (fuoco,acqua,erba)
+     * @param tipo
+     */
     Avversari(String tipo){
         this.tipo = tipo;
     }

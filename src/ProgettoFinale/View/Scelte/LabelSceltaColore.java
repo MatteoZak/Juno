@@ -8,15 +8,25 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Classe usata per la visualizzazione della scelta del colore
+ */
 public class LabelSceltaColore extends JLabel {
     private JButton sceltaRosso = new JButton();
     private JButton sceltaBlu = new JButton();
     private JButton sceltaGiallo = new JButton();
     private JButton sceltaVerde = new JButton();
+
+    /**
+     * Costruttore che utilizza il BorderLayout
+     */
     public LabelSceltaColore(){
         setLayout(new BorderLayout());
     }
 
+    /**
+     * Metodo che gestisce il colore rosso
+     */
     public void setSceltaRosso() {
         try {
             sceltaRosso.setIcon(new ImageIcon(ImageIO.read(new File("Risorse/images/Utilita/sceltaRosso.png"))
@@ -32,7 +42,9 @@ public class LabelSceltaColore extends JLabel {
         sceltaRosso.setActionCommand("SCELTACOLORE");
         add(sceltaRosso,BorderLayout.NORTH);
     }
-
+    /**
+     * Metodo che gestisce il colore blu
+     */
     public void setSceltaBlu() {
         try {
             sceltaBlu.setIcon(new ImageIcon(ImageIO.read(new File("Risorse/images/Utilita/sceltaBlu.png"))
@@ -47,7 +59,9 @@ public class LabelSceltaColore extends JLabel {
         sceltaBlu.setActionCommand("SCELTACOLORE");
         add(sceltaBlu,BorderLayout.WEST);
     }
-
+    /**
+     * Metodo che gestisce il colore giallo
+     */
     public void setSceltaGiallo() {
         try {
             sceltaGiallo.setIcon(new ImageIcon(ImageIO.read(new File("Risorse/images/Utilita/sceltaGiallo.png"))
@@ -62,7 +76,9 @@ public class LabelSceltaColore extends JLabel {
         sceltaGiallo.setActionCommand("SCELTACOLORE");
         add(sceltaGiallo,BorderLayout.EAST);
     }
-
+    /**
+     * Metodo che gestisce il colore verde
+     */
     public void setSceltaVerde() {
         try {
             sceltaVerde.setIcon(new ImageIcon(ImageIO.read(new File("Risorse/images/Utilita/sceltaVerde.png"))
@@ -78,18 +94,31 @@ public class LabelSceltaColore extends JLabel {
         add(sceltaVerde,BorderLayout.SOUTH);
     }
 
+    /**
+     * Metodo che ritorna il bottone per il rosso
+     * @return
+     */
     public JButton getSceltaRosso() {
         return sceltaRosso;
     }
-
+    /**
+     * Metodo che ritorna il bottone per il blu
+     * @return
+     */
     public JButton getSceltaBlu() {
         return sceltaBlu;
     }
-
+    /**
+     * Metodo che ritorna il bottone per il giallo
+     * @return
+     */
     public JButton getSceltaGiallo() {
         return sceltaGiallo;
     }
-
+    /**
+     * Metodo che ritorna il bottone per il verde
+     * @return
+     */
     public JButton getSceltaVerde() {
         return sceltaVerde;
     }

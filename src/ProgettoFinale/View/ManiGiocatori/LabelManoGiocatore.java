@@ -9,7 +9,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-
+/**
+ * Classe che rappresenta lo spazio dove viene rappresentata
+ * la mano del giocatore (utente)
+ */
 public class LabelManoGiocatore extends JLabel {
 //    public void visualizzaCarte(Giocatore giocatore,Controller ctrl){
 //        removeAll();
@@ -24,6 +27,13 @@ public class LabelManoGiocatore extends JLabel {
 //        repaint();
 //    }
 
+    /**
+     * Metodo che visualizza le carte nella mano utilizzando
+     * dei suoi metodi, rimuovendole prima tutte e poi aggiungerle tramite un forEach
+     * le carte aggiunte sono bottoni a differenza delle altre mani
+     * @param carteInMano
+     * @param ctrl
+     */
     public void visualizzaCarte(ArrayList<Carta> carteInMano, Controller ctrl){
         removeAll();
         int puntoIniziale = calcolaCentro(getWidth(),carteInMano.size());
@@ -36,12 +46,24 @@ public class LabelManoGiocatore extends JLabel {
         }
         repaint();
     }
-
+    /**
+     * Metodo che tramite una formula calcola il centro della mano utilizzando la sua
+     * larghezza e il numero di carte in mano
+     * @param larghezza
+     * @param carteInMano
+     * @return
+     */
     private int calcolaCentro(int larghezza, int carteInMano){
 //        return larghezza/2-carteInMano*(calcolaOffset(larghezza,carteInMano))/2;
         return larghezza/2 - (100+calcolaOffset(larghezza,carteInMano)*(carteInMano-1))/2;
     }
-
+    /**
+     * Metodo che calcola lo spazio tra ogni carta in base a quante sono
+     * nella mano
+     * @param larghezza
+     * @param carteInMano
+     * @return
+     */
     private int calcolaOffset(int larghezza, int carteInMano){
         int offset = 101;
         if (carteInMano*101 > larghezza){

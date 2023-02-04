@@ -16,6 +16,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe usata per visualizzare lo sfondo del gioco
+ */
 public class GameView extends JLabel{
     private JLabel sfondo = new JLabel();
     private JLabel labelAudio = new JLabel("Audio");
@@ -68,6 +71,12 @@ public class GameView extends JLabel{
     private AnimazioneComputerDx animazioneComputerDx = new AnimazioneComputerDx();
     private AnimazioneComputerDxGioca animazioneComputerDxGioca = new AnimazioneComputerDxGioca();
     private Costanti costanti = new Costanti();
+
+    /**
+     * Costruttore con dimensioni dello schermo in cui
+     * vengono aggiunti i label di: le mani,i bottoni, il mazzo, la pila scarti,
+     * la scelta dei colori, i giocatori, il tasto Juno e le animazioni
+     */
     public GameView() {
         setSize(width,height);
         setVisible(false);
@@ -626,6 +635,11 @@ public class GameView extends JLabel{
         }
     }
 
+    /**
+     * Metodo usato per compiere l'animazioni degli avversari
+     * @param nomeGiocatore
+     * @param carta
+     */
     public void animazioneGiocatoriGiocaCarta(String nomeGiocatore, Carta carta){
         switch (nomeGiocatore){
             case "computerSx"-> {

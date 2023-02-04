@@ -5,6 +5,9 @@ import ProgettoFinale.View.FontPokemon;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe utilizzata per la rappresentazione della scelta delle modalità
+ */
 public class SelezioneModalita extends JLabel {
     private JButton modStandard = new JButton();
     private JButton modCarteExtra = new JButton();
@@ -15,6 +18,12 @@ public class SelezioneModalita extends JLabel {
 
     private JButton tastoIndietro = new JButton("Torna Indietro");
 
+    /**
+     * Costruttore con le dimensioni dello schermo utilizzando
+     * un GridBagLayout
+     * @param width
+     * @param height
+     */
     public SelezioneModalita(int width, int height){
         setBounds(0,0,width,height);
         setLayout(new GridBagLayout());
@@ -134,22 +143,45 @@ public class SelezioneModalita extends JLabel {
         setVisible(false);
     }
 
+    /**
+     * Metodo che ritorna il bottone della modalità standard
+     * @return
+     */
     public JButton getModStandard() {
         return modStandard;
     }
 
+    /**
+     * Metodo che ritorna il bottone della modalità
+     * con carte extra
+     * @return
+     */
     public JButton getModCarteExtra() {
         return modCarteExtra;
     }
 
+    /**
+     * Metodo che ritorna il bottone per la modalità
+     * con le regole inverite
+     * @return
+     */
     public JButton getModInvertita() {
         return modInvertita;
     }
 
+    /**
+     * Metodo che ritorna il bottone per tornare indietro
+     * @return
+     */
     public JButton getTastoIndietro() {
         return tastoIndietro;
     }
 
+    /**
+     * Metodo usato per rendere più leggibile la spiegazione delle modalità
+     * @param orig
+     * @return
+     */
     public static String convertToMultiline(String orig)
     {
         return "<html>" + orig.replaceAll("\n", "<br>");

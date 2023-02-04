@@ -7,9 +7,21 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * Classe utilizzata per quando l'utente preme le carte
+ * nella sua mano
+ */
 public class BottoneCarta extends JButton {
     private Carta carta;
 
+    /**
+     * Costruttore in cui viene passato anche il controller
+     * in cui viene generato il bottone con l'immagine della carta passata in input
+     * e vengono implementati tutti i metodi necessari per l'utilizzo del mouse
+     * tramite un MouseListener
+     * @param c
+     * @param ctrl
+     */
     public BottoneCarta(Carta c, Controller ctrl){
         this.carta = c;
         setBorderPainted(false);
@@ -47,6 +59,10 @@ public class BottoneCarta extends JButton {
         });
     }
 
+    /**
+     * Metodo che ritorna la carta del bottone
+     * @return
+     */
     public Carta getCarta() {
         return carta;
     }

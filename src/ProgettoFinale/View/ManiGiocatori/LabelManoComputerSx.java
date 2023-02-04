@@ -10,6 +10,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Classe che rappresenta lo spazio dove viene rappresentata
+ * la mano del giocatore a sx
+ */
 public class LabelManoComputerSx extends JLabel{
 
 //    public void visualizzaMano(Computer computer){
@@ -32,6 +36,11 @@ public class LabelManoComputerSx extends JLabel{
 //            repaint();
 //        }
 //    }
+    /**
+     * Metodo che visualizza le carte nella mano utilizzando
+     * dei suoi metodi
+     * @param manoComputer
+     */
     public void visualizzaMano(ArrayList<Carta> manoComputer){
         removeAll();
         int puntoIniziale = calcolaCentro(getHeight(),manoComputer.size());
@@ -51,10 +60,23 @@ public class LabelManoComputerSx extends JLabel{
         }
         repaint();
     }
-
+    /**
+     * Metodo che tramite una formula calcola il centro della mano utilizzando la sua
+     * altezza e il numero di carte in mano
+     * @param altezza
+     * @param carteInMano
+     * @return
+     */
     private int calcolaCentro(int altezza, int carteInMano){
         return altezza/2 - (100+calcolaOffset(altezza,carteInMano)*(carteInMano-1))/2;
     }
+    /**
+     * Metodo che calcola lo spazio tra ogni carta in base a quante sono
+     * nella mano
+     * @param altezza
+     * @param carteInMano
+     * @return
+     */
     private int calcolaOffset(int altezza, int carteInMano){
         int offset = 101;
         if (carteInMano*101 > altezza){
@@ -62,7 +84,12 @@ public class LabelManoComputerSx extends JLabel{
         }
         return offset;
     }
-
+    /**
+     * Metodo che rappresenta le carte girate di 90 gradi
+     * @param bimg
+     * @param angle
+     * @return
+     */
     public static BufferedImage rotate(BufferedImage bimg, double angle) {
         int h = bimg.getWidth();
         int w = bimg.getHeight();
