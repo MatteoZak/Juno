@@ -2,6 +2,8 @@ package ProgettoFinale.View.ManiGiocatori;
 
 import ProgettoFinale.Controller.Controller;
 import ProgettoFinale.Model.Carte.Carta;
+import ProgettoFinale.View.Decorator.DecoratoreCarta;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -26,7 +28,7 @@ public class BottoneCarta extends JButton {
         this.carta = c;
         setBorderPainted(false);
         setContentAreaFilled(false);
-        setIcon(new ImageIcon(c.getImmagine()));
+        setIcon(new ImageIcon(new DecoratoreCarta(c).visualizzaCarta()));
         addMouseListener(new MouseListener() {
 
             @Override

@@ -6,10 +6,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
 
-/**
- * Classe utilizzata per la creazione del profilo utente a schermo
- * utilizzando dei label e il GridBagLayout
- */
 public class ProfiloView extends JLabel {
     private JFileChooser fileChooser;
     private JLabel menuProfilo = new JLabel();
@@ -33,11 +29,6 @@ public class ProfiloView extends JLabel {
 
     private JButton uscita = new JButton();
 
-    /**
-     * Costruttore con le dimensioni dello schermo
-     * @param width
-     * @param height
-     */
     public ProfiloView(int width, int height){
         setSize(width, height);
         setVisible(false);
@@ -199,83 +190,39 @@ public class ProfiloView extends JLabel {
         add(menuProfilo);
     }
 
-    /**
-     * Metodo che ritorna il bottone per azzerare i dati dell'utente
-     * @return
-     */
+
     public JButton getAzzeraDati() {
         return azzeraDati;
     }
 
-    /**
-     * Metodo che ritorna il nome dell'utente
-     * @return
-     */
     public String getUsername() {return username.getText();}
 
-    /**
-     * Metodo che sovrascrive il nome dell'utente
-     * @param str
-     */
     public void setUsername(String str) {
         this.username.setText(str);
     }
-
-    /**
-     * Metodo che ritorna il file scelto
-     * @return
-     */
     public JFileChooser getFileChooser() {
         return fileChooser;
     }
-
-    /**
-     * Metodo che ritorna il label dell'icona dell'utente
-     * @return
-     */
     public JLabel getLabelIcona(){
         return labelIcona;
     }
     public Image getIcona() {
         return Toolkit.getDefaultToolkit().createImage(fileChooser.getSelectedFile().getAbsolutePath());
     }
-
-    /**
-     * Metodo che ritorna il bottone per scegliere l'immagine
-     * @return
-     */
     public JButton getScelta() {
         return scelta;
     }
-
-    /**
-     * Metodo che ritorna il bottone per confermare le modifiche
-     * @return
-     */
     public JButton getApplica() {
         return applica;
     }
-
-    /**
-     * Metodo che ritorna il label delle partite giocate dall'utente
-     * @return
-     */
     public JLabel getGiocate() {
         return giocate;
     }
 
-    /**
-     * Metodo che ritorna il label delle partite vinte dall'utente
-     * @return
-     */
     public JLabel getVittorie() {
         return vittorie;
     }
 
-    /**
-     * Metodo che ritorna il label delle partite perse dall'utente
-     * @return
-     */
     public JLabel getSconfitte() {
         return sconfitte;
     }
@@ -284,10 +231,6 @@ public class ProfiloView extends JLabel {
         return stellaLivello;
     }
 
-    /**
-     * Metodo che ritorna il label del livello del giocatore
-     * @return
-     */
     public JLabel getLivello() {
         return livello;
     }
@@ -300,10 +243,6 @@ public class ProfiloView extends JLabel {
         return usernameStr;
     }
 
-    /**
-     * Metodo che ritorna il bottone per uscire dal profilo
-     * @return
-     */
     public JButton getUscita() {
         return uscita;
     }

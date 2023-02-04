@@ -1,7 +1,5 @@
 package ProgettoFinale.Controller.Pacchetti;
 
-import ProgettoFinale.Model.Giocatori.Giocatori;
-
 public class PassaTurno {
 
     private String giocatoreDiTurno;

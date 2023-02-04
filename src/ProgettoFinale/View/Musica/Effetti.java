@@ -30,21 +30,6 @@ public class Effetti implements Musica{
         playList.add(new File("Risorse/audio/EffettiSpeciali/vittoria.wav")); //7
         playList.add(new File("Risorse/audio/EffettiSpeciali/fuga.wav")); //8
         playList.add(new File("Risorse/audio/EffettiSpeciali/lose.wav")); //9
-        /*
-        try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(playList.get(0));
-            clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException(e);
-        }
-
-         */
     }
 
     /**

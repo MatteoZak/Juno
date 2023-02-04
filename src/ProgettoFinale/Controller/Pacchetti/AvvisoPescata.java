@@ -4,7 +4,6 @@ import ProgettoFinale.Controller.Controller;
 import ProgettoFinale.Model.Carte.Carta;
 import ProgettoFinale.Model.Giocatori.Giocatore;
 import ProgettoFinale.Model.Giocatori.Giocatori;
-
 import java.awt.event.ActionListener;
 
 public class AvvisoPescata{

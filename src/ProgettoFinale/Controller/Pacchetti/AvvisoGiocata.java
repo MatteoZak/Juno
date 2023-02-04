@@ -1,11 +1,8 @@
 package ProgettoFinale.Controller.Pacchetti;
 
 import ProgettoFinale.Controller.Controller;
-import ProgettoFinale.Model.Carte.Carta;
 import ProgettoFinale.Model.Giocatori.Giocatori;
 import ProgettoFinale.View.ManiGiocatori.BottoneCarta;
-
-import java.awt.event.ActionListener;
 
 public class AvvisoGiocata {
     private BottoneCarta carta;

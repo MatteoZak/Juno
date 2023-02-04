@@ -1,7 +1,6 @@
 package ProgettoFinale.View.ManiGiocatori;
 
 import ProgettoFinale.Model.Carte.Carta;
-import ProgettoFinale.Model.Giocatori.Computer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +24,7 @@ public class LabelManoComputerDx extends JLabel {
         int puntoIniziale = calcolaCentro(getHeight(),manoComputer.size());
         int offset = calcolaOffset(getHeight(),manoComputer.size());
 
-        for(Carta carta : manoComputer){
+        for(int i = 0; i < manoComputer.size(); i++){
             JLabel dorso = new JLabel();
             try {
                 dorso.setIcon(new ImageIcon((rotate(ImageIO.read(new File("Risorse/images/Carte/backJuno1.png")), -90)

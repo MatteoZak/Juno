@@ -1,14 +1,9 @@
 package ProgettoFinale.View.Animazioni;
 
-import ProgettoFinale.Model.Carte.Carta;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Classe astratta che gestisce i metodi e le rappresentazioni delle animazioni
@@ -43,10 +38,6 @@ abstract public class Animazione extends JLabel implements ActionListener {
         g2d.drawImage(image,x,y,null);
     }
 
-    public void paintScoperta(Graphics g){
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(image,x,y,width,height,null);
-    }
 
     /**
      * Metodo astratto che verrà implementato dalle sottoclassi per gestire la rappresentazione
@@ -55,7 +46,6 @@ abstract public class Animazione extends JLabel implements ActionListener {
      */
     @Override
     public abstract void actionPerformed(ActionEvent e);
-    public int getxDestinazione() {return xDestinazione;}
 
     /**
      * Metodo usato per salvare la posizione finale sull'asse x
@@ -64,10 +54,6 @@ abstract public class Animazione extends JLabel implements ActionListener {
      */
     public void setxDestinazione(int xDestinazione) {
         this.xDestinazione = xDestinazione;
-    }
-
-    public int getyDestinazione() {
-        return yDestinazione;
     }
 
     /**
@@ -87,10 +73,6 @@ abstract public class Animazione extends JLabel implements ActionListener {
             timer.start();
         }
 
-    public int getXX() {
-        return x;
-    }
-
     /**
      * Metodo usato per salvare la posizione finale sull'asse x
      * da cui parte l'immagine
@@ -108,9 +90,6 @@ abstract public class Animazione extends JLabel implements ActionListener {
         this.image = image;
     }
 
-    public int getYY() {
-        return y;
-    }
     /**
      *Metodo usato per salvare la posizione finale sull'asse y
      *da cui parte l'immagine
@@ -119,19 +98,4 @@ abstract public class Animazione extends JLabel implements ActionListener {
         this.y = y;
     }
 
-    public int getVelocitaX() {
-        return velocitaX;
-    }
-
-    public void setVelocitaX(int velocitaX) {
-        this.velocitaX = velocitaX;
-    }
-
-    public int getVelocitaY() {
-        return velocitaY;
-    }
-
-    public void setVelocitaY(int velocitaY) {
-        this.velocitaY = velocitaY;
-    }
 }

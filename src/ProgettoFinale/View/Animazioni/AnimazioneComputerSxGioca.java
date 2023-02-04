@@ -1,6 +1,5 @@
 package ProgettoFinale.View.Animazioni;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 /**
  * Classe utilizzata per le animazioni delle carte giocate dell'avversario a sinistra

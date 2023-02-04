@@ -6,8 +6,4 @@ public class FinePartita {
     public FinePartita(boolean esitoPartita) {
         this.esitoPartita = esitoPartita;
     }
-
-    public boolean isEsitoPartita() {
-        return esitoPartita;
-    }
 }

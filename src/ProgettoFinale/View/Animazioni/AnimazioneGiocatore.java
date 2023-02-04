@@ -1,7 +1,6 @@
 package ProgettoFinale.View.Animazioni;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 /**
  * Classe utilizzata per le animazioni delle carte pescate dal giocatore (utente)

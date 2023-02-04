@@ -1,7 +1,6 @@
 package ProgettoFinale.View.Decorator;
 
 import ProgettoFinale.Model.Carte.Carta;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;

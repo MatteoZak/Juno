@@ -6,8 +6,6 @@ import ProgettoFinale.Model.Tavolo.Tavolo;
 
 public class Juno {
     public static void main(String[] args) {
-        Tavolo t = Tavolo.getTavoloInstance();
-        FinestraGioco frame = new FinestraGioco();
-        Controller ctrl = Controller.getInstance(frame,t);
+        Controller ctrl = Controller.getInstance();
     }
 }

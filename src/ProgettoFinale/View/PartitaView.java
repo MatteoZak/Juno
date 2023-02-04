@@ -3,6 +3,7 @@ package ProgettoFinale.View;
 import ProgettoFinale.Model.Carte.Carta;
 import ProgettoFinale.Utilita.Costanti;
 import ProgettoFinale.View.Animazioni.*;
+import ProgettoFinale.View.Decorator.DecoratoreCarta;
 import ProgettoFinale.View.ImpostazioniAudio.Audio;
 import ProgettoFinale.View.ManiGiocatori.LabelManoComputerDx;
 import ProgettoFinale.View.ManiGiocatori.LabelManoComputerSu;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * Classe usata per visualizzare lo sfondo del gioco
  */
-public class GameView extends JLabel{
+public class PartitaView extends JLabel{
     private JLabel sfondo = new JLabel();
     private JLabel labelAudio = new JLabel("Audio");
     private JButton bottoneAudio = new JButton();
@@ -77,7 +78,7 @@ public class GameView extends JLabel{
      * vengono aggiunti i label di: le mani,i bottoni, il mazzo, la pila scarti,
      * la scelta dei colori, i giocatori, il tasto Juno e le animazioni
      */
-    public GameView() {
+    public PartitaView() {
         setSize(width,height);
         setVisible(false);
 
@@ -311,7 +312,6 @@ public class GameView extends JLabel{
 
         animazioneComputerDxGioca.setBounds(pilaScarti.getX()+100,pilaScarti.getY()-10,
                 width-labelManoComputerDx.getWidth()-pilaScarti.getX(),160);
-        System.out.println(animazioneComputerDxGioca.getX());
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -643,26 +643,32 @@ public class GameView extends JLabel{
     public void animazioneGiocatoriGiocaCarta(String nomeGiocatore, Carta carta){
         switch (nomeGiocatore){
             case "computerSx"-> {
-                getAnimazioneComputerSxGioca().setImage(carta.getImmagine());
+                getAnimazioneComputerSxGioca().setImage(new DecoratoreCarta(carta).visualizzaCarta());
                 getAnimazioneComputerSxGioca().setX(10);
                 getAnimazioneComputerSxGioca().setY(10);
                 getAnimazioneComputerSxGioca().timer();
                 getSfondo().add(getAnimazioneComputerSxGioca());
             }
             case "computerSu" -> {
-                getAnimazioneComputerSuGioca().setImage(carta.getImmagine());
+                getAnimazioneComputerSuGioca().setImage(new DecoratoreCarta(carta).visualizzaCarta());
                 getAnimazioneComputerSuGioca().setX(5);
                 getAnimazioneComputerSuGioca().setY(5);
                 getAnimazioneComputerSuGioca().timer();
                 getSfondo().add(getAnimazioneComputerSuGioca());
             }
-            default -> {
-                getAnimazioneComputerDxGioca().setImage(carta.getImmagine());
-                //SE NON FUNZIONA METTIAMO f.getGw().getAnimazioneComputerDxGioca().getWidth() ma con piu velocita su x
+            case "computerDx" -> {
+                getAnimazioneComputerDxGioca().setImage(new DecoratoreCarta(carta).visualizzaCarta());
                 getAnimazioneComputerDxGioca().setX(getPilaScarti().getX());
                 getAnimazioneComputerDxGioca().setY(10);
                 getAnimazioneComputerDxGioca().timer();
                 getSfondo().add(getAnimazioneComputerDxGioca());
+            }
+            default -> {
+                getAnimazioneGiocatoreGioca().setImage(new DecoratoreCarta(carta).visualizzaCarta());
+//                getAnimazioneGiocatoreGioca().setX(getBottoneCarta().getX());
+                getAnimazioneGiocatoreGioca().setY(getLabelManoGiocatore().getY()-350);
+                getAnimazioneGiocatoreGioca().timer();
+                getSfondo().add(getAnimazioneGiocatoreGioca());
             }
         }
     }

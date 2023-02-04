@@ -5,13 +5,13 @@ import ProgettoFinale.Model.Carte.Carta;
 import java.awt.*;
 
 public class AvvisoPilaScarti {
-    private Image imgCarta;
+    private Carta imgCarta;
 
-    public AvvisoPilaScarti(Image imgCarta) {
+    public AvvisoPilaScarti(Carta imgCarta) {
         this.imgCarta = imgCarta;
     }
 
-    public Image getImgCarta() {
+    public Carta getImgCarta() {
         return imgCarta;
     }
 }

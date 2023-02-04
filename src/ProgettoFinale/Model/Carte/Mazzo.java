@@ -20,6 +20,7 @@ public class Mazzo {
      * Metodo che aggiunge al mazzo la giusta quantità di carte in base al loro colore e valore
      */
     public void formaMazzo(){
+        mazzo.clear();
         for (Colori c : Colori.values()){
             if (!(c.equals(Colori.NERO) || c.equals(Colori.VIOLA))) {
                 mazzo.push(new CartaNormale(c, Valori.ZERO));
@@ -62,11 +63,6 @@ public class Mazzo {
             valoriCarteSpeciali.add(valore);
         else
             valoriCarteSpeciali.remove(valore);
-        System.out.println(valoriCarteSpeciali.toString());
-    }
-
-    public List<Valori> getCarteSpecialiSelezionate(){
-        return valoriCarteSpeciali;
     }
 
     /**
@@ -104,24 +100,3 @@ public class Mazzo {
     }
 
 }
-
-//        for(int i = mazzo.size() - 1; i > 0; --i){
-//            int index = sourceRandom.nextInt(i);
-//            Carta c = mazzo.get(index);
-//            mazzo.set(index,mazzo.get(i));
-//            mazzo.set(i,c);
-//        }
-
-//for( Colori c : Colori.values() ){
-//                if(!c.equals(Colori.NERO)) {
-//                    mazzo.push(new CartaNormale(c, Valori.ZERO));
-//                    mazzo.push(new CartaNormale(Colori.NERO, Valori.CAMBIOCOLORE));
-//                    mazzo.push(new CartaNormale(Colori.NERO, Valori.PESCAQUATTRO));
-//                    for ( Valori v : Valori.values() ) {
-//                        if (!(v.equals(Valori.ZERO) || v.equals(Valori.CAMBIOCOLORE) || v.equals(Valori.PESCAQUATTRO))) {
-//                            mazzo.push(new CartaNormale(c, v));
-//                            mazzo.push(new CartaNormale(c, v));
-//                        }
-//                    }
-//                }
-//            }

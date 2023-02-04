@@ -1,16 +1,11 @@
 package ProgettoFinale.Model.Tavolo;
 
-import ProgettoFinale.Controller.Controller;
-import ProgettoFinale.Controller.Pacchetti.*;
 import ProgettoFinale.Model.Carte.Carta;
 import ProgettoFinale.Model.Carte.Mazzo;
 import ProgettoFinale.Model.Giocatori.Computer;
 import ProgettoFinale.Model.Giocatori.Giocatore;
 import ProgettoFinale.Model.Giocatori.Giocatori;
-import ProgettoFinale.Model.TurnManager;
-
-import javax.swing.*;
-import java.awt.event.ActionListener;
+import ProgettoFinale.Model.GestoreTurno;
 import java.util.Observable;
 import java.util.Stack;
 
@@ -23,7 +18,7 @@ public class Tavolo extends Observable {
     private Computer computerSx = new Computer();
     private Computer computerSu = new Computer();
     private Computer computerDx = new Computer();
-    private TurnManager tm = new TurnManager(giocatore,computerSx,computerSu,computerDx );
+    private GestoreTurno tm = new GestoreTurno(giocatore,computerSx,computerSu,computerDx );
     private Mazzo mazzo;
     private Stack<Carta> scarti = new Stack();
 
@@ -102,29 +97,21 @@ public class Tavolo extends Observable {
         return tavoloInstance;
     }
 
-    public void pescata(Giocatori giocatore){
-        Carta c = mazzo.pesca();
+    public void pescata(Giocatori giocatore, Carta c){
         giocatore.pescata(c);
-        notificaCambiamenti(new AvvisoPescataComputer((Computer) giocatore));
     }
 
-    public void giocataPescata(Carta carta){
-        notificaCambiamenti(new AvvisoGiocataComputer(carta, giocatore));
-    }
 
     public void giocata(Giocatori giocatore, Carta carta){
         giocatore.getMano().remove(carta);
-        notificaCambiamenti(new AvvisoGiocataComputer(carta, giocatore));
     }
 
     public void cambioPilaScarti(Carta carta){
         getScarti().push(carta);
-        notificaCambiamenti(new AvvisoPilaScarti(carta.getImmagine()));
     }
 
     public void turnoPassato(){
         tm.passaTurno();
-        notificaCambiamenti(new PassaTurno(tm.getGiocatoreDiTurno().getNome()));
     }
 
     public void finePartita(boolean esito){
@@ -135,10 +122,9 @@ public class Tavolo extends Observable {
             getGiocatore().sconfitta();
             getGiocatore().livellamento(50);
         }
-        notificaCambiamenti(new FinePartita(esito));
     }
 
-    public TurnManager getTm() {
+    public GestoreTurno getTm() {
         return tm;
     }
 

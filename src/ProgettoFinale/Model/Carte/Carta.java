@@ -7,10 +7,8 @@ import java.awt.*;
  * un valore e un immagine
  */
 public abstract class Carta {
-    protected Image img;
     protected Colori colore;
     protected Valori valore;
-    //TODO:refactorEnumColori
 
     /**
      * Metodo che ritorna il colore della carta
@@ -29,14 +27,6 @@ public abstract class Carta {
     }
 
     /**
-     * Metodo che ritorna l'immagine della carta
-     * @return immagine della carta
-     */
-    public Image getImmagine(){
-        return img;
-    }
-
-    /**
      * Metodo che dato in input un oggetto Colori cambia il suo colore con quello
      * @param colore
      */
@@ -52,13 +42,6 @@ public abstract class Carta {
         this.valore = valore;
     }
 
-    /**
-     * Metodo che dato in input un oggetto Image cambia la sua immagine con quello
-     * @param img
-     */
-    public void setImmagine(Image img){
-        this.img = img;
-    }
 
     /**
      * Metodo che ritorna il colore e il valore della carta

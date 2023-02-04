@@ -3,7 +3,8 @@ package ProgettoFinale;
 import ProgettoFinale.Controller.Pacchetti.*;
 import ProgettoFinale.Model.Giocatori.Giocatore;
 import ProgettoFinale.View.Animazioni.Animazione;
-import ProgettoFinale.View.GameView;
+import ProgettoFinale.View.Decorator.DecoratoreCarta;
+import ProgettoFinale.View.PartitaView;
 import ProgettoFinale.View.Informazioni;
 import ProgettoFinale.View.ManiGiocatori.BottoneCarta;
 import ProgettoFinale.View.Modalita.SelezionaCarteExtra;
@@ -27,6 +28,7 @@ import java.util.Observer;
  * Classe usata come View ed è la nostra finestra in cui posizioniamo tutti i label
  */
 public class FinestraGioco extends JFrame implements Observer {
+    private static FinestraGioco instance;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     protected int height = (int) screenSize.getHeight();
     protected int width = (int) screenSize.getWidth();
@@ -43,7 +45,7 @@ public class FinestraGioco extends JFrame implements Observer {
     private JLabel naticchioni = new JLabel();
     private JLabel blueSprite = new JLabel();
     private JLabel piePagina = new JLabel();
-    private GameView gw = new GameView();
+    private PartitaView gw = new PartitaView();
     private ProfiloView pw = new ProfiloView(width,height);
     private Audio audio = new Audio(width,height);
     private SelezioneModalita modalita = new SelezioneModalita(width,height);
@@ -60,7 +62,7 @@ public class FinestraGioco extends JFrame implements Observer {
      * Costruttore che chiama la super classe
      * e non usa layout, in cui vengono aggiunto tutti i label
      */
-    public FinestraGioco(){
+    private FinestraGioco(){
         super("Juno!");
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
         setUndecorated(true);
@@ -253,7 +255,7 @@ public class FinestraGioco extends JFrame implements Observer {
      * Metodo che ritorna la GameView
      * @return
      */
-    public GameView getGw() {
+    public PartitaView getGw() {
         return gw;
     }
 
@@ -285,6 +287,7 @@ public class FinestraGioco extends JFrame implements Observer {
      */
     public Versi getVersi(){return versi;}
 
+    public Effetti getEffetti(){return effetti;}
     /**
      * Metodo che gestisce la fine della partita e fa ritornare nel menù principale
      */
@@ -298,6 +301,15 @@ public class FinestraGioco extends JFrame implements Observer {
         getMenu().setVisible(true);
         ambiente.stop();
         ambiente.riproduciMusicaAmbiente(5);
+    }
+
+    /**
+     * Metodo per rendere la FinestraGioco Singleton
+     * @return l'istanza della FinestraGioco senza crearne uno nuovo se già esiste
+     */
+    public static FinestraGioco getInstance() {
+        if (instance == null) instance = new FinestraGioco();
+        return instance;
     }
 
     /**
@@ -323,21 +335,17 @@ public class FinestraGioco extends JFrame implements Observer {
                             ((AvvisoPescataComputer) arg).getGiocatorePescante().getMano());
 
         } else if (arg instanceof AvvisoGiocata) {
-            //TODO: Creare metodo in gw per animazioneGiocatoreGioca
             if(Integer.parseInt(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getValoreIntero())<10)
                 effetti.riproduciEffettoSpeciale(2);
             else if (Integer.parseInt(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getValoreIntero())==10
                     ||Integer.parseInt(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getValoreIntero())==11)
                 effetti.riproduciEffettoSpeciale(3);
             else effetti.riproduciEffettoSpeciale(4);
-            gw.getAnimazioneGiocatoreGioca().setImage(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getImmagine());
-            gw.getAnimazioneGiocatoreGioca().setX(((AvvisoGiocata) arg).getBottoneCarta().getX());
-            gw.getAnimazioneGiocatoreGioca().setY(gw.getLabelManoGiocatore().getY()-350);
-            gw.getAnimazioneGiocatoreGioca().timer();
-            gw.getSfondo().add(gw.getAnimazioneGiocatoreGioca());
+            gw.animazioneGiocatoriGiocaCarta(((AvvisoGiocata) arg).getGiocatore().getNome(),
+                    ((AvvisoGiocata) arg).getBottoneCarta().getCarta());
             gw.getLabelManoGiocatore().visualizzaCarte(((AvvisoGiocata) arg).getGiocatore().getMano(),
                                                         ((AvvisoGiocata) arg).getCtrl());
-            gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getImmagine()));
+            gw.getPilaScarti().setIcon(new ImageIcon(new DecoratoreCarta(((AvvisoGiocata) arg).getBottoneCarta().getCarta()).visualizzaCarta()));
         } else if (arg instanceof AvvisoGiocataComputer) {
             if(Integer.parseInt(((AvvisoGiocataComputer) arg).getCartaGiocata().getValoreIntero())<10)
                 effetti.riproduciEffettoSpeciale(2);
@@ -364,12 +372,11 @@ public class FinestraGioco extends JFrame implements Observer {
                                                                 else{gw.aggiornaMano(x.getNome(), x.getMano());}
                                                                 });
         } else if (arg instanceof AvvisoPilaScarti){
-            gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoPilaScarti) arg).getImgCarta()));
-        }  else if (arg instanceof FinePartita){
+            gw.getPilaScarti().setIcon(new ImageIcon(new DecoratoreCarta(((AvvisoPilaScarti) arg).getImgCarta()).visualizzaCarta()));
+        } else if (arg instanceof FinePartita){
             effetti.riproduciEffettoSpeciale(9);
             partitaFinita();
         }
     }
 }
 
-//new java.awt.Color(31, 122, 31)

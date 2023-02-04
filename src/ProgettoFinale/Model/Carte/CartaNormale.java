@@ -1,7 +1,5 @@
 package ProgettoFinale.Model.Carte;
 
-import ProgettoFinale.View.Decorator.DecoratoreCarta;
-
 /**
  * Classe concreta che estende Carta e permette la creazione delle varie carte
  */
@@ -14,6 +12,5 @@ public class CartaNormale extends Carta {
     public CartaNormale(Colori colore, Valori valore) {
         setColore(colore);
         setValore(valore);
-        setImmagine(new DecoratoreCarta(this).visualizzaCarta());
     }
 }

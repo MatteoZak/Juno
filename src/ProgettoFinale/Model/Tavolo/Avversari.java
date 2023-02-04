@@ -24,5 +24,4 @@ public enum Avversari {
         this.tipo = tipo;
     }
 
-    //TODO:metodi statici per ottenere tutti e 3 i tipi dei pokemon
 }

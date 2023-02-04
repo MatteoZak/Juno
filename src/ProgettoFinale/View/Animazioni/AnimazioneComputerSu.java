@@ -1,7 +1,5 @@
 package ProgettoFinale.View.Animazioni;
 
-import ProgettoFinale.View.Animazioni.Animazione;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 /**

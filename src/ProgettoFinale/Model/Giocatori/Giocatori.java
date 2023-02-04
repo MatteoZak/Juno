@@ -7,7 +7,7 @@ import java.util.Observable;
 /**
  * Classe astratta dei giocatori in cui abbiamo le carte in mano e il nome
  */
-public abstract class Giocatori extends Observable {
+public abstract class Giocatori{
     protected ArrayList<Carta> mano = new ArrayList<>();
     protected String nome;
 
@@ -39,13 +39,5 @@ public abstract class Giocatori extends Observable {
         this.nome = nome;
     }
 
-    /**
-
-     */
-    @Override
-    public void notifyObservers() {
-        this.setChanged();
-        super.notifyObservers();
-    }
 }
 

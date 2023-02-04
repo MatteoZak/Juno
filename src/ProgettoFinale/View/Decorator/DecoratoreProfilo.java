@@ -24,7 +24,6 @@ public class DecoratoreProfilo extends DecoratoreProfiliAstratto{
      */
     @Override
     public void visualizzaAvatar() {
-        //TODO: cambiare trattino con costante nell'apposita classe            nome = bottoneIcona.getName().split("-")[1];
         String nome = bottoneIcona.getName();
         if(!bottoneIcona.getName().contains("Giocatore"))
             nome = bottoneIcona.getName().substring(10);

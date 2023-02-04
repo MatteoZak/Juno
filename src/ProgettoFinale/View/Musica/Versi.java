@@ -34,20 +34,6 @@ public class Versi implements Musica{
         playListCompleta.add(new File("Risorse/audio/Versi/meganium.wav"));
         playListCompleta.add(new File("Risorse/audio/Versi/sceptile.wav"));
         playListCompleta.add(new File("Risorse/audio/Versi/avvio.wav"));
-        /*
-        try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(playListCompleta.get(0));
-            clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException(e);
-        }
-
-         */
     }
     /**
      * Metodo che inizializza la clip con la traccia utilizzando un indice

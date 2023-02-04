@@ -1,9 +1,7 @@
 package ProgettoFinale.Controller.Pacchetti;
 
-import ProgettoFinale.Controller.Controller;
 import ProgettoFinale.Model.Carte.Carta;
 import ProgettoFinale.Model.Giocatori.Giocatori;
-import ProgettoFinale.View.ManiGiocatori.BottoneCarta;
 
 public class AvvisoGiocataComputer {
     private Carta cartaGiocata;

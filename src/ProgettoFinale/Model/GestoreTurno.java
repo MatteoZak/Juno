@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Classe che gestisce i turni dei giocatori
  */
-public class TurnManager {
+public class GestoreTurno {
     private int turno;
     private boolean direzione;
     private Giocatore g;
@@ -24,7 +24,7 @@ public class TurnManager {
      * @param computerSu
      * @param computerDx
      */
-    public TurnManager(Giocatore g, Computer computerSx, Computer computerSu, Computer computerDx){
+    public GestoreTurno(Giocatore g, Computer computerSx, Computer computerSu, Computer computerDx){
         this.g = g;
         this.computerSx = computerSx;
         this.computerSu = computerSu;
@@ -98,7 +98,6 @@ public class TurnManager {
      * @return giocatore successivo
      */
     public Giocatori getGiocatoreSuccessivo(){
-        //TODO: rivedere
         int i = turno;
         if(direzione)
             return giocatori.get(++i % giocatori.size());
