@@ -216,40 +216,47 @@ public class FinestraGioco extends JFrame implements Observer {
     public Audio getAudio() {
         return audio;
     }
+    public Ambiente getAmbiente(){return ambiente;}
+    public Versi getVersi(){return versi;}
 
     /**
      * Metodo che gestisce la fine della partita e fa ritornare nel menù principale
      */
     public void partitaFinita(){
         gw.setEnabled(false);
-        ambiente.stop();
-        ambiente.close();
         JFrame uscita = new JFrame();
         JOptionPane.showMessageDialog(uscita,"FINE PARTITA!");
-        effetti.riproduciEffettoSpeciale(7);
+        effetti.riproduciEffettoSpeciale(8);
         gw.setVisible(false);
         getPrincipale().setVisible(true);
         getMenu().setVisible(true);
+        ambiente.stop();
         ambiente.riproduciMusicaAmbiente(5);
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if(arg instanceof AvvisoPescata) {
-            effetti.riproduciEffettoSpeciale(0);
+            effetti.riproduciEffettoSpeciale(1);
             gw.animazioneGiocatori(((AvvisoPescata) arg).getGiocatorePescante().getNome());
             gw.getLabelManoGiocatore().add(new BottoneCarta(((AvvisoPescata) arg).getCartaPescata(),
                                             ((AvvisoPescata) arg).getCtrl()));
             gw.getLabelManoGiocatore().visualizzaCarte(((AvvisoPescata) arg).getGiocatorePescante().getMano(),
                                                         ((AvvisoPescata) arg).getCtrl());
         } else if (arg instanceof AvvisoPescataComputer){
-            effetti.riproduciEffettoSpeciale(0);
+            effetti.riproduciEffettoSpeciale(1);
             gw.animazioneGiocatori(((AvvisoPescataComputer) arg).getGiocatorePescante().getNome());
             gw.aggiornaMano(((AvvisoPescataComputer) arg).getGiocatorePescante().getNome(),
                             ((AvvisoPescataComputer) arg).getGiocatorePescante().getMano());
 
         } else if (arg instanceof AvvisoGiocata) {
             //TODO: Creare metodo in gw per animazioneGiocatoreGioca
+            if(Integer.parseInt(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getValoreIntero())<10)
+                effetti.riproduciEffettoSpeciale(2);
+            else if (Integer.parseInt(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getValoreIntero())==10
+                    ||Integer.parseInt(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getValoreIntero())==11)
+                effetti.riproduciEffettoSpeciale(3);
+            else effetti.riproduciEffettoSpeciale(4);
             gw.getAnimazioneGiocatoreGioca().setImage(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getImmagine());
             gw.getAnimazioneGiocatoreGioca().setX(((AvvisoGiocata) arg).getBottoneCarta().getX());
             gw.getAnimazioneGiocatoreGioca().setY(gw.getLabelManoGiocatore().getY()-350);
@@ -259,12 +266,23 @@ public class FinestraGioco extends JFrame implements Observer {
                                                         ((AvvisoGiocata) arg).getCtrl());
             gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getImmagine()));
         } else if (arg instanceof AvvisoGiocataComputer) {
+            if(Integer.parseInt(((AvvisoGiocataComputer) arg).getCartaGiocata().getValoreIntero())<10)
+                effetti.riproduciEffettoSpeciale(2);
+            else if (Integer.parseInt(((AvvisoGiocataComputer) arg).getCartaGiocata().getValoreIntero())==10
+                    ||Integer.parseInt(((AvvisoGiocataComputer) arg).getCartaGiocata().getValoreIntero())==11)
+                effetti.riproduciEffettoSpeciale(3);
+            else effetti.riproduciEffettoSpeciale(4);
             gw.animazioneGiocatoriGiocaCarta(((AvvisoGiocataComputer) arg).getGiocatore().getNome(),
                                                 ((AvvisoGiocataComputer) arg).getCartaGiocata());
             gw.aggiornaMano(((AvvisoGiocataComputer) arg).getGiocatore().getNome(),
                             ((AvvisoGiocataComputer) arg).getGiocatore().getMano());
         } else if (arg instanceof PassaTurno){
             gw.segnaGiocatoreAttivo(((PassaTurno) arg).getGiocatoreDiTurno());
+            if(((PassaTurno) arg).getGiocatoreDiTurno().contains("Sx")) versi.riproduciPlaylist(0);
+            else if ((((PassaTurno) arg).getGiocatoreDiTurno().contains("Su")))
+                versi.riproduciPlaylist(1);
+            else if ((((PassaTurno) arg).getGiocatoreDiTurno().contains("Dx"))) versi.riproduciPlaylist(2);
+
         } else if (arg instanceof  Aggiornamento){
             Arrays.stream(((Aggiornamento) arg).getGiocatore()).forEach(x ->
                                                                 {if (x instanceof Giocatore){
@@ -275,7 +293,7 @@ public class FinestraGioco extends JFrame implements Observer {
         } else if (arg instanceof AvvisoPilaScarti){
             gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoPilaScarti) arg).getImgCarta()));
         }  else if (arg instanceof FinePartita){
-            effetti.riproduciEffettoSpeciale(8);
+            effetti.riproduciEffettoSpeciale(9);
             partitaFinita();
         }
     }

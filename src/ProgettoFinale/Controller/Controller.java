@@ -52,9 +52,10 @@ public class Controller implements ActionListener, ChangeListener {
         this.f = f;
         this.t = t;
         t.addObserver(f);
-        riproduciMusicaAmbiente(5);
+        f.getAmbiente().riproduciMusicaAmbiente(5);
+        //riproduciMusicaAmbiente(5);
         riproduciEffettoSpeciale(0);
-        riproduciVerso(0);
+        riproduciVerso(9);
 
         addChangeListener();
         addActionListener();
@@ -130,17 +131,17 @@ public class Controller implements ActionListener, ChangeListener {
     @Override
     public void stateChanged(ChangeEvent e) {
         if(e.getSource().equals(f.getAudio().getBarraVolumeAmbiente())){
-            ambiente.setVolume(f.getAudio().getBarraVolumeAmbiente().getValue());
+            f.getAmbiente().setVolume(f.getAudio().getBarraVolumeAmbiente().getValue());
             f.getAudio().getVolumeAmbiente().setText(String.valueOf((int)((f.getAudio().getBarraVolumeAmbiente().getValue()+80F)/0.85F)));
-            ambiente.regola();
+            f.getAmbiente().regola();
         }else if (e.getSource().equals(f.getAudio().getBarraVolumeEffetti())){
             effetti.setVolume(f.getAudio().getBarraVolumeEffetti().getValue());
             f.getAudio().getVolumeEffetti().setText(String.valueOf((int)((f.getAudio().getBarraVolumeEffetti().getValue()+80F)/0.85F)));
             effetti.regola();
         } else if (e.getSource().equals(f.getAudio().getBarraVolumeVersi())) {
-            versi.setVolume(f.getAudio().getBarraVolumeVersi().getValue());
+            f.getVersi().setVolume(f.getAudio().getBarraVolumeVersi().getValue());
             f.getAudio().getVolumeVersi().setText(String.valueOf((int) ((f.getAudio().getBarraVolumeVersi().getValue() + 80F) / 0.85F)));
-            versi.regola();
+            f.getVersi().regola();
         }
     }
 
@@ -314,7 +315,7 @@ public class Controller implements ActionListener, ChangeListener {
                 f.getGw().setVisible(true);
                 break;
             case "JUNO":
-                riproduciEffettoSpeciale(5);
+                riproduciEffettoSpeciale(6);
                 f.getGw().getTastoJuno().setVisible(false);
                 break;
             case "PASSA":
@@ -353,10 +354,11 @@ public class Controller implements ActionListener, ChangeListener {
                 break;
             case "PRINCIPALEPARTITA":
                 JFrame uscita = new JFrame();
+                stopMusicaAmbiente();
                 int risposta = JOptionPane.showConfirmDialog(uscita, "Vuoi davvero uscire e perdere la partita?");
                 if (risposta == 0) {
                     t.getGiocatore().sconfitta();
-                    riproduciEffettoSpeciale(7);
+                    riproduciEffettoSpeciale(8);
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
@@ -470,6 +472,7 @@ public class Controller implements ActionListener, ChangeListener {
                 f.getGw().getPilaMazzo().setEnabled(true);
                 applicaEffetto(bc.getCarta().getValoreIntero());
                 if(t.getGiocatore().getMano().isEmpty()){
+                    f.getAmbiente().stop();
                     t.finePartita(true);
                 }
                 if(t.getGiocatore().getMano().size() == 1){
@@ -509,39 +512,39 @@ public class Controller implements ActionListener, ChangeListener {
         //TODO:fare solo una volta riproduci effetto speciale
         switch (valore) {
             case "10" -> {
-                riproduciEffettoSpeciale(2);
+                //riproduciEffettoSpeciale(3);
                 invertiGiro();
             }
             case "11" -> {
-                riproduciEffettoSpeciale(2);
+                //riproduciEffettoSpeciale(3);
                 blocco();
             }
             case "12" -> {
-                riproduciEffettoSpeciale(2);
+                //riproduciEffettoSpeciale(4);
                 pescaDue();
             }
             case "13" -> {
-                riproduciEffettoSpeciale(2);
+                //riproduciEffettoSpeciale(3);
                 cambioColore();
             }
             case "14" -> {
-                riproduciEffettoSpeciale(2);
+                //riproduciEffettoSpeciale(4);
                 pescaQuattro();
             }
             case "15" -> {
-                riproduciEffettoSpeciale(2);
+                //riproduciEffettoSpeciale(4);
                 for(int i = 0; i < 3 ; i++){
                     blocco();
                 }
             }
             case "16" -> {
-                riproduciEffettoSpeciale(2);
+                //riproduciEffettoSpeciale(4);
                 for(int i = 0; i < 3 ; i++){
                     pescaDue();
                 }
             }
             case "17" -> {
-                riproduciEffettoSpeciale(2);
+                //riproduciEffettoSpeciale(4);
                 for(int i = 0; i < 3 ; i++){
                     fineMazzo();
                     t.getTm().getGiocatoreSuccessivo().getMano().add(t.getMazzo().pesca());
@@ -549,19 +552,19 @@ public class Controller implements ActionListener, ChangeListener {
                 }
             }
             case "18" -> {
-                riproduciEffettoSpeciale(2);
+                //riproduciEffettoSpeciale(4);
                 scambioMani();
             }
             case "19" -> {
-                riproduciEffettoSpeciale(2);
+                //riproduciEffettoSpeciale(4);
                 invertiGiro();
                 blocco();
             }
             case "20" -> {
-                riproduciEffettoSpeciale(2);
+                //riproduciEffettoSpeciale(4);
                 duello();
             }
-            default -> riproduciEffettoSpeciale(1);
+            //default -> riproduciEffettoSpeciale(2);
 
         }
     }
@@ -570,7 +573,7 @@ public class Controller implements ActionListener, ChangeListener {
      * Metodo per la carta che inverte il giro, riproducendo il suono
      */
     private void invertiGiro(){
-        riproduciEffettoSpeciale(3);
+        //riproduciEffettoSpeciale(4);
         t.getTm().cambiaDirezione();
         f.getGw().visualizzaDirezione(t.getTm().getDirezione());
     }
@@ -579,7 +582,7 @@ public class Controller implements ActionListener, ChangeListener {
      * Metodo della carta che blocca il giocatore successivo
      */
     private void blocco(){
-        riproduciEffettoSpeciale(3);
+        //riproduciEffettoSpeciale(4);
         t.getTm().passaTurno();
     }
 
@@ -587,13 +590,13 @@ public class Controller implements ActionListener, ChangeListener {
      * Metodo della carta che fa pescare due carte al giocatore successivo e lo blocca
      */
     private void pescaDue(){
-        riproduciEffettoSpeciale(3);
+        //riproduciEffettoSpeciale(4);
         fineMazzo();
         Carta c = t.getMazzo().pesca();
         t.getTm().getGiocatoreSuccessivo().getMano().add(c);
         inviaPacchettoPescata(t.getTm().getGiocatoreSuccessivo(),c);
         fineMazzo();
-        riproduciEffettoSpeciale(3);
+        //riproduciEffettoSpeciale(4);
         Carta c2 = t.getMazzo().pesca();
         t.getTm().getGiocatoreSuccessivo().getMano().add(c2);
         inviaPacchettoPescata(t.getTm().getGiocatoreSuccessivo(),c2);
@@ -622,7 +625,7 @@ public class Controller implements ActionListener, ChangeListener {
     private void pescaQuattro() {
         for(int i = 0; i < 4; i++){
             fineMazzo();
-            riproduciEffettoSpeciale(3);
+            //EffettoSpeciale(4);
             Carta c = t.getMazzo().pesca();
             t.getTm().getGiocatoreSuccessivo().getMano().add(c);
             inviaPacchettoPescata(t.getTm().getGiocatoreSuccessivo(),c);
@@ -697,7 +700,7 @@ public class Controller implements ActionListener, ChangeListener {
      */
     private void fineMazzo(){
         if (t.getMazzo().getPilaMazzo().isEmpty()) {
-            riproduciEffettoSpeciale(4);
+            riproduciEffettoSpeciale(5);
             System.out.println("Mazziere: Sto mischiando il mazzo!!");
             riformaMazzo();
         }
@@ -738,6 +741,7 @@ public class Controller implements ActionListener, ChangeListener {
             t.cambioPilaScarti(cartaDaGiocare);
             applicaEffetto(cartaDaGiocare.getValoreIntero());
             if (computer.getMano().isEmpty()){
+                f.getAmbiente().stop();
                 t.finePartita(false);
             }
         }
@@ -799,10 +803,11 @@ public class Controller implements ActionListener, ChangeListener {
     public void iniziaPartita(){
         resetPartita();
         impostaAvatars();
-        stopMusicaAmbiente();
+        f.getAmbiente().stop();
         leggiImpostazioniAudio();
         f.getGw().setEnabled(true);
-        riproduciMusicaAmbiente(4);
+        //riproduciMusicaAmbiente(4);
+        f.getAmbiente().riproduciMusicaAmbiente(4);
         t.getMazzo().formaMazzo();
         if(modalita.equals(ModalitaGioco.EXTRA))
             t.getMazzo().aggiungiCarteSpeciali();
@@ -859,23 +864,24 @@ public class Controller implements ActionListener, ChangeListener {
     public void impostaAvatars(){
         //TODO:Aggiustare i substring e vedere come aggiustare il decoratore magari facendo decorare anche nome
         /////////////////////////////////////////////////// GIOCATORE //////////////////////////////////////////////
+        f.getVersi().resetPlaylist();
         f.getGw().getNomeGiocatore().setText(t.getGiocatore().getUsername());
         new DecoratoreProfilo(f.getGw().getAvatarGiocatore()).visualizzaAvatar();
         /////////////////////////////////////////////////// COMPUTER SX ///////////////////////////////////////////
         int primo = sourceRandom.nextInt(0,3);
-        versi.aggiungiCanzone(primo);
+        f.getVersi().aggiungiCanzone(primo);
         f.getGw().getAvatarComputerSx().setName("ComputerSx"+Avversari.values()[primo].toString().toLowerCase());
         new DecoratoreProfilo(f.getGw().getAvatarComputerSx()).visualizzaAvatar();
         f.getGw().getNomeComputerSx().setText(f.getGw().getAvatarComputerSx().getName().substring(10));
         /////////////////////////////////////////////////// COMPUTER SU ///////////////////////////////////////////
         int secondo = sourceRandom.nextInt(3,6);
-        versi.aggiungiCanzone(secondo);
+        f.getVersi().aggiungiCanzone(secondo);
         f.getGw().getAvatarComputerSu().setName("ComputerSu"+Avversari.values()[secondo].toString().toLowerCase());
         new DecoratoreProfilo(f.getGw().getAvatarComputerSu()).visualizzaAvatar();
         f.getGw().getNomeComputerSu().setText(f.getGw().getAvatarComputerSu().getName().substring(10));
         /////////////////////////////////////////////////// COMPUTER DX ///////////////////////////////////////////
         int terzo = sourceRandom.nextInt(6,9);
-        versi.aggiungiCanzone(terzo);
+        f.getVersi().aggiungiCanzone(terzo);
         f.getGw().getAvatarComputerDx().setName("ComputerDx"+Avversari.values()[terzo].toString().toLowerCase());
         new DecoratoreProfilo(f.getGw().getAvatarComputerDx()).visualizzaAvatar();
         f.getGw().getNomeComputerDx().setText(f.getGw().getAvatarComputerDx().getName().substring(10));
@@ -896,18 +902,18 @@ public class Controller implements ActionListener, ChangeListener {
      * @param i è l'indice della traccia
      */
     public void riproduciMusicaAmbiente(int i){
-        ambiente.setTraccia(i);
-        ambiente.regola();
-        ambiente.play();
-        ambiente.loop();
+        f.getAmbiente().setTraccia(i);
+        f.getAmbiente().regola();
+        f.getAmbiente().play();
+        f.getAmbiente().loop();
     }
 
     /**
      * Metodo per fermare la musica
      */
     public void stopMusicaAmbiente(){
-        ambiente.stop();
-        ambiente.close();
+        f.getAmbiente().stop();
+        f.getAmbiente().close();
     }
 
     /**
@@ -925,9 +931,9 @@ public class Controller implements ActionListener, ChangeListener {
      * @param i è l'indice della traccia
      */
     public void riproduciVerso(int i){
-        versi.setTraccia(i);
-        versi.regola();
-        versi.play();
+        f.getVersi().setTraccia(i);
+        f.getVersi().regola();
+        f.getVersi().play();
     }
 
     /**
@@ -956,11 +962,11 @@ public class Controller implements ActionListener, ChangeListener {
      * Metodo che legge i valori dei volumi sui JSlider e scrive il valore corrispondente dopo averlo convertito
      */
     public void leggiImpostazioniAudio(){
-        f.getAudio().getBarraVolumeAmbiente().setValue((int) ambiente.getVolume());
+        f.getAudio().getBarraVolumeAmbiente().setValue((int) f.getAmbiente().getVolume());
         f.getAudio().getVolumeAmbiente().setText(String.valueOf((int)((f.getAudio().getBarraVolumeAmbiente().getValue()+80F)/0.85F)));
         f.getAudio().getBarraVolumeEffetti().setValue((int) effetti.getVolume());
         f.getAudio().getVolumeEffetti().setText(String.valueOf((int)((f.getAudio().getBarraVolumeEffetti().getValue()+80F)/0.85F)));
-        f.getAudio().getBarraVolumeVersi().setValue((int) versi.getVolume());
+        f.getAudio().getBarraVolumeVersi().setValue((int) f.getVersi().getVolume());
         f.getAudio().getVolumeVersi().setText(String.valueOf((int)((f.getAudio().getBarraVolumeVersi().getValue()+80F)/0.85F)));
     }
 

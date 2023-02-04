@@ -10,21 +10,21 @@ import java.util.List;
 public class Effetti implements Musica{
 
     private Clip clip;
-    protected List<File> playList= new ArrayList<>();
-    protected FloatControl fc;
+    private List<File> playList= new ArrayList<>();
+    private FloatControl fc;
     private List<String> lines;
-
     private File file = new File("musica.txt");
     public Effetti(){
-        playList.add(new File("Risorse/audio/EffettiSpeciali/drawCard.wav")); //0
-        playList.add(new File("Risorse/audio/EffettiSpeciali/playCard1.wav")); //1
-        playList.add(new File("Risorse/audio/EffettiSpeciali/playCard2.wav")); //2
-        playList.add(new File("Risorse/audio/EffettiSpeciali/plusCard.wav")); //3
-        playList.add(new File("Risorse/audio/EffettiSpeciali/shuffle.wav")); //4
-        playList.add(new File("Risorse/audio/EffettiSpeciali/uno.wav")); //5
-        playList.add(new File("Risorse/audio/EffettiSpeciali/vittoria.wav")); //6
-        playList.add(new File("Risorse/audio/EffettiSpeciali/fuga.wav")); //7
-        playList.add(new File("Risorse/audio/EffettiSpeciali/lose.wav")); //8
+        playList.add(new File("Risorse/audio/EffettiSpeciali/avvio.wav")); //0
+        playList.add(new File("Risorse/audio/EffettiSpeciali/drawCard.wav")); //1
+        playList.add(new File("Risorse/audio/EffettiSpeciali/playCard1.wav")); //2
+        playList.add(new File("Risorse/audio/EffettiSpeciali/playCard2.wav")); //3
+        playList.add(new File("Risorse/audio/EffettiSpeciali/plusCard.wav")); //4
+        playList.add(new File("Risorse/audio/EffettiSpeciali/shuffle.wav")); //5
+        playList.add(new File("Risorse/audio/EffettiSpeciali/uno.wav")); //6
+        playList.add(new File("Risorse/audio/EffettiSpeciali/vittoria.wav")); //7
+        playList.add(new File("Risorse/audio/EffettiSpeciali/fuga.wav")); //8
+        playList.add(new File("Risorse/audio/EffettiSpeciali/lose.wav")); //9
         /*
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(playList.get(0));

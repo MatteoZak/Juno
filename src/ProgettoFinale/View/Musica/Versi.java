@@ -29,6 +29,7 @@ public class Versi implements Musica{
         playListCompleta.add(new File("Risorse/audio/Versi/venusaur.wav"));
         playListCompleta.add(new File("Risorse/audio/Versi/meganium.wav"));
         playListCompleta.add(new File("Risorse/audio/Versi/sceptile.wav"));
+        playListCompleta.add(new File("Risorse/audio/Versi/avvio.wav"));
         /*
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(playListCompleta.get(0));
@@ -105,11 +106,31 @@ public class Versi implements Musica{
 
     @Override
     public List<File> getPlayList() {
-        return playListCompleta;
+        return playList;
     }
 
+    public void resetPlaylist(){
+        playList.clear();
+    }
     public void riproduciVerso(int i){
         setTraccia(i);
+        regola();
+        play();
+    }
+    public void riproduciPlaylist(int i){
+        System.out.println("metofo giusto");
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(playList.get(i));
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        //setTraccia(i);
         regola();
         play();
     }

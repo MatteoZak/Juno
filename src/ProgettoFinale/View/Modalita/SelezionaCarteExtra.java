@@ -16,13 +16,13 @@ public class SelezionaCarteExtra extends JLabel {
     private JLabel labelBloccoInverti = new JLabel();
     private JLabel labelDuello = new JLabel();
 
-    JCheckBox checkBloccaTutti = new JCheckBox();
-    JCheckBox checkPescaDueTutti = new JCheckBox();
-    JCheckBox checkPescaTreTutti = new JCheckBox();
-    JCheckBox checkScambiaMani = new JCheckBox();
-    JCheckBox checkBloccoInverti = new JCheckBox();
-    JCheckBox checkDuello = new JCheckBox();
-    JButton bottoneGioca = new JButton("Gioca");
+    private JCheckBox checkBloccaTutti = new JCheckBox();
+    private JCheckBox checkPescaDueTutti = new JCheckBox();
+    private JCheckBox checkPescaTreTutti = new JCheckBox();
+    private JCheckBox checkScambiaMani = new JCheckBox();
+    private JCheckBox checkBloccoInverti = new JCheckBox();
+    private JCheckBox checkDuello = new JCheckBox();
+    private JButton bottoneGioca = new JButton("Gioca");
     private JLabel spiegazioneBloccaTutti = new JLabel();
     private JLabel spiegazionePescaDueTutti = new JLabel();
     private JLabel spiegazionePescaTreTutti = new JLabel();

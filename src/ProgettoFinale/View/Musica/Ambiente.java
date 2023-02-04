@@ -25,6 +25,7 @@ public class Ambiente implements Musica{
         playList.add(new File("Risorse/audio/Ambiente/centro pokemon.wav")); //3
         playList.add(new File("Risorse/audio/Ambiente/Battaglia Campione.wav")); //4
         playList.add(new File("Risorse/audio/Ambiente/menu principale.wav")); //5
+        playList.add(new File("Risorse/audio/Ambiente/avvio.wav")); //6
     }
 
 

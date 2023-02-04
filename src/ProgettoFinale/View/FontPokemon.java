@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class FontPokemon {
-    Font font;
+    private Font font;
     public FontPokemon(float size){
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, new File("Risorse/Pokemon Solid.ttf")).deriveFont(size);
