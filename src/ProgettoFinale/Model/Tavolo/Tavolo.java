@@ -102,35 +102,24 @@ public class Tavolo extends Observable {
         return tavoloInstance;
     }
 
-    public void pescata(Giocatori giocatore, Controller ctrl){
+    public void pescata(Giocatori giocatore){
         Carta c = mazzo.pesca();
         giocatore.pescata(c);
-        if (giocatore instanceof Giocatore){
-            notificaCambiamenti(new AvvisoPescata(c, (Giocatore) giocatore, ctrl));
-        }else {
-            notificaCambiamenti(new AvvisoPescataComputer((Computer) giocatore));
-        }
+        notificaCambiamenti(new AvvisoPescataComputer((Computer) giocatore));
     }
 
     public void giocataPescata(Carta carta){
-        getScarti().push(carta);
         notificaCambiamenti(new AvvisoGiocataComputer(carta, giocatore));
     }
 
     public void giocata(Giocatori giocatore, Carta carta){
         giocatore.getMano().remove(carta);
-        getScarti().push(carta);
         notificaCambiamenti(new AvvisoGiocataComputer(carta, giocatore));
     }
 
-    public void giocata(Giocatori giocatore, Carta carta, Controller ctrl){
-        giocatore.getMano().remove(carta);
+    public void cambioPilaScarti(Carta carta){
         getScarti().push(carta);
-        if (giocatore instanceof Giocatore){
-            notificaCambiamenti(new AvvisoGiocata(carta, giocatore, ctrl));
-        }else{
-        notificaCambiamenti(new AvvisoGiocataComputer(carta, giocatore));
-        }
+        notificaCambiamenti(new AvvisoPilaScarti(carta.getImmagine()));
     }
 
     public void turnoPassato(){

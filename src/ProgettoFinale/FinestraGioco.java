@@ -250,20 +250,19 @@ public class FinestraGioco extends JFrame implements Observer {
 
         } else if (arg instanceof AvvisoGiocata) {
             //TODO: Creare metodo in gw per animazioneGiocatoreGioca
-//            gw.getAnimazioneGiocatoreGioca().setImage(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getImmagine());
-//            gw.getAnimazioneGiocatoreGioca().setX(((AvvisoGiocata) arg).getBottoneCarta().getX());
-//            gw.getAnimazioneGiocatoreGioca().setY(gw.getLabelManoGiocatore().getY()-350);
-//            gw.getAnimazioneGiocatoreGioca().timer();
+            gw.getAnimazioneGiocatoreGioca().setImage(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getImmagine());
+            gw.getAnimazioneGiocatoreGioca().setX(((AvvisoGiocata) arg).getBottoneCarta().getX());
+            gw.getAnimazioneGiocatoreGioca().setY(gw.getLabelManoGiocatore().getY()-350);
+            gw.getAnimazioneGiocatoreGioca().timer();
             gw.getSfondo().add(gw.getAnimazioneGiocatoreGioca());
             gw.getLabelManoGiocatore().visualizzaCarte(((AvvisoGiocata) arg).getGiocatore().getMano(),
                                                         ((AvvisoGiocata) arg).getCtrl());
-            gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoGiocata) arg).getCarta().getImmagine()));
+            gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoGiocata) arg).getBottoneCarta().getCarta().getImmagine()));
         } else if (arg instanceof AvvisoGiocataComputer) {
             gw.animazioneGiocatoriGiocaCarta(((AvvisoGiocataComputer) arg).getGiocatore().getNome(),
                                                 ((AvvisoGiocataComputer) arg).getCartaGiocata());
             gw.aggiornaMano(((AvvisoGiocataComputer) arg).getGiocatore().getNome(),
                             ((AvvisoGiocataComputer) arg).getGiocatore().getMano());
-            gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoGiocataComputer) arg).getCartaGiocata().getImmagine()));
         } else if (arg instanceof PassaTurno){
             gw.segnaGiocatoreAttivo(((PassaTurno) arg).getGiocatoreDiTurno());
         } else if (arg instanceof  Aggiornamento){
@@ -273,7 +272,9 @@ public class FinestraGioco extends JFrame implements Observer {
                                                                             ((Aggiornamento) arg).getCtrl());}
                                                                 else{gw.aggiornaMano(x.getNome(), x.getMano());}
                                                                 });
-        } else if (arg instanceof FinePartita){
+        } else if (arg instanceof AvvisoPilaScarti){
+            gw.getPilaScarti().setIcon(new ImageIcon(((AvvisoPilaScarti) arg).getImgCarta()));
+        }  else if (arg instanceof FinePartita){
             effetti.riproduciEffettoSpeciale(8);
             partitaFinita();
         }

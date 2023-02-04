@@ -8,17 +8,17 @@ import ProgettoFinale.View.ManiGiocatori.BottoneCarta;
 import java.awt.event.ActionListener;
 
 public class AvvisoGiocata {
-    private Carta carta;
+    private BottoneCarta carta;
     private Giocatori giocatore;
     private Controller ctrl;
 
-    public AvvisoGiocata(Carta carta, Giocatori giocatore, Controller ctrl) {
+    public AvvisoGiocata(BottoneCarta carta, Giocatori giocatore, Controller ctrl) {
         this.carta = carta;
         this.giocatore = giocatore;
         this.ctrl = ctrl;
     }
 
-    public Carta getCarta() {
+    public BottoneCarta getBottoneCarta() {
         return carta;
     }
 

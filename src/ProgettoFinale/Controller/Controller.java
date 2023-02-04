@@ -465,7 +465,7 @@ public class Controller implements ActionListener, ChangeListener {
 //                t.giocata(t.getGiocatore(), bc.getCarta(), getActList(bc));
                 t.getGiocatore().getMano().remove(bc.getCarta());
                 t.getScarti().push(bc.getCarta());
-                t.notificaCambiamenti(new AvvisoGiocata(bc.getCarta(),t.getTm().getGiocatoreDiTurno(),this));
+                t.notificaCambiamenti(new AvvisoGiocata(bc,t.getTm().getGiocatoreDiTurno(),this));
                 f.getGw().getPilaScarti().setIcon(new ImageIcon(t.getScarti().peek().getImmagine()));
                 f.getGw().getPilaMazzo().setEnabled(true);
                 applicaEffetto(bc.getCarta().getValoreIntero());
@@ -729,11 +729,13 @@ public class Controller implements ActionListener, ChangeListener {
             Carta cartaPescataBot = t.getMazzo().pesca();
             if(giocabile(cartaPescataBot)){
                 t.giocataPescata(cartaPescataBot);
+                t.cambioPilaScarti(cartaPescataBot);
                 applicaEffetto(cartaPescataBot.getValoreIntero());
-            }else {t.pescata(computer, null);}
+            }else {t.pescata(computer);}
         } else {
             Carta cartaDaGiocare = giocabili.get(sourceRandom.nextInt(giocabili.size()));
             t.giocata(computer, cartaDaGiocare);
+            t.cambioPilaScarti(cartaDaGiocare);
             applicaEffetto(cartaDaGiocare.getValoreIntero());
             if (computer.getMano().isEmpty()){
                 t.finePartita(false);
@@ -789,21 +791,6 @@ public class Controller implements ActionListener, ChangeListener {
         t.getTm().resetTurni();
         t.notificaCambiamenti(new PassaTurno(t.getTm().getGiocatoreDiTurno().getNome()));
     }
-
-//    /**
-//     * Metodo che gestisce la fine della partita e fa ritornare nel menù principale
-//     */
-//    public void partitaFinita(){
-//        f.getGw().setEnabled(false);
-//        stopMusicaAmbiente();
-//        JFrame uscita = new JFrame();
-//        JOptionPane.showMessageDialog(uscita,"FINE PARTITA!");
-//        riproduciEffettoSpeciale(7);
-//        f.getGw().setVisible(false);
-//        f.getPrincipale().setVisible(true);
-//        f.getMenu().setVisible(true);
-//        riproduciMusicaAmbiente(5);
-//    }
 
     /**
      * Metodo che avvia la partita, mischiando il mazzo, mettendo la prima carta come pila degli scarti
@@ -871,28 +858,25 @@ public class Controller implements ActionListener, ChangeListener {
      */
     public void impostaAvatars(){
         //TODO:Aggiustare i substring e vedere come aggiustare il decoratore magari facendo decorare anche nome
-        //GIOCATORE
+        /////////////////////////////////////////////////// GIOCATORE //////////////////////////////////////////////
         f.getGw().getNomeGiocatore().setText(t.getGiocatore().getUsername());
         new DecoratoreProfilo(f.getGw().getAvatarGiocatore()).visualizzaAvatar();
-        //COMPUTER SX
+        /////////////////////////////////////////////////// COMPUTER SX ///////////////////////////////////////////
         int primo = sourceRandom.nextInt(0,3);
         versi.aggiungiCanzone(primo);
         f.getGw().getAvatarComputerSx().setName("ComputerSx"+Avversari.values()[primo].toString().toLowerCase());
-        System.out.println(f.getGw().getAvatarComputerSx().getName());
         new DecoratoreProfilo(f.getGw().getAvatarComputerSx()).visualizzaAvatar();
         f.getGw().getNomeComputerSx().setText(f.getGw().getAvatarComputerSx().getName().substring(10));
-        // COMPUTER SU
+        /////////////////////////////////////////////////// COMPUTER SU ///////////////////////////////////////////
         int secondo = sourceRandom.nextInt(3,6);
         versi.aggiungiCanzone(secondo);
         f.getGw().getAvatarComputerSu().setName("ComputerSu"+Avversari.values()[secondo].toString().toLowerCase());
-        System.out.println(f.getGw().getAvatarComputerSu().getName());
         new DecoratoreProfilo(f.getGw().getAvatarComputerSu()).visualizzaAvatar();
         f.getGw().getNomeComputerSu().setText(f.getGw().getAvatarComputerSu().getName().substring(10));
-        //COMPUTER DX
+        /////////////////////////////////////////////////// COMPUTER DX ///////////////////////////////////////////
         int terzo = sourceRandom.nextInt(6,9);
         versi.aggiungiCanzone(terzo);
         f.getGw().getAvatarComputerDx().setName("ComputerDx"+Avversari.values()[terzo].toString().toLowerCase());
-        System.out.println(f.getGw().getAvatarComputerDx().getName());
         new DecoratoreProfilo(f.getGw().getAvatarComputerDx()).visualizzaAvatar();
         f.getGw().getNomeComputerDx().setText(f.getGw().getAvatarComputerDx().getName().substring(10));
     }
@@ -980,9 +964,6 @@ public class Controller implements ActionListener, ChangeListener {
         f.getAudio().getVolumeVersi().setText(String.valueOf((int)((f.getAudio().getBarraVolumeVersi().getValue()+80F)/0.85F)));
     }
 
-    public ActionListener getActList(BottoneCarta bc){
-        return e -> cartaCliccata(bc);
-    }
 
     /**
      * Metodo per rendere il Controller Singleton
@@ -1287,4 +1268,20 @@ public class Controller implements ActionListener, ChangeListener {
 //                faiGiocare();
 //            }
 //        }
+//    }
+
+
+//    /**
+//     * Metodo che gestisce la fine della partita e fa ritornare nel menù principale
+//     */
+//    public void partitaFinita(){
+//        f.getGw().setEnabled(false);
+//        stopMusicaAmbiente();
+//        JFrame uscita = new JFrame();
+//        JOptionPane.showMessageDialog(uscita,"FINE PARTITA!");
+//        riproduciEffettoSpeciale(7);
+//        f.getGw().setVisible(false);
+//        f.getPrincipale().setVisible(true);
+//        f.getMenu().setVisible(true);
+//        riproduciMusicaAmbiente(5);
 //    }

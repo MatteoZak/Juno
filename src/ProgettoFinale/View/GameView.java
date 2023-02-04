@@ -76,8 +76,6 @@ public class GameView extends JLabel{
 
 ////////////////////////     SFONDO     /////////////////////////////////////////
         sfondo.setBounds(0,0,width,height);
-        sfondo.setOpaque(true);
-        sfondo.setBackground(Color.cyan);
         sfondo.setIcon(new ImageIcon(toolkit.createImage(costanti.getPathSfondoGameView())
                 .getScaledInstance(width,height,Image.SCALE_DEFAULT)));
         add(sfondo);
@@ -282,27 +280,19 @@ public class GameView extends JLabel{
 
         animazioneGiocatoreGioca.setBounds(pilaScarti.getX(),pilaScarti.getY()+150,100,
                 height-labelManoGiocatore.getHeight()-pilaScarti.getY());
-        //animazioneGiocatoreGioca.setBounds(labelManoComputerSx.getWidth(),pilaScarti.getY()+150,
-        //     labelManoGiocatore.getWidth(),labelManoGiocatore.getY()-pilaScarti.getY()+150);
+
         animazioneGiocatoreGioca.setxDestinazione(pilaScarti.getX());
 
         animazioneComputerSx.setBounds(labelManoComputerSx.getWidth()-40,pilaMazzo.getY(),
                 pilaMazzo.getX()-labelManoComputerSx.getWidth()+40,100);
-        //animazioneComputerSx.setBounds(labelManoComputerSx.getWidth(),labelManoComputerSu.getHeight(),
-        //        labelManoComputerSu.getWidth(),labelManoGiocatore.getY());
 
         animazioneComputerSxGioca.setBounds(labelManoComputerSx.getWidth(),pilaScarti.getY()-10,
                 pilaScarti.getX()-labelManoComputerSx.getWidth(),160);
         animazioneComputerSxGioca.setxDestinazione(pilaScarti.getX()-labelManoComputerSx.getWidth());
-        //System.out.println(pilaScarti.getY());
-        //System.out.println(labelManoComputerSu.getHeight());
-        //System.out.println(pilaScarti.getX()-labelManoComputerSx.getWidth());
-        //System.out.println(animazioneComputerSxGioca.getWidth());
-        System.out.println("distanza mazzo-pila scarti: "+ (pilaMazzo.getX()-pilaScarti.getX()-100));
+
         animazioneComputerSu.setBounds(pilaMazzo.getX(),labelManoComputerSu.getHeight()-30,
                 100,pilaMazzo.getY()+160-labelManoComputerSu.getHeight());
 
-//labelManoGiocatore.getY()
         animazioneComputerSuGioca.setBounds(pilaScarti.getX()-10,labelManoComputerSu.getHeight(),
                 110, pilaScarti.getY()-labelManoComputerSu.getHeight());
         animazioneComputerSuGioca.setyDestinazione(pilaScarti.getY()-labelManoComputerSu.getHeight());
@@ -310,23 +300,9 @@ public class GameView extends JLabel{
         animazioneComputerDx.setBounds(pilaMazzo.getX(),pilaMazzo.getY(),
                 width-pilaMazzo.getX()+100-labelManoComputerDx.getWidth(),100);
 
-        System.out.println(animazioneComputerDx.getX());
-        System.out.println(animazioneComputerDx.getY());
-        System.out.println(animazioneComputerDx.getWidth());
-        System.out.println(animazioneComputerDx.getHeight());
-        //animazioneComputerDxGioca.setBounds(pilaScarti.getX()+100,pilaScarti.getY(),
-          //      getPilaMazzo().getX(),labelManoComputerDx.getHeight());
         animazioneComputerDxGioca.setBounds(pilaScarti.getX()+100,pilaScarti.getY()-10,
                 width-labelManoComputerDx.getWidth()-pilaScarti.getX(),160);
         System.out.println(animazioneComputerDxGioca.getX());
-        //System.out.println(width-labelManoComputerDx.getWidth()-pilaScarti.getX());
-        //animazioneComputerDxGioca.setxDestinazione(pilaScarti.getX()+100);
-        //animazioneGiocatore.setX(pilaMazzo.getX());
-
-        //animazioneGiocatore.setVelocitaY(5);
-
-
-        // sfondo.add(animazioneGiocatore);
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
